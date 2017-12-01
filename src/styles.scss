@@ -4,10 +4,14 @@ body {
     background: url("/assets/background3.jpg");
     background-repeat:no-repeat;
     background-size: cover;
-    padding: 3em;
+    padding: 2em;
     font-family: 'Raleway', 'Arial';
     color:#fff;
 }
+
+.navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
+.navbar {min-height:32px !important}
+
 ul {
     list-style-type:none;
     margin:0 0 2em 0;
@@ -19,7 +23,7 @@ ul li {
     margin-right: 30px;
 }
 ul li a {
-    font-size: 1.5em;
+    font-size: 1em;
 }
 a {
     color:#fff;
