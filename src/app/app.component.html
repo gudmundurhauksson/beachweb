@@ -6,7 +6,7 @@
 </ul> -->
 
 <!-- https://medium.com/@ct7/the-simple-way-to-make-a-mobile-angular-2-bootstrap-navbar-without-jquery-d6b3f67b037b -->
-
+<router-outlet></router-outlet>
 <nav class="navbar navbar-fixed-top">
   <div class="container-fluid">
      
@@ -45,6 +45,17 @@
           <li><a href="#">Leikmenn</a></li>
           <li><a href="#">Reglur</a></li>          
           
+          <li class="dropdown" dropdown *ngIf="authService.isLoggedIn()">
+              <a dropdownToggle role="button" >
+                Mínar Síður
+                <span class="caret"></span>
+              </a>
+              <ul *dropdownMenu class="dropdown-menu">
+                <li><a routerLink="competitions/2018">Skráning</a></li>
+                <li><a routerLink="competitions/2017">Tölfræði</a></li>
+                
+              </ul>
+            </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">

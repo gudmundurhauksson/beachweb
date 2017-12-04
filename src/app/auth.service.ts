@@ -19,6 +19,10 @@ export class AuthService {
     var data: AuthData;
     data = <AuthData>this._data.load("authentication");
 
+    if(data === undefined) {
+      return;
+    }
+
     var result = this._data.verifyLogin(data);
     result.subscribe((player: Object) => {
       this.player = <Player>player;
