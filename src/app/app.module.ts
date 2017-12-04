@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule }  from '@angular/http';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +18,10 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { UsersComponent } from './users/users.component';
+import { NewuserComponent } from './newuser/newuser.component';
+import { AuthService } from './auth.service';
+
+import { CookieService } from 'angular2-cookie';
 
 @NgModule({
   declarations: [
@@ -24,18 +29,20 @@ import { UsersComponent } from './users/users.component';
     HomeComponent,
     AboutComponent,
     CompetitionsComponent,
-    UsersComponent
+    UsersComponent,
+    NewuserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpModule,
     FormsModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot()
   ],
-  providers: [DataService],
+  providers: [DataService, AuthService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,17 +3,20 @@
   <li><a routerLink="">Home</a></li>
   <li><a routerLink="about/48">About</a></li>
   <li><a routerLink="competitions">Competitions</a></li>
-</ul>
+</ul> -->
 
-<router-outlet></router-outlet>-->
-<nav class="navbar navbar-default navbar-xs">
+<!-- https://medium.com/@ct7/the-simple-way-to-make-a-mobile-angular-2-bootstrap-navbar-without-jquery-d6b3f67b037b -->
+
+<nav class="navbar navbar-fixed-top">
   <div class="container-fluid">
+     
       <!--<div class="navbar-header">
           <a class="navbar-brand">
             <img src="assets/img/ngx-bootstrap.svg" class="logo">
           </a>
           <span class="navbar-brand">Angular + Bootstrap</span>
       </div>-->
+      <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
          <!-- <li class="active"><a href="#">
             Link <span class="sr-only">(current)</span>
@@ -45,8 +48,10 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a routerLink="users">Innskrá</a></li>
+          <li *ngIf="!authService.isLoggedIn()"><a routerLink="users">Innskrá</a></li>
+          <li *ngIf="authService.isLoggedIn()"><a (click)="logout()">Útskrá</a></li>
       </ul>
+    </div>
   </div>
 </nav>
 

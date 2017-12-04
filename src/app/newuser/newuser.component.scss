@@ -1,7 +1,7 @@
 body, html {
     height: 100%;
     background-repeat: no-repeat;
-    background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
+    background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));    
 }
 
 .card-container.card {
@@ -73,7 +73,10 @@ body, html {
 }
 
 .form-signin #inputEmail,
-.form-signin #inputPassword {
+.form-signin #inputPassword,
+.form-signin #inputName,
+.form-signin #ID,
+.form-signin #confirmPassword {
     direction: ltr;
     height: 44px;
     font-size: 16px;
@@ -136,4 +139,12 @@ body, html {
 .forgot-password:active,
 .forgot-password:focus{
     color: rgb(12, 97, 33);
+}
+
+.radio-gender {
+    color: rgb(104, 145, 162);
+}
+
+.radioLabel {
+    font-weight: 200;
 }
