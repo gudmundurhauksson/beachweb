@@ -4,8 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';     
 import { AboutComponent } from './about/about.component';  
 import { CompetitionsComponent } from './competitions/competitions.component';  
-import { UsersComponent } from './users/users.component';
+import { LoginComponent } from './login/login.component';
 import { NewuserComponent } from './newuser/newuser.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -26,12 +28,20 @@ const routes: Routes = [
     component: CompetitionsComponent
   },
   {
-    path: 'users',
-    component: UsersComponent
+    path: 'login',
+    component: LoginComponent
   }, 
   {
     path: 'newuser',
     component:NewuserComponent
+  },
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
   }
 
 ];

@@ -8,6 +8,8 @@ import { CookieService } from 'angular2-cookie/core';
 import { AuthData } from './models/authdata';
 import { RequestOptions } from '@angular/http';
 import { Headers } from '@angular/http';
+import { CookieOptionsArgs } from 'angular2-cookie/services/cookie-options-args.model';
+import { CookieOptions } from 'angular2-cookie/services/base-cookie-options';
 
 @Injectable()
 export class DataService {
@@ -34,13 +36,17 @@ export class DataService {
   }
 
   login(player: Player) : Observable<Response> {
-    var result = this.http.post(this.baseUrl + "token", "grant_type=password&username=" + player.email + "&password=" + player.password);
+    var result = this.http.post(this.baseUrl + "token", "grant_type=password&username=" + player.id + "&password=" + player.password);
     var tmp = result.map((res: Response) => res.json());
     return tmp;
   }
 
   save(key: string, content: Object) {
-    this._cookieService.putObject(key, content);
+    var option: CookieOptionsArgs;
+    option = new CookieOptions();
+    var expires = new Date();
+    expires.setDate(expires.getDate() + 30);    
+    this._cookieService.putObject(key, content, {"expires" : expires } );
   }
 
   load(key: string) : Object {
@@ -64,5 +70,12 @@ export class DataService {
     return options;
   }
 
-
+  changePassword(password: string) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+    var result = this.http.post(this.apiUrl + "players/changepassword", {"Password": password} ,
+      this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+    return tmp;
+  }
 }

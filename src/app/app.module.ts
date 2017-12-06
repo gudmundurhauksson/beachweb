@@ -17,11 +17,13 @@ import { CompetitionsComponent } from './competitions/competitions.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { UsersComponent } from './users/users.component';
+import { LoginComponent } from './login/login.component';
 import { NewuserComponent } from './newuser/newuser.component';
 import { AuthService } from './auth.service';
 
 import { CookieService } from 'angular2-cookie';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -29,8 +31,10 @@ import { CookieService } from 'angular2-cookie';
     HomeComponent,
     AboutComponent,
     CompetitionsComponent,
-    UsersComponent,
-    NewuserComponent
+    LoginComponent,
+    NewuserComponent,
+    ChangePasswordComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

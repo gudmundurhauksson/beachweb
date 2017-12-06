@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 import { Player } from './models/player';
 import { AuthData } from './models/authdata';
+import { Router } from '@angular/router';
 
 
 @Injectable()
@@ -10,7 +11,7 @@ export class AuthService {
   private _isLoggedIn: boolean;
   public player: Player;
 
-  constructor(private _data: DataService) { 
+  constructor(private _data: DataService, private router: Router) { 
     console.log("auth service");
     this._loadLogin();
   }
@@ -41,22 +42,19 @@ export class AuthService {
 
   logout() {
     this._isLoggedIn = false;
-    this._data.clear("authentication");
+    this._data.clear("authentication");    
   }
 
-  login(player: Player): void {
-    
+   login(player: Player) : void {    
     var result = this._data.login(player);
     result.subscribe(s => {
         this._data.save("authentication", s);
-        this._loadLogin();        
+        this._loadLogin();   
+        this.router.navigate(['']);
       }, 
     error => {
-      console.log(error);
-    });
-
-    
-    
+      console.log(error);      
+    });      
   }
 
 }

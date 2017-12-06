@@ -1,4 +1,3 @@
-
 <!--<ul>
   <li><a routerLink="">Home</a></li>
   <li><a routerLink="about/48">About</a></li>
@@ -6,64 +5,86 @@
 </ul> -->
 
 <!-- https://medium.com/@ct7/the-simple-way-to-make-a-mobile-angular-2-bootstrap-navbar-without-jquery-d6b3f67b037b -->
-<router-outlet></router-outlet>
+
 <nav class="navbar navbar-fixed-top">
   <div class="container-fluid">
-     
-      <!--<div class="navbar-header">
-          <a class="navbar-brand">
-            <img src="assets/img/ngx-bootstrap.svg" class="logo">
-          </a>
-          <span class="navbar-brand">Angular + Bootstrap</span>
-      </div>-->
-      <div id="navbar" class="navbar-collapse collapse">
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" (click)="toggleState()">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- #1 -->
+
+      <a class="navbar-brand" href="#">Strandblak - BLÍ</a>
+    </div>
+
+    <div class="collapse navbar-collapse" [ngClass]="{ 'in': isIn  }">
       <ul class="nav navbar-nav">
-         <!-- <li class="active"><a href="#">
+        <!-- <li class="active"><a href="#">
             Link <span class="sr-only">(current)</span>
           </a></li>-->
-          <li class="dropdown" dropdown>
-            <a dropdownToggle role="button" >
-              Mót
-              <span class="caret"></span>
-            </a>
-            <ul *dropdownMenu class="dropdown-menu">
-              <li><a routerLink="competitions/2018">2018</a></li>
-              <li><a routerLink="competitions/2017">2017</a></li>
-              <li><a routerLink="competitions/2016">2016</a></li>
-              <li><a routerLink="competitions/2015">2015</a></li>
-              <li><a routerLink="competitions/2014">2014</a></li>
-            </ul>
-          </li>
-          <!-- <li class="dropdown" dropdown>
+        <li class="dropdown" dropdown *ngIf="false">
+          <a dropdownToggle role="button">
+            Mót
+            <span class="caret"></span>
+          </a>
+          <ul *dropdownMenu class="dropdown-menu">
+            <li>
+              <a routerLink="competitions/2018">2018</a>
+            </li>
+            <li>
+              <a routerLink="competitions/2017">2017</a>
+            </li>
+            <li>
+              <a routerLink="competitions/2016">2016</a>
+            </li>
+            <li>
+              <a routerLink="competitions/2015">2015</a>
+            </li>
+            <li>
+              <a routerLink="competitions/2014">2014</a>
+            </li>
+          </ul>
+        </li>
+        <!-- <li class="dropdown" dropdown>
               <a dropdownToggle role="button"> 
                 Skráning <span class="caret"></span></a>
               <ul *dropdownMenu class="dropdown-menu"> 
                 
               </ul>              
           </li> -->
-          <li><a href="#">Stig</a></li>
-          <li><a href="#">Leikmenn</a></li>
-          <li><a href="#">Reglur</a></li>          
-          
-          <li class="dropdown" dropdown *ngIf="authService.isLoggedIn()">
-              <a dropdownToggle role="button" >
-                Mínar Síður
-                <span class="caret"></span>
-              </a>
-              <ul *dropdownMenu class="dropdown-menu">
-                <li><a routerLink="competitions/2018">Skráning</a></li>
-                <li><a routerLink="competitions/2017">Tölfræði</a></li>
-                
-              </ul>
+        <li>
+          <a href="#">Stig</a>
+        </li>
+        
+        <li class="dropdown" dropdown *ngIf="authService.isLoggedIn()">
+          <a dropdownToggle role="button">
+            Mínar Síður
+            <span class="caret"></span>
+          </a>
+          <ul *dropdownMenu class="dropdown-menu">
+            <li>
+              <a routerLink="change-password">Breyta lykilorði</a>
             </li>
+
+          </ul>
+        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-          <li *ngIf="!authService.isLoggedIn()"><a routerLink="users">Innskrá</a></li>
-          <li *ngIf="authService.isLoggedIn()"><a (click)="logout()">Útskrá</a></li>
+        <li *ngIf="!authService.isLoggedIn()">
+          <a routerLink="login">Innskrá</a>
+        </li>
+        <li *ngIf="authService.isLoggedIn()">
+          <a (click)="logout()">Útskrá</a>
+        </li>
       </ul>
     </div>
-  </div>
-</nav>
+    </div>
+  </nav>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+

@@ -4,11 +4,12 @@ import {Player} from '../models/player';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class UsersComponent implements OnInit {
+
+export class LoginComponent implements OnInit {
 
   public player:Player;
 
@@ -20,7 +21,8 @@ export class UsersComponent implements OnInit {
 
   }
 
-  login() {
+   login() {
+    console.log('logging in');
     this._auth.login(this.player);
   }
 
