@@ -10,6 +10,8 @@ import { RequestOptions } from '@angular/http';
 import { Headers } from '@angular/http';
 import { CookieOptionsArgs } from 'angular2-cookie/services/cookie-options-args.model';
 import { CookieOptions } from 'angular2-cookie/services/base-cookie-options';
+import { Location } from '@angular/common';
+import { BeachLocation } from './models/beachlocation';
 
 @Injectable()
 export class DataService {
@@ -31,6 +33,13 @@ export class DataService {
   register(player: Player): Observable<Response> {
     console.log("registering");
     var result = this.http.post(this.apiUrl + "players", player);
+    var tmp = result.map((res: Response) => res.json());
+    return tmp;
+  }
+
+  registerLocation(location: BeachLocation): Observable<Response> {
+    console.log("registerLocation");
+    var result = this.http.post(this.apiUrl + "locations", location);
     var tmp = result.map((res: Response) => res.json());
     return tmp;
   }

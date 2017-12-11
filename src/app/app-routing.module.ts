@@ -8,6 +8,9 @@ import { LoginComponent } from './login/login.component';
 import { NewuserComponent } from './newuser/newuser.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { componentFactoryName } from '@angular/compiler';
+import { NewLocationComponent } from './new-location/new-location.component';
+import { NewTournamentComponent } from './new-tournament/new-tournament.component';
 
 const routes: Routes = [
   {
@@ -42,6 +45,14 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'new-location',
+    component: NewLocationComponent
+  },
+  {
+    path: 'new-tournament',
+    component: NewTournamentComponent
   }
 
 ];

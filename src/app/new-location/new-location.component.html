@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="card card-container">
+        <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+        
+        <p id="profile-name" class="profile-name-card"></p>
+        <form class="form-signin">
+            <span id="reauth-email" class="reauth-email"></span>
+            
+            <input type="text" id="name" name="name" class="form-control" placeholder="nafn" required [(ngModel)]="location.name">
+            <input type="text" id="description" name="description" class="form-control" placeholder="lýsing" required [(ngModel)]="location.description">
+            <input type="text" id="courts" name="courts" class="form-control" placeholder="fjöldi valla" required [(ngModel)]="location.courts">
+            <input type="text" id="gps" name="gps" class="form-control" placeholder="hnit" required [(ngModel)]="location.gps">
+            <input type="text" id="address" name="address" class="form-control" placeholder="heimilisfang" required [(ngModel)]="location.address">
+            <input type="text" id="website" name="website" class="form-control" placeholder="vefsíða" required [(ngModel)]="location.website">
+            
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="register()">Skrá</button>
+        </form><!-- /form -->
+        <div>        
+      </div>      
+    </div><!-- /card-container -->
+  </div><!-- /container -->

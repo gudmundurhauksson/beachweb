@@ -24,6 +24,8 @@ import { AuthService } from './auth.service';
 import { CookieService } from 'angular2-cookie';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NewTournamentComponent } from './new-tournament/new-tournament.component';
+import { NewLocationComponent } from './new-location/new-location.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     LoginComponent,
     NewuserComponent,
     ChangePasswordComponent,
-    DashboardComponent
+    DashboardComponent,
+    NewTournamentComponent,
+    NewLocationComponent
   ],
   imports: [
     BrowserModule,
