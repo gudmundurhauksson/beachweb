@@ -26,6 +26,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NewTournamentComponent } from './new-tournament/new-tournament.component';
 import { NewLocationComponent } from './new-location/new-location.component';
+import { TournamentsComponent } from './tournaments/tournaments.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { NewLocationComponent } from './new-location/new-location.component';
     ChangePasswordComponent,
     DashboardComponent,
     NewTournamentComponent,
-    NewLocationComponent
+    NewLocationComponent,
+    TournamentsComponent
   ],
   imports: [
     BrowserModule,

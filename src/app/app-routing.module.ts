@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { componentFactoryName } from '@angular/compiler';
 import { NewLocationComponent } from './new-location/new-location.component';
 import { NewTournamentComponent } from './new-tournament/new-tournament.component';
+import { TournamentsComponent } from './tournaments/tournaments.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,10 @@ const routes: Routes = [
   {
     path: 'new-tournament',
     component: NewTournamentComponent
+  },
+  {
+    path:'tournaments',
+    component: TournamentsComponent
   }
 
 ];

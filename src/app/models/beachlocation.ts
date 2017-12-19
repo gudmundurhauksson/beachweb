@@ -1,4 +1,5 @@
 export class BeachLocation {
+    id: number;
     name: string;
     description: string;
     courts: number;

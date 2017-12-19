@@ -12,6 +12,7 @@ import { CookieOptionsArgs } from 'angular2-cookie/services/cookie-options-args.
 import { CookieOptions } from 'angular2-cookie/services/base-cookie-options';
 import { Location } from '@angular/common';
 import { BeachLocation } from './models/beachlocation';
+import { Tournament } from './models/tournament';
 
 @Injectable()
 export class DataService {
@@ -44,6 +45,23 @@ export class DataService {
     return tmp;
   }
 
+  registerTournament(tournament: Tournament): Observable<Response> {
+
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    console.log("registerTournament");
+    var result = this.http.post(this.apiUrl + "tournaments", tournament, this.getAuthorizationRequestOption(data));
+    var tmp = result.map((res: Response) => res.json());
+    return tmp;
+  }
+
+  getTournaments(): Observable<Response> {
+    var result = this.http.get(this.apiUrl + "tournaments");
+    var tmp = result.map((res: Response) => res.json());
+    return tmp;
+  }
+
   login(player: Player) : Observable<Response> {
     var result = this.http.post(this.baseUrl + "token", "grant_type=password&username=" + player.id + "&password=" + player.password);
     var tmp = result.map((res: Response) => res.json());
@@ -60,7 +78,7 @@ export class DataService {
 
   load(key: string) : Object {
     return this._cookieService.getObject(key);
-  }
+  }  
 
   clear(key: string) : void {
     this._cookieService.remove(key);
@@ -70,9 +88,10 @@ export class DataService {
     var result = this.http.get(this.apiUrl + "players/loggedin", this.getAuthorizationRequestOption(auth));
     var tmp = result.map((player: Response) => player.json());
     return tmp;
-  }
+  }  
 
   getAuthorizationRequestOption(auth: AuthData): RequestOptions {
+
     let header = new Headers();
     header.append("Authorization", "Bearer " + auth.access_token);
     let options = new RequestOptions({headers: header});
@@ -85,6 +104,32 @@ export class DataService {
     var result = this.http.post(this.apiUrl + "players/changepassword", {"Password": password} ,
       this.getAuthorizationRequestOption(data));
     var tmp = result.map(s => s.json());
+    return tmp;
+  }
+
+  getLocations(): Observable<Response> {
+    var result = this.http.get(this.apiUrl + "locations");
+    return result.map(s=>s.json());
+  }
+
+  openRegistration(tournamentId: number) : Observable<Response> {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "tournaments/" + tournamentId + "/registration/open", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+
+
+  closeRegistration(tournamentId: number) : Observable<Response> {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "tournaments/" + tournamentId + "/registration/close", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
     return tmp;
   }
 }

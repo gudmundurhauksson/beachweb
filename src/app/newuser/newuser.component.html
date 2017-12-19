@@ -6,7 +6,7 @@
         <form class="form-signin">
             <span id="reauth-email" class="reauth-email"></span>
             <input type="text" id="ID" name="ID" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="player.id">
-            <input type="text" id="inputName" name="inputName" class="form-control" placeholder="nafn" required autofocus [(ngModel)]="name" (input)="onChangeName($event.target.value)">
+            <input type="text" id="inputName" name="inputName" class="form-control" placeholder="nafn" required autofocus [(ngModel)]="player.name" (input)="onChangeName($event.target.value)">
             
             <div class="radio-gender">
               <label class="radioLabel">
