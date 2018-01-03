@@ -5,4 +5,5 @@ export class Player {
     password: string;
     isMale: boolean;
     mobile: string;
+    isAdmin: boolean;
 }

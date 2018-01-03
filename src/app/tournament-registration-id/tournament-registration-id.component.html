@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="card card-container">
+    <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+    <form class="form-signin">
+
+      <h4>Veldu mót</h4>
+      <div class="radio-gender" *ngIf="isMaleTournament()">
+        <label class="radioLabel">
+          <input type="radio" id="tournamentType" name="tournamentType" [value]="1" [(ngModel)]="tournamentType">Fullorðnir-Karlar</label>
+      </div>
+
+      <div class="radio-gender" *ngIf="isFemaleTournament()">
+        <label class="radioLabel">
+          <input type="radio" id="tournamentType" name="tournamentType" [value]="2" [(ngModel)]="tournamentType">Fullorðnir-Konur</label>
+      </div>
+
+      <div class="radio-gender" *ngIf="isMaleYouthTournament()">
+        <label class="radioLabel">
+          <input type="radio" id="tournamentType" name="tournamentType" [value]="4" [(ngModel)]="tournamentType">Unglingar-Karlar</label>
+      </div>
+
+      <div class="radio-gender" *ngIf="isFemaleYouthTournament()">
+        <label class="radioLabel">
+          <input type="radio" id="tournamentType" name="tournamentType" [value]="8" [(ngModel)]="tournamentType">Unglingar-Konur</label>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<div class="container">
+  <div class="card card-container">
+    <h4>Leikmaður 1</h4>
+    <label>{{loggedInPlayer().name}}</label>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="card card-container">
+
+    <form class="form-signin">
+
+      <h4>Leikmaður 2</h4>
+
+      <div class="radio-player">
+        <label class="radioLabel">
+          <input type="checkbox" id="existingPlayer" name="existingPlayer" [(ngModel)]="registerNewPlayer">Nýr leikmaður</label>
+      </div>
+
+      <div *ngIf="registerNewPlayer">
+        <span id="reauth-email" class="reauth-email"></span>
+        <input type="text" id="ID" name="ID" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="player.id">
+        <input type="text" id="inputName" name="inputName" class="form-control" placeholder="nafn" required autofocus [(ngModel)]="player.name"
+          (input)="onChangeName($event.target.value)">
+
+        <div class="radio-gender">
+          <label class="radioLabel">
+            <input type="radio" id="genderMale" name="gender" [value]="1" [(ngModel)]="gender">Kk</label>
+        </div>
+
+        <div class="radio-gender">
+          <label class="radioLabel">
+            <input type="radio" id="genderFemale" name="gender" [value]="0" [(ngModel)]="gender">Kvk</label>
+        </div>
+
+        <input type="text" id="inputMobile" name="inputMobile" class="form-control" placeholder="gsm" required autofocus [(ngModel)]="player.mobile">
+        <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="netfang" required autofocus [(ngModel)]="player.email">
+        <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="lykilorð" required [(ngModel)]="player.password">
+        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="lykilorð endurtekið"
+          required [(ngModel)]="confirm">
+
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="register()">Nýskrá</button>
+      </div>
+
+
+    </form>
+    <!-- /form -->
+
+
+  </div>
+  <!-- /card-container -->
+</div>
+<!-- /container -->

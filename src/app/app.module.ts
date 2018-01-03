@@ -27,6 +27,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NewTournamentComponent } from './new-tournament/new-tournament.component';
 import { NewLocationComponent } from './new-location/new-location.component';
 import { TournamentsComponent } from './tournaments/tournaments.component';
+import { TournamentRegistrationComponent } from './tournament-registration/tournament-registration.component';
+import { TournamentRegistrationIdComponent } from './tournament-registration-id/tournament-registration-id.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { TournamentsComponent } from './tournaments/tournaments.component';
     DashboardComponent,
     NewTournamentComponent,
     NewLocationComponent,
-    TournamentsComponent
+    TournamentsComponent,
+    TournamentRegistrationComponent,
+    TournamentRegistrationIdComponent
   ],
   imports: [
     BrowserModule,

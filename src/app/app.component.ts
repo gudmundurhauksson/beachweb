@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,14 +18,14 @@ export class AppComponent {
       this.isIn = bool === false ? true : false; 
   }
 
-  constructor(public authService:AuthService ) {
+  constructor(public authService:AuthService, private router: Router ) {
     console.log(authService);
-
     authService.isLoggedIn();
   }
 
   logout() : void {
     console.log("logging out ...");
     this.authService.logout();
+    this.router.navigate(['']);
   }
 }

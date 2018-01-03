@@ -1,9 +1,13 @@
+import { BeachLocation } from "./beachlocation";
+
 export class Tournament {
-    tournamentId: number;
+    id: number;
     name: string;
     locationId: number;
     description: string;
     date: string;
     isRegistrationOpen: boolean;
     type: number;
+
+    location: BeachLocation;
 }

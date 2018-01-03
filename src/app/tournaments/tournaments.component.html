@@ -2,19 +2,19 @@
   <div class="card card-container">
     <p id="profile-name" class="profile-name-card"></p>
     <form class="form-signin">
+      <span id="reauth-email" class="reauth-email">Veldu mót:</span>
       <div *ngFor="let tournament of tournaments">
 
-          <span id="reauth-email" class="reauth-email">Veldu mót:</span>
         <div class="radio-gender">
           <label class="radioLabel">
-            <input type="radio"  name="tournament" [value]="tournament.id" [(ngModel)]="tournamentId">{{tournament.name}} - {{tournament.date}}</label>
+            <input type="radio" name="tournament" [value]="tournament.id" (change)="onTournamentSelected(tournament)" />{{tournament.name}} - {{tournament.date}}
+            <span *ngIf="tournament.isRegistrationOpen">(Opið f. skráningu)</span>
+          </label>
         </div>
-
-
-        <button class="btn btn-m btn-primary btn-success" type="submit" (click)="open()">Opna f. skráningu</button>
-        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="close()">Loka f. skráningu</button>
-
       </div>
+
+      <button class="btn btn-m btn-primary btn-success" type="submit" (click)="open()" [disabled]="selected.isRegistrationOpen">Opna f. skráningu</button>
+      <button class="btn btn-m btn-primary btn-fail" type="submit" (click)="close()" [disabled]="!selected.isRegistrationOpen">Loka f. skráningu</button>
     </form>
   </div>
 </div>

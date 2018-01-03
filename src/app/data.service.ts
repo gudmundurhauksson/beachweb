@@ -17,18 +17,11 @@ import { Tournament } from './models/tournament';
 @Injectable()
 export class DataService {
 
-  private goals = new BehaviorSubject<any>(['The initial goal', 'Another silly life goal']);
-  goal = this.goals.asObservable();
-
   private baseUrl ="http://localhost:3564/"; 
   private apiUrl = this.baseUrl + "api/";
 
   constructor(private http: Http, private _cookieService: CookieService) { 
     console.log("data service");
-  }
-
-  changeGoal(goal) {
-    this.goals.next(goal)
   }
 
   register(player: Player): Observable<Response> {
@@ -58,6 +51,12 @@ export class DataService {
 
   getTournaments(): Observable<Response> {
     var result = this.http.get(this.apiUrl + "tournaments");
+    var tmp = result.map((res: Response) => res.json());
+    return tmp;
+  }
+
+  getTournament(id: number): Observable<Response> {
+    var result = this.http.get(this.apiUrl + "tournaments/" + id);
     var tmp = result.map((res: Response) => res.json());
     return tmp;
   }

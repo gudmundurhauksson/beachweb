@@ -18,7 +18,7 @@
       </button>
       <!-- #1 -->
 
-      <a class="navbar-brand" href="#">Strandblak - BLÍ</a>
+
     </div>
 
     <div class="collapse navbar-collapse" [ngClass]="{ 'in': isIn  }">
@@ -56,10 +56,15 @@
                 
               </ul>              
           </li> -->
+
+        <li>
+          <a href="/">Forsíða</a>
+        </li>
+
         <li>
           <a href="#">Stig</a>
         </li>
-        
+
         <li class="dropdown" dropdown *ngIf="authService.isLoggedIn()">
           <a dropdownToggle role="button">
             Mínar Síður
@@ -83,8 +88,7 @@
         </li>
       </ul>
     </div>
-    </div>
-  </nav>
+  </div>
+</nav>
 
-  <router-outlet></router-outlet>
-
+<router-outlet></router-outlet>

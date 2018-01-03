@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Tournament } from '../models/tournament';
 import { DataService } from '../data.service';
 import { BeachLocation } from '../models/beachlocation';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-tournament',
@@ -13,42 +15,46 @@ export class NewTournamentComponent implements OnInit {
   public tournament: Tournament;
   public locations: BeachLocation[];
   public selectedLocation: BeachLocation;
-  
+
   public isKk: boolean;
   public isKvk: boolean;
   public isYouthKk: boolean;
   public isYouthKvk: boolean;
 
-  constructor(private _data : DataService) { 
-    this.tournament = new Tournament();  
+  constructor(private _data: DataService, private _auth: AuthService, private _router: Router) {
+    this.tournament = new Tournament();
     this.isKk = false;
     this.isKvk = false;
     this.isYouthKk = false;
     this.isYouthKvk = false;
+
+    if (!_auth.isLoggedIn() || !_auth.player.isAdmin) {
+      this._router.navigate(['']);
+    }
   }
 
-  register() : void { 
+  register(): void {
 
-    this.tournament.type = 
-      (this.isKk ? 0x01 : 0x00) | 
+    this.tournament.type =
+      (this.isKk ? 0x01 : 0x00) |
       (this.isKvk ? 0x02 : 0x00) |
       (this.isYouthKk ? 0x04 : 0x00) |
       (this.isYouthKvk ? 0x08 : 0x00);
-      console.log(this.selectedLocation);
+    console.log(this.selectedLocation);
 
-      this.tournament.locationId = this.selectedLocation.id;
+    this.tournament.locationId = this.selectedLocation.id;
 
     this._data.registerTournament(this.tournament).subscribe(s => {
-      
-    }, 
-    (error: any) => {
-      
-    });
+
+    },
+      (error: any) => {
+
+      });
   }
 
   ngOnInit() {
-    this._data.getLocations().subscribe((s : any) => {
-      this.locations = <BeachLocation[]>s;      
+    this._data.getLocations().subscribe((s: any) => {
+      this.locations = <BeachLocation[]>s;
       console.log(s);
     });
   }

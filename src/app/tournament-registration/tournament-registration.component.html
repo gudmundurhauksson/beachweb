@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4" *ngFor="let tournament of tournaments">
+            <a routerLink="{{tournament.id}}/register">
+              <div class="panel panel-primary">
+                <div class="panel-heading">{{tournament.name}}
+
+                  <span *ngIf="tournament.isRegistrationOpen"> - Opið fyrir skráningu!</span>
+
+                </div>
+                <div class="panel-body">
+                  <img src="./assets/referee.jpg" class="img-responsive" style="width:100%" alt="Image">
+                </div>
+                <div class="panel-footer">{{tournament.location.name}}</div>
+              </div>
+            </a>
+          </div>
+
+
+    </div>
+</div>
+

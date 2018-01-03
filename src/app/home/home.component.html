@@ -7,7 +7,7 @@
           <div class="panel-body">
             <img src="./assets/referee.jpg" class="img-responsive" style="width:100%" alt="Image">
           </div>
-          <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+          <div class="panel-footer">Almennt um strandblaksreglur</div>
         </div>
       </a>
     </div>
@@ -19,19 +19,7 @@
           <div class="panel-body">
             <img src="./assets/trophy.jpg" class="img-responsive" style="width:100%" alt="Image">
           </div>
-          <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
-        </div>
-      </a>
-    </div>
-
-    <div class="col-sm-4">
-      <a routerLink="/competitions">
-        <div class="panel panel-primary">
-          <div class="panel-heading">MÓT SUMARSINS</div>
-          <div class="panel-body">
-            <img src="./assets/courts.jpg" class="img-responsive" style="width:100%" alt="Image">
-          </div>
-          <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+          <div class="panel-footer">Stigastaða allra leikmanna</div>
         </div>
       </a>
     </div>
@@ -39,39 +27,36 @@
     <div class="col-sm-4">
       <a routerLink="/tournaments">
         <div class="panel panel-primary">
+          <div class="panel-heading">MÓT SUMARSINS</div>
+          <div class="panel-body">
+            <img src="./assets/courts.jpg" class="img-responsive" style="width:100%" alt="Image">
+          </div>
+          <div class="panel-footer">Öll mót sumarsins</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-sm-4" *ngIf="isAdmin()">
+      <a routerLink="/admin-tournaments">
+        <div class="panel panel-primary">
           <div class="panel-heading">MÓT Í GANGI</div>
           <div class="panel-body">
             <img src="./assets/competitions.jpg" class="img-responsive" style="width:100%" alt="Image">
           </div>
-          <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+          <div class="panel-footer">Opna/Loka fyrir skráningu í mót</div>
         </div>
       </a>
 
-    </div>
+    </div>   
 
-    <!--<div class="col-sm-4"> 
-        <div class="panel panel-primary">
-          <div class="panel-heading">SKRÁ Í MÓT</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
-        </div>
-      </div>
-      <div class="col-sm-4"> 
-        <div class="panel panel-primary">
-          <div class="panel-heading">BLACK FRIDAY DEAL</div>
-          <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-          <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
-        </div>
-      </div>-->
-
-    <div class="col-sm-4">
+      <div class="col-sm-4" *ngIf="isAdmin()">
       <a routerLink="/new-tournament">
         <div class="panel panel-primary">
           <div class="panel-heading">SKRÁ NÝTT MÓT</div>
           <div class="panel-body">
             <img src="./assets/competitions.jpg" class="img-responsive" style="width:100%" alt="Image">
           </div>
-          <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+          <div class="panel-footer">Skrá nýtt mót inn í kerfið</div>
         </div>
       </a>
     </div>

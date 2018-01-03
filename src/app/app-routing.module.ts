@@ -12,6 +12,8 @@ import { componentFactoryName } from '@angular/compiler';
 import { NewLocationComponent } from './new-location/new-location.component';
 import { NewTournamentComponent } from './new-tournament/new-tournament.component';
 import { TournamentsComponent } from './tournaments/tournaments.component';
+import { TournamentRegistrationComponent } from './tournament-registration/tournament-registration.component';
+import { TournamentRegistrationIdComponent } from './tournament-registration-id/tournament-registration-id.component';
 
 const routes: Routes = [
   {
@@ -23,14 +25,14 @@ const routes: Routes = [
     component: AboutComponent
   },
   {
-    path: 'competitions', 
-    component: CompetitionsComponent
-  }
-  ,
-  {
-    path: 'competitions/:id',
-    component: CompetitionsComponent
+    path: 'tournaments', 
+    component: TournamentRegistrationComponent
   },
+  {
+    path: 'tournaments/:id/register', 
+    component: TournamentRegistrationIdComponent
+  }
+  ,  
   {
     path: 'login',
     component: LoginComponent
@@ -56,7 +58,7 @@ const routes: Routes = [
     component: NewTournamentComponent
   },
   {
-    path:'tournaments',
+    path:'admin-tournaments',
     component: TournamentsComponent
   }
 

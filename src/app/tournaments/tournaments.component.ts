@@ -3,6 +3,8 @@ import { Tournament } from '../models/tournament';
 import { DataService } from '../data.service';
 import { _createDefaultCookieXSRFStrategy } from '@angular/http/src/http_module';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { _appIdRandomProviderFactory } from '@angular/core/src/application_tokens';
 
 @Component({
   selector: 'app-tournaments',
@@ -12,19 +14,30 @@ import { AuthService } from '../auth.service';
 export class TournamentsComponent implements OnInit {
 
   public tournaments: Tournament[];
-  public tournamentId: number;
+  public selected: Tournament;
 
-  constructor(private _data: DataService) {
-    this.tournamentId = -1;
+  constructor(private _data: DataService, router: Router, private _auth: AuthService) {
+    this.selected = new Tournament();
+    this.selected.id = -1;
+
+    if(!_auth.isLoggedIn() ||!_auth.player.isAdmin) {
+      router.navigate(['']);
+    }
+
   }
 
   open(): void {
-    if (this.tournamentId == -1) {
+    if (this.selected == null || this.selected.id < 0) {
       return;
     }
 
-    this._data.openRegistration(this.tournamentId).subscribe(s => {
+    this._data.openRegistration(this.selected.id).subscribe((s : any) => {
       console.log(s);
+
+      var idx = this.tournaments.indexOf(this.selected);
+      this.tournaments.splice(idx, 1, <Tournament>s);
+
+      this.selected = new Tournament();
     },
       (error: any) => {
         console.log(error);
@@ -32,12 +45,19 @@ export class TournamentsComponent implements OnInit {
   }
 
   close(): void {
-    if (this.tournamentId == -1) {
+    if (this.selected == null || this.selected.id < 0) {
       return;
     }
 
-    this._data.closeRegistration(this.tournamentId).subscribe(s => {
+    console.log(this.selected);
+
+    this._data.closeRegistration(this.selected.id).subscribe((s: any) => {
       console.log(s);
+      
+      var idx = this.tournaments.indexOf(this.selected);
+      this.tournaments.splice(idx, 1, <Tournament>s);
+
+      this.selected = new Tournament();
     },
       (error: any) => {
         console.log(error);
@@ -51,6 +71,10 @@ export class TournamentsComponent implements OnInit {
       console.log(s);
     });
 
+  }
+
+  onTournamentSelected(tournament: Tournament): void {
+    this.selected = tournament;
   }
 
 }
