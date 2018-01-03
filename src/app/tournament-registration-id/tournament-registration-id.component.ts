@@ -4,6 +4,10 @@ import { DataService } from '../data.service';
 import { Player } from '../models/player';
 import { Tournament } from '../models/tournament';
 import { AuthService } from '../auth.service';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal/bs-modal.service';
+import { TemplateRef } from '@angular/core/src/linker/template_ref';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tournament-registration-id',
@@ -15,14 +19,17 @@ export class TournamentRegistrationIdComponent implements OnInit {
   private id: number;
   public tournament: Tournament;
   public tournamentType: number;
-  public player: Player;
-  public registerNewPlayer: boolean;
+  public player: Player;  
+  public existingId: string;
+  public modalRef: BsModalRef; // {1}
+  public otherPlayer: Player;
 
-  constructor(private route: ActivatedRoute, private _data: DataService, private _auth: AuthService) {
+  constructor(private route: ActivatedRoute, private _data: DataService, 
+    private _auth: AuthService,  private modalService : BsModalService,
+    private router: Router) {
 
     this.player = new Player();
-    this.tournament = new Tournament();
-    this.registerNewPlayer = false;
+    this.tournament = new Tournament();    
 
     this.route.params.subscribe((res: any) => {
       this.id = res.id
@@ -74,6 +81,37 @@ export class TournamentRegistrationIdComponent implements OnInit {
     }
 
     return this._auth.player;
+  }
+
+  search() : void {    
+    this._data.findPlayerById(this.existingId).subscribe((s:any) => {
+      var found : Player;
+      found = s;
+      if (found.id == this.loggedInPlayer().id) {
+        console.log("Error, same player");
+        return;
+      }
+
+      console.log("found player");
+      this.otherPlayer = found;
+    }, (err: any) => {
+      if (err.status == 404) {
+        document.getElementById('openModalButton').click();      
+      }
+    });
+  }
+
+  public openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template); // {3}
+  }
+
+  public newPlayer():void {
+    this.modalRef.hide();
+    this.router.navigate(['/newuser/' + this.existingId]);
+  }
+
+  public cancel():void {
+    this.otherPlayer = null;    
   }
 
   ngOnInit() {

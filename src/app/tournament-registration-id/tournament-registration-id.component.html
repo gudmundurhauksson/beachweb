@@ -31,7 +31,7 @@
 <div class="container">
   <div class="card card-container">
     <h4>Leikmaður 1</h4>
-    <label>{{loggedInPlayer().name}}</label>
+    <label>{{loggedInPlayer().name}} ({{loggedInPlayer().id}})</label>
   </div>
 </div>
 
@@ -43,36 +43,16 @@
 
       <h4>Leikmaður 2</h4>
 
-      <div class="radio-player">
-        <label class="radioLabel">
-          <input type="checkbox" id="existingPlayer" name="existingPlayer" [(ngModel)]="registerNewPlayer">Nýr leikmaður</label>
+      <div *ngIf="otherPlayer == null">
+        <input type="text" id="existingId" name="existingId" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="existingId">
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="search()">Leita</button>
       </div>
 
-      <div *ngIf="registerNewPlayer">
-        <span id="reauth-email" class="reauth-email"></span>
-        <input type="text" id="ID" name="ID" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="player.id">
-        <input type="text" id="inputName" name="inputName" class="form-control" placeholder="nafn" required autofocus [(ngModel)]="player.name"
-          (input)="onChangeName($event.target.value)">
-
-        <div class="radio-gender">
-          <label class="radioLabel">
-            <input type="radio" id="genderMale" name="gender" [value]="1" [(ngModel)]="gender">Kk</label>
-        </div>
-
-        <div class="radio-gender">
-          <label class="radioLabel">
-            <input type="radio" id="genderFemale" name="gender" [value]="0" [(ngModel)]="gender">Kvk</label>
-        </div>
-
-        <input type="text" id="inputMobile" name="inputMobile" class="form-control" placeholder="gsm" required autofocus [(ngModel)]="player.mobile">
-        <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="netfang" required autofocus [(ngModel)]="player.email">
-        <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="lykilorð" required [(ngModel)]="player.password">
-        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="lykilorð endurtekið"
-          required [(ngModel)]="confirm">
-
-        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="register()">Nýskrá</button>
+      <div *ngIf="otherPlayer != null">
+        <label>{{otherPlayer.name}} ({{otherPlayer.id}})</label>
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="confirm()">Skrá lið</button>
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="cancel()">Hætta við</button>
       </div>
-
 
     </form>
     <!-- /form -->
@@ -82,3 +62,18 @@
   <!-- /card-container -->
 </div>
 <!-- /container -->
+
+
+<ng-template #playerNotFoundModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Leikmaður fannst ekki</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="newPlayer()">Skrá nýjan leikmann</button>
+  </div>
+</ng-template>
+
+<button id="openModalButton" [hidden]="true" (click)="openModal(playerNotFoundModal)">Open Modal</button>

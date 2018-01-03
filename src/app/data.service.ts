@@ -131,4 +131,15 @@ export class DataService {
 
     return tmp;
   }
+
+  findPlayerById(id: string) : Observable<Response> {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "players/" + id, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+
+  }
 }
