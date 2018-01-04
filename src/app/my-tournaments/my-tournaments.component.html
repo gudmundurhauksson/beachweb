@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="card card-container">
+
+    <div *ngFor="let team of getTeams()">
+      <label>{{team.tournament.name}} {{team.player1Id}}: {{team.payment}}</label>
+    </div>
+
+  </div>
+</div>

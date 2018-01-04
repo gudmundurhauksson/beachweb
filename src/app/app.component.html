@@ -60,28 +60,16 @@
         <li>
           <a href="/">Forsíða</a>
         </li>
-
-        <li>
-          <a href="#">Stig</a>
-        </li>
-
-        <li class="dropdown" dropdown *ngIf="authService.isLoggedIn()">
-          <a dropdownToggle role="button">
-            Mínar Síður
-            <span class="caret"></span>
-          </a>
-          <ul *dropdownMenu class="dropdown-menu">
-            <li>
-              <a routerLink="change-password">Breyta lykilorði</a>
-            </li>
-
-          </ul>
-        </li>
+        
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
         <li *ngIf="!authService.isLoggedIn()">
           <a routerLink="login">Innskrá</a>
+        </li>
+
+        <li class="dropdown" dropdown *ngIf="authService.isLoggedIn()">
+            <a routerLink="change-password">Breyta lykilorði</a>
         </li>
         <li *ngIf="authService.isLoggedIn()">
           <a (click)="logout()">Útskrá</a>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import {Http, Response} from '@angular/http';
+import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Player } from './models/player';
@@ -13,14 +13,15 @@ import { CookieOptions } from 'angular2-cookie/services/base-cookie-options';
 import { Location } from '@angular/common';
 import { BeachLocation } from './models/beachlocation';
 import { Tournament } from './models/tournament';
+import { Team } from './models/team';
 
 @Injectable()
 export class DataService {
 
-  private baseUrl ="http://localhost:3564/"; 
+  private baseUrl = "http://localhost:3564/";
   private apiUrl = this.baseUrl + "api/";
 
-  constructor(private http: Http, private _cookieService: CookieService) { 
+  constructor(private http: Http, private _cookieService: CookieService) {
     console.log("data service");
   }
 
@@ -61,7 +62,7 @@ export class DataService {
     return tmp;
   }
 
-  login(player: Player) : Observable<Response> {
+  login(player: Player): Observable<Response> {
     var result = this.http.post(this.baseUrl + "token", "grant_type=password&username=" + player.id + "&password=" + player.password);
     var tmp = result.map((res: Response) => res.json());
     return tmp;
@@ -71,36 +72,36 @@ export class DataService {
     var option: CookieOptionsArgs;
     option = new CookieOptions();
     var expires = new Date();
-    expires.setDate(expires.getDate() + 30);    
-    this._cookieService.putObject(key, content, {"expires" : expires } );
+    expires.setDate(expires.getDate() + 30);
+    this._cookieService.putObject(key, content, { "expires": expires });
   }
 
-  load(key: string) : Object {
+  load(key: string): Object {
     return this._cookieService.getObject(key);
-  }  
+  }
 
-  clear(key: string) : void {
+  clear(key: string): void {
     this._cookieService.remove(key);
   }
 
-  verifyLogin(auth: AuthData) : Observable<Response> {
+  verifyLogin(auth: AuthData): Observable<Response> {
     var result = this.http.get(this.apiUrl + "players/loggedin", this.getAuthorizationRequestOption(auth));
     var tmp = result.map((player: Response) => player.json());
     return tmp;
-  }  
+  }
 
   getAuthorizationRequestOption(auth: AuthData): RequestOptions {
 
     let header = new Headers();
     header.append("Authorization", "Bearer " + auth.access_token);
-    let options = new RequestOptions({headers: header});
+    let options = new RequestOptions({ headers: header });
     return options;
   }
 
   changePassword(password: string) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
-    var result = this.http.post(this.apiUrl + "players/changepassword", {"Password": password} ,
+    var result = this.http.post(this.apiUrl + "players/changepassword", { "Password": password },
       this.getAuthorizationRequestOption(data));
     var tmp = result.map(s => s.json());
     return tmp;
@@ -108,38 +109,57 @@ export class DataService {
 
   getLocations(): Observable<Response> {
     var result = this.http.get(this.apiUrl + "locations");
-    return result.map(s=>s.json());
+    return result.map(s => s.json());
   }
 
-  openRegistration(tournamentId: number) : Observable<Response> {
+  openRegistration(tournamentId: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "tournaments/" + tournamentId + "/registration/open", this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
 
 
-  closeRegistration(tournamentId: number) : Observable<Response> {
+  closeRegistration(tournamentId: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "tournaments/" + tournamentId + "/registration/close", this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
 
-  findPlayerById(id: string) : Observable<Response> {
+  findPlayerById(id: string): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "players/" + id, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  registerTeam(team: Team): Observable<Response> {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.post(this.apiUrl + "teams", team, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  getTournamentsStatus(player: Player) : Observable<Response> {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "players/" + player.id + "/tournaments", this.getAuthorizationRequestOption(data));
     var tmp = result.map(s=>s.json());
 
     return tmp;
-
   }
 }

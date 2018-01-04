@@ -25,6 +25,10 @@ export class HomeComponent implements OnInit {
     return this._auth.player.isAdmin;
   }
 
+  isLoggedIn():boolean {
+    return this._auth.isLoggedIn();
+  }
+
   ngOnInit() {
   }
 

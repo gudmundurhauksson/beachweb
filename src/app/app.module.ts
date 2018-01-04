@@ -29,6 +29,7 @@ import { NewLocationComponent } from './new-location/new-location.component';
 import { TournamentsComponent } from './tournaments/tournaments.component';
 import { TournamentRegistrationComponent } from './tournament-registration/tournament-registration.component';
 import { TournamentRegistrationIdComponent } from './tournament-registration-id/tournament-registration-id.component';
+import { MyTournamentsComponent } from './my-tournaments/my-tournaments.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { TournamentRegistrationIdComponent } from './tournament-registration-id/
     NewLocationComponent,
     TournamentsComponent,
     TournamentRegistrationComponent,
-    TournamentRegistrationIdComponent
+    TournamentRegistrationIdComponent,
+    MyTournamentsComponent
   ],
   imports: [
     BrowserModule,

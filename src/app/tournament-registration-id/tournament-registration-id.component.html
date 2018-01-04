@@ -25,19 +25,13 @@
       </div>
 
     </form>
-  </div>
-</div>
 
-<div class="container">
-  <div class="card card-container">
+    <div>&nbsp;</div>
+
     <h4>Leikmaður 1</h4>
     <label>{{loggedInPlayer().name}} ({{loggedInPlayer().id}})</label>
-  </div>
-</div>
-
-
-<div class="container">
-  <div class="card card-container">
+ 
+    <div>&nbsp;</div>
 
     <form class="form-signin">
 
@@ -50,7 +44,7 @@
 
       <div *ngIf="otherPlayer != null">
         <label>{{otherPlayer.name}} ({{otherPlayer.id}})</label>
-        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="confirm()">Skrá lið</button>
+        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" [disabled]="!canConfirm()" (click)="confirm()">Skrá lið</button>
         <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="cancel()">Hætta við</button>
       </div>
 
@@ -63,6 +57,18 @@
 </div>
 <!-- /container -->
 
+
+<ng-template #messageModal>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left"><span id="modalHeader">{{modalHeader}}</span></h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <span id="modalMessage">{{modalBody}}</span>      
+    </div>
+  </ng-template>
 
 <ng-template #playerNotFoundModal>
   <div class="modal-header">
@@ -77,3 +83,4 @@
 </ng-template>
 
 <button id="openModalButton" [hidden]="true" (click)="openModal(playerNotFoundModal)">Open Modal</button>
+<button id="openMessageButton" [hidden]="true" (click)="openModal(messageModal)">Open Modal</button>

@@ -14,6 +14,7 @@ import { NewTournamentComponent } from './new-tournament/new-tournament.componen
 import { TournamentsComponent } from './tournaments/tournaments.component';
 import { TournamentRegistrationComponent } from './tournament-registration/tournament-registration.component';
 import { TournamentRegistrationIdComponent } from './tournament-registration-id/tournament-registration-id.component';
+import { MyTournamentsComponent } from './my-tournaments/my-tournaments.component';
 
 const routes: Routes = [
   {
@@ -64,6 +65,10 @@ const routes: Routes = [
   {
     path:'admin-tournaments',
     component: TournamentsComponent
+  },
+  {
+    path:'my-tournaments',
+    component: MyTournamentsComponent
   }
 
 ];
