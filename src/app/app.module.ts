@@ -30,6 +30,9 @@ import { TournamentsComponent } from './tournaments/tournaments.component';
 import { TournamentRegistrationComponent } from './tournament-registration/tournament-registration.component';
 import { TournamentRegistrationIdComponent } from './tournament-registration-id/tournament-registration-id.component';
 import { MyTournamentsComponent } from './my-tournaments/my-tournaments.component';
+import { PaymentComponent } from './payment/payment.component';
+import { KassComponent } from './kass/kass.component';
+import { AurComponent } from './aur/aur.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { MyTournamentsComponent } from './my-tournaments/my-tournaments.componen
     TournamentsComponent,
     TournamentRegistrationComponent,
     TournamentRegistrationIdComponent,
-    MyTournamentsComponent
+    MyTournamentsComponent,
+    PaymentComponent,
+    KassComponent,
+    AurComponent
   ],
   imports: [
     BrowserModule,

@@ -2,8 +2,63 @@
   <div class="card card-container">
 
     <div *ngFor="let team of getTeams()">
-      <label>{{team.tournament.name}} {{team.player1Id}}: {{team.payment}}</label>
+
+      <div>
+        <h4>{{team.tournament.name}} ({{getTournamentType(team)}}) </h4>
+      </div>
+
+      <div>
+        <label>Leikmaður 1: {{team.player1.name}} ({{team.player1Id}})</label>
+        <br />
+        <label>Leikmaður 2: {{team.player2.name}} ({{team.player2Id}})</label>
+      </div>
+
+      <div>
+        <button class="btn btn-m btn-primary btn-block" type="submit" (click)="pay(team)">Greiða</button>
+        <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="cancel(team)">Hætta við</button>
+      </div>
+
     </div>
 
+    <div *ngIf="getTeams() != null && getTeams().length == 0">
+      <h4>Engin mótaskráning fannst</h4>
+    </div>
   </div>
 </div>
+
+<ng-template #messageModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <span id="modalHeader">{{modalHeader}}</span>
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <span id="modalMessage">{{modalBody}}</span>
+  </div>
+</ng-template>
+
+<ng-template #yesNoModal>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">
+        <span id="modalHeader">{{modalHeader}}</span>
+      </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <span id="modalMessage">{{modalBody}}</span>
+    </div>
+
+    <div>
+        <button class="btn btn-m btn-primary btn-block" type="submit" (click)="confirmCancel()">Já</button>
+        <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="modalRef.hide()">Nei</button>
+      </div>
+
+  </ng-template>
+
+<button id="openYesNoButton" [hidden]="true" (click)="openModal(yesNoModal)">Open Modal</button>
+<button id="openMessageButton" [hidden]="true" (click)="openModal(messageModal)">Open Modal</button>

@@ -139,7 +139,7 @@ export class TournamentRegistrationIdComponent implements OnInit {
     team.teamTypeId = this.tournamentType;
 
     this._data.registerTeam(team).subscribe((s: any) => {
-      this.router.navigate(['']);
+      this.router.navigate(['/my-tournaments']);
     }, (err: any) => {
       this.showMessage("Villa", err);
       console.log(err);
