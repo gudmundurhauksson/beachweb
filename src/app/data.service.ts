@@ -14,6 +14,7 @@ import { Location } from '@angular/common';
 import { BeachLocation } from './models/beachlocation';
 import { Tournament } from './models/tournament';
 import { Team } from './models/team';
+import { ScoresModel } from './models/scoresmodel';
 
 @Injectable()
 export class DataService {
@@ -50,8 +51,14 @@ export class DataService {
     return tmp;
   }
 
-  getTournaments(): Observable<Response> {
-    var result = this.http.get(this.apiUrl + "tournaments");
+  getRemainingTournaments(year: number): Observable<Response> {
+    var result = this.http.get(this.apiUrl + "tournaments/" + year + "/remaining");
+    var tmp = result.map((res: Response) => res.json());
+    return tmp;
+  }
+
+  getPreviousTournaments(year: number): Observable<Response> {
+    var result = this.http.get(this.apiUrl + "tournaments/" + year + "/previous");
     var tmp = result.map((res: Response) => res.json());
     return tmp;
   }
@@ -192,4 +199,19 @@ export class DataService {
 
     return tmp;
   }
+
+  getTotalPlayerScoresByTypeAndYear(type: number, year: number) : Observable<Response> {
+    var result= this.http.get(this.apiUrl + "scores/" + type + "/total/" + year);
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+
+  getTournamentPlayersScoresByTypeAndYear(type: number, year: number) : Observable<Response> {
+    var result= this.http.get(this.apiUrl + "scores/" + type + "/tournaments/" + year);
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+
 }

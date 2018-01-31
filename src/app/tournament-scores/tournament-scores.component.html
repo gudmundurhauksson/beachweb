@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <h4>
+            <a routerLink="/scores">Heildarstaða</a>
+          </h4>
+          <h4>
+            <a routerLink="/scores/tournaments/2017">Mótastaða 2017</a>
+          </h4>
+
+          <div name="women" id="women">
+            <h4>Konur</h4>
+          </div>
+          <div>
+            <table *ngIf="isWomenScoreLoaded">
+              <tr>
+                <td>Nafn</td>
+                <td *ngFor="let tournament of womenScores.tournaments">{{tournament.name}}</td>
+                <td>Samtals</td>
+              </tr>
+
+              <tr *ngFor="let player of womenScores.playerScores">
+                <td>{{player.name}}</td>
+                <td *ngFor="let score of player.score" style="text-align:center">
+                  <div *ngIf="score > 0">{{score}}</div>
+                  <div *ngIf="score == 0">-</div>
+                </td>
+                <td>{{player.totalScore}}</td>
+              </tr>
+
+            </table>
+          </div>
+
+          <div name="karlar" id="karla">
+              <h4>Karlar</h4>
+            </div>
+            <div>
+              <table *ngIf="isMenScoreLoaded">
+                <tr>
+                  <td>Nafn</td>
+                  <td *ngFor="let tournament of mensScores.tournaments">{{tournament.name}}</td>
+                  <td>Samtals</td>
+                </tr>
+  
+                <tr *ngFor="let player of mensScores.playerScores">
+                  <td>{{player.name}}</td>
+                  <td *ngFor="let score of player.score" style="text-align:center">
+                    <div *ngIf="score > 0">{{score}}</div>
+                    <div *ngIf="score == 0">-</div>
+                  </td>
+                  <td>{{player.totalScore}}</td>
+                </tr>
+  
+              </table>
+            </div>
+  
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

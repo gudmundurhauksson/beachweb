@@ -18,6 +18,8 @@ import { MyTournamentsComponent } from './my-tournaments/my-tournaments.componen
 import { PaymentComponent } from './payment/payment.component';
 import { KassComponent } from './kass/kass.component';
 import { AurComponent } from './aur/aur.component';
+import { ScoresComponent } from './scores/scores.component';
+import { TournamentScoresComponent } from './tournament-scores/tournament-scores.component';
 
 const routes: Routes = [
   {
@@ -85,6 +87,14 @@ const routes: Routes = [
     path:'payment/:id/aur',
     component: AurComponent
   },
+  {
+    path:'scores/:year',
+    component:ScoresComponent
+  },
+  {
+    path:'scores/tournaments/:year',
+    component: TournamentScoresComponent
+  }
 
 ];
 

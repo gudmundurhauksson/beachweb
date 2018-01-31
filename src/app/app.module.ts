@@ -33,6 +33,8 @@ import { MyTournamentsComponent } from './my-tournaments/my-tournaments.componen
 import { PaymentComponent } from './payment/payment.component';
 import { KassComponent } from './kass/kass.component';
 import { AurComponent } from './aur/aur.component';
+import { ScoresComponent } from './scores/scores.component';
+import { TournamentScoresComponent } from './tournament-scores/tournament-scores.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { AurComponent } from './aur/aur.component';
     MyTournamentsComponent,
     PaymentComponent,
     KassComponent,
-    AurComponent
+    AurComponent,
+    ScoresComponent,
+    TournamentScoresComponent
   ],
   imports: [
     BrowserModule,

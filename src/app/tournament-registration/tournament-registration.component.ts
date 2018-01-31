@@ -11,11 +11,12 @@ import { BeachLocation } from '../models/beachlocation';
 })
 export class TournamentRegistrationComponent implements OnInit {
 
-  public tournaments: Tournament[];
+  public remainingTournaments: Tournament[];
+  public previousTournaments: Tournament[];
 
-  constructor(private _auth: AuthService, private _data: DataService) {
-
-    _data.getTournaments().subscribe((s: any) => {
+  constructor(private _auth: AuthService, private _data: DataService) {    
+    
+    _data.getRemainingTournaments(2018).subscribe((s: any) => {
       var local = <Tournament[]>s;
 
       _data.getLocations().subscribe((l: any) => {
@@ -31,7 +32,7 @@ export class TournamentRegistrationComponent implements OnInit {
           }          
         }
         
-        this.tournaments = local;
+        this.remainingTournaments = local;
       }, (err: any) => {
 
       });
