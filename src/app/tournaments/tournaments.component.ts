@@ -66,10 +66,7 @@ export class TournamentsComponent implements OnInit {
 
   ngOnInit() {
 
-    this._data.getRemainingTournaments().subscribe((s: any) => {
-      this.tournaments = <Tournament[]>s;
-      console.log(s);
-    });
+   
 
   }
 
