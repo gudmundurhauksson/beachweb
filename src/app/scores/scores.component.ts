@@ -16,7 +16,7 @@ export class ScoresComponent implements OnInit {
   public mensScores: ScoresModel[];
 
   constructor(private route: ActivatedRoute, private data : DataService, private auth : AuthService) {     
-
+    
     this.route.params.subscribe((res: any) => {
       var year = res.year;
       console.log(year);

@@ -51,19 +51,13 @@ export class DataService {
     return tmp;
   }
 
-  getRemainingTournaments(year: number): Observable<Response> {
-    var result = this.http.get(this.apiUrl + "tournaments/" + year + "/remaining");
+  getTournaments(year: number): Observable<Response> {
+    var result = this.http.get(this.apiUrl + "tournaments/filterbyyear/" + year);
     var tmp = result.map((res: Response) => res.json());
     return tmp;
   }
-
-  getPreviousTournaments(year: number): Observable<Response> {
-    var result = this.http.get(this.apiUrl + "tournaments/" + year + "/previous");
-    var tmp = result.map((res: Response) => res.json());
-    return tmp;
-  }
-
-  getTournament(id: number): Observable<Response> {
+  
+  getTournament(id: number): Observable<Response> { 
     var result = this.http.get(this.apiUrl + "tournaments/" + id);
     var tmp = result.map((res: Response) => res.json());
     return tmp;
@@ -214,4 +208,13 @@ export class DataService {
     return tmp;
   }
 
+  getRegistration(tournamentId: number, teamType: number) : Observable<Response> {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamType, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
 }

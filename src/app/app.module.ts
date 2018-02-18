@@ -35,6 +35,7 @@ import { KassComponent } from './kass/kass.component';
 import { AurComponent } from './aur/aur.component';
 import { ScoresComponent } from './scores/scores.component';
 import { TournamentScoresComponent } from './tournament-scores/tournament-scores.component';
+import { AllRegistrationsComponent } from './all-registrations/all-registrations.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { TournamentScoresComponent } from './tournament-scores/tournament-scores
     KassComponent,
     AurComponent,
     ScoresComponent,
-    TournamentScoresComponent
+    TournamentScoresComponent,    
+    AllRegistrationsComponent
   ],
   imports: [
     BrowserModule,

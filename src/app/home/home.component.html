@@ -36,18 +36,31 @@
       </a>
     </div>
 
-    <div class="col-sm-4" *ngIf="isLoggedIn()">
-        <a routerLink="/my-tournaments">
+    <div class="col-sm-4" *ngIf="isAdmin()">
+        <a routerLink="/all-registrations">
           <div class="panel panel-primary">
-            <div class="panel-heading">MÍNAR SKRÁNINGAR</div>
+            <div class="panel-heading">SKRÁNINGAR Í MÓT</div>
             <div class="panel-body">
               <img src="./assets/competitions.jpg" class="img-responsive" style="width:100%" alt="Image">
             </div>
-            <div class="panel-footer">Greiða fyrir eða hætta við skráningu</div>
+            <div class="panel-footer">Skoða allar skráningar</div>
           </div>
         </a>
   
-      </div>   
+      </div>  
+
+    <div class="col-sm-4" *ngIf="isLoggedIn()">
+      <a routerLink="/my-tournaments">
+        <div class="panel panel-primary">
+          <div class="panel-heading">MÍNAR SKRÁNINGAR</div>
+          <div class="panel-body">
+            <img src="./assets/competitions.jpg" class="img-responsive" style="width:100%" alt="Image">
+          </div>
+          <div class="panel-footer">Greiða fyrir eða hætta við skráningu</div>
+        </div>
+      </a>
+
+    </div>
 
     <div class="col-sm-4" *ngIf="isAdmin()">
       <a routerLink="/admin-tournaments">
@@ -60,9 +73,9 @@
         </div>
       </a>
 
-    </div>   
+    </div>
 
-      <div class="col-sm-4" *ngIf="isAdmin()">
+    <div class="col-sm-4" *ngIf="isAdmin()">
       <a routerLink="/new-tournament">
         <div class="panel panel-primary">
           <div class="panel-heading">SKRÁ NÝTT MÓT</div>

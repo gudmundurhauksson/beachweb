@@ -11,39 +11,55 @@ import { BeachLocation } from '../models/beachlocation';
 })
 export class TournamentRegistrationComponent implements OnInit {
 
-  public remainingTournaments: Tournament[];
-  public previousTournaments: Tournament[];
+  public tournaments: Array<Tournament>;
 
-  constructor(private _auth: AuthService, private _data: DataService) {    
-    
-    _data.getRemainingTournaments(2018).subscribe((s: any) => {
-      var local = <Tournament[]>s;
+  constructor(private _auth: AuthService, private _data: DataService) {
 
-      _data.getLocations().subscribe((l: any) => {
-        for (var t = 0; t < local.length; t++) {
+    this.tournaments = new Array();
+    var date = new Date();
+    console.log(date.getFullYear());
+    for (var i = date.getFullYear(); i >= 2016; i--) {
 
-          var locations = <BeachLocation[]>l;
-          
-          for (var tmp = 0; tmp< locations.length; tmp++) {
-            if(locations[tmp].id == local[t].locationId) {
-              local[t].location = locations[tmp];
-              break;
+      _data.getTournaments(i).subscribe((s: any) => {
+        var local = <Tournament[]>s;
+
+        _data.getLocations().subscribe((l: any) => {
+          for (var t = 0; t < local.length; t++) {
+
+            var locations = <BeachLocation[]>l;
+
+            for (var tmp = 0; tmp < locations.length; tmp++) {
+              if (locations[tmp].id == local[t].locationId) {
+                local[t].location = locations[tmp];
+                break;
+              }
             }
-          }          
-        }
-        
-        this.remainingTournaments = local;
-      }, (err: any) => {
+          }
+          
+          for (var ll = 0; ll < local.length; ll++ ){
+            this.tournaments.push(local[ll]);
+          }
+        }, (err: any) => {
 
+        });
+
+
+      }, (error: any) => {
+        console.log(error);
       });
-
-    }, (error: any) => {
-      console.log(error);
-    });
+    }
 
   }
 
   ngOnInit() {
+  }
+
+  isAdmin(): boolean {
+    if (!this._auth.isLoggedIn()) {
+      return false;
+    }
+
+    return this._auth.player.isAdmin;
   }
 
 }

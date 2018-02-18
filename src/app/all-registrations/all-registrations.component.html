@@ -1,0 +1,31 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <table *ngIf="isMensRegistrationsLoaded">
+            <tr>
+              <td style="width:175px">Leikmaður 1</td>
+              <td style="width:175px">Stig</td>
+              <td style="width:175px">Leikmaður 2</td>
+              <td style="width:175px">Stig</td>
+              <td style="width:175px">Heildarstig</td>
+              <td style="width:175px">Deild</td>
+            </tr>
+
+            <tr *ngFor="let registration of mensRegistrations">
+              <td>{{registration.player1Name}}</td>
+              <td>{{registration.totalPlayer1Points}}</td>
+              <td>{{registration.player2Name}}</td>
+              <td>{{registration.totalPlayer2Points}}</td>
+              <td>{{registration.totalTeamPoints}}</td>
+              <td>{{registration.teamDivision}}</td>
+            </tr>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

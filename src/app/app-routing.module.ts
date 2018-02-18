@@ -20,6 +20,7 @@ import { KassComponent } from './kass/kass.component';
 import { AurComponent } from './aur/aur.component';
 import { ScoresComponent } from './scores/scores.component';
 import { TournamentScoresComponent } from './tournament-scores/tournament-scores.component';
+import { AllRegistrationsComponent } from './all-registrations/all-registrations.component';
 
 const routes: Routes = [
   {
@@ -94,6 +95,10 @@ const routes: Routes = [
   {
     path:'scores/tournaments/:year',
     component: TournamentScoresComponent
+  },  
+  {
+    path:'all-registrations/:tournamentId',
+    component: AllRegistrationsComponent
   }
 
 ];
