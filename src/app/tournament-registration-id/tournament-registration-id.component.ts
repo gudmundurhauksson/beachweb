@@ -9,6 +9,7 @@ import { BsModalService } from 'ngx-bootstrap/modal/bs-modal.service';
 import { TemplateRef } from '@angular/core/src/linker/template_ref';
 import { Router } from '@angular/router';
 import { Team } from '../models/team';
+import { isRegExp } from 'util';
 
 @Component({
   selector: 'app-tournament-registration-id',
@@ -33,14 +34,19 @@ export class TournamentRegistrationIdComponent implements OnInit {
     this.tournament = new Tournament();
 
     this.route.params.subscribe((res: any) => {
-
-
-
       this.id = res.id
-      _data.getTournament(this.id).subscribe((s: any) => {
-        this.tournament = s;
-      }, (err: any) => {
-        console.log(err);
+
+      _data.getTeamByPlayerIdAndTournamentId(this._auth.player.id, this.id).subscribe((s: any) => {
+          console.log("already registered!");
+          this.router.navigate(['my-tournaments']);
+          return;
+      }, (error: any) => {
+        console.log("get tournament!");
+        _data.getTournament(this.id).subscribe((s: any) => {
+          this.tournament = s;
+        }, (err: any) => {
+          console.log(err);
+        });
       });
     });
   }

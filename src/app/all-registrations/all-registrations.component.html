@@ -5,24 +5,40 @@
       <div class="panel panel-primary">
         <div class="panel-body">
           <table *ngIf="isMensRegistrationsLoaded">
-            <tr>
-              <td style="width:175px">Leikmaður 1</td>
-              <td style="width:175px">Stig</td>
-              <td style="width:175px">Leikmaður 2</td>
-              <td style="width:175px">Stig</td>
-              <td style="width:175px">Heildarstig</td>
-              <td style="width:175px">Deild</td>
-            </tr>
+            <thead>
+              <th style="width:175px;">Leikmaður 1</th>
+              <th style="width:175px">Stig</th>
+              <th style="width:175px">Leikmaður 2</th>
+              <th style="width:175px">Stig</th>
+              <th style="width:175px">Heildarstig</th>
+              <th style="width:175px">Deild</th>
+              
+            </thead>
+            <ng-container *ngFor="let division of mensRegistrations">
+              <tr *ngFor="let registration of division">
+                <td>{{registration.player1Name}}</td>
+                <td>{{registration.totalPlayer1Points}}</td>
+                <td>{{registration.player2Name}}</td>
+                <td>{{registration.totalPlayer2Points}}</td>
+                <td>{{registration.totalTeamPoints}}</td>
+                <td>{{registration.teamDivision}}
+                    <button btn bt-sm (click)="assignDivision(registration.teamId, 1)">1</button>
+                    <button btn bt-sm (click)="assignDivision(registration.teamId, 2)">2</button>
+                    <button btn bt-sm (click)="assignDivision(registration.teamId, 3)">3</button>
+                    <button btn bt-sm (click)="assignDivision(registration.teamId, 4)">4</button>
+                    <button btn bt-sm (click)="assignDivision(registration.teamId, 0)">0</button>
+                </td>
+              </tr>
 
-            <tr *ngFor="let registration of mensRegistrations">
-              <td>{{registration.player1Name}}</td>
-              <td>{{registration.totalPlayer1Points}}</td>
-              <td>{{registration.player2Name}}</td>
-              <td>{{registration.totalPlayer2Points}}</td>
-              <td>{{registration.totalTeamPoints}}</td>
-              <td>{{registration.teamDivision}}</td>
-            </tr>
+              <tr *ngIf="division[0].teamDivision != 0">
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="arrangeMatches(division[0].teamDivision)">Leikjaniðurröðun</button>
+              </tr>  
+          </ng-container>
+          
+
           </table>
+
+          
 
         </div>
       </div>

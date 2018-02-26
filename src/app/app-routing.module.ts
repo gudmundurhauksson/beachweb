@@ -21,6 +21,7 @@ import { AurComponent } from './aur/aur.component';
 import { ScoresComponent } from './scores/scores.component';
 import { TournamentScoresComponent } from './tournament-scores/tournament-scores.component';
 import { AllRegistrationsComponent } from './all-registrations/all-registrations.component';
+import { ArrangeMatchesComponent } from './arrange-matches/arrange-matches.component';
 
 const routes: Routes = [
   {
@@ -99,6 +100,10 @@ const routes: Routes = [
   {
     path:'all-registrations/:tournamentId',
     component: AllRegistrationsComponent
+  },
+  {
+    path: 'arrange-matches/:tournamentId/:division',
+    component: ArrangeMatchesComponent
   }
 
 ];

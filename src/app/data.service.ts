@@ -99,7 +99,7 @@ export class DataService {
     return options;
   }
 
-  changePassword(password: string) {
+  changePassword(password: string) :Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
     var result = this.http.post(this.apiUrl + "players/changepassword", { "Password": password },
@@ -149,6 +149,16 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.post(this.apiUrl + "teams", team, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  getTeamByPlayerIdAndTournamentId(personalId: string, tournamentId: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "teams/" + personalId + "/tournament/" + tournamentId, this.getAuthorizationRequestOption(data));
     var tmp = result.map(s => s.json());
 
     return tmp;
@@ -213,6 +223,16 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamType, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+
+  assignDivision(teamId: number, division: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "teams/" + teamId + "/division/" + division, this.getAuthorizationRequestOption(data));
     var tmp = result.map(s=>s.json());
 
     return tmp;

@@ -12,6 +12,8 @@
             <input type="text" id="inputEmail" name="inputEmail" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="player.id">
             <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="lykilorð" required [(ngModel)]="player.password">
 
+            <label *ngIf="isServerNotResponding" class="error">Þjónusta svarar ekki. Reynið síðar.</label>
+
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="login()">Innskrá</button>
         </form>
         <!-- /form -->
@@ -29,3 +31,18 @@
     <!-- /card-container -->
 </div>
 <!-- /container -->
+
+<ng-template #messageModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            <span id="modalHeader">{{modalHeader}}</span>
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <span id="modalMessage">{{modalBody}}</span>
+    </div>
+</ng-template>
+<button id="openMessageButton" [hidden]="true" (click)="openModal(messageModal)">Open Modal</button>

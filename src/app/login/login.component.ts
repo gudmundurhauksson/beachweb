@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { DataService } from '../data.service';
-import {Player} from '../models/player';
+import { Player } from '../models/player';
 import { AuthService } from '../auth.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,11 @@ import { AuthService } from '../auth.service';
 
 export class LoginComponent implements OnInit {
 
-  public player:Player;
+  public modalRef: BsModalRef; // {1}
 
-  constructor(private _data : DataService, private _auth: AuthService) { 
+  public player: Player;
+
+  constructor(private _data: DataService, private _auth: AuthService, private modalService: BsModalService) {
     this.player = new Player();
   }
 
@@ -21,9 +24,33 @@ export class LoginComponent implements OnInit {
 
   }
 
-   login() {
+  login() {
     console.log('logging in');
-    this._auth.login(this.player);
+    this._auth.login(this.player).subscribe((s: number) => {
+      console.log("S=" + s);
+      console.log(s == 0);
+      if (s == 0) {       
+        this.showMessage("Villa!", "Þjónustan svarar ekki. Vinsamlegast reynið síðar.");
+      } else if (s==200) {
+        // success
+        // navigate?
+      } else if (s== 400) {        
+        this.showMessage("Villa!", "Rangt notendanafn eða lykilorð.");
+      }
+    });
+  }
+
+  public modalHeader: string;
+  public modalBody: string;
+
+  showMessage(header: string, body: string) {
+    this.modalHeader = header;
+    this.modalBody = body;
+    document.getElementById("openMessageButton").click();
+  }
+
+  public openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template); // {3}
   }
 
 }
