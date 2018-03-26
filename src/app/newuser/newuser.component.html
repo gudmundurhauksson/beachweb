@@ -29,3 +29,18 @@
       </div>      
     </div><!-- /card-container -->
 </div><!-- /container -->
+
+<ng-template #messageModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            <span id="modalHeader">{{modalHeader}}</span>
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <span id="modalMessage">{{modalBody}}</span>
+    </div>
+  </ng-template>
+  <button id="openMessageButton" [hidden]="true" (click)="openModal(messageModal)">Open Modal</button>

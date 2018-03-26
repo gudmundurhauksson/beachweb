@@ -4,8 +4,8 @@
       <label>Símanúmer</label>
       <input type="text" id="gsm" name="gsm" class="form-control" placeholder="gsm" required autofocus [(ngModel)]="gsm">
       <label>Athugið: Rukkun er send á símanúmerið og þarf að greiðast innan 90 sekúndna.</label>
-  
-      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="send()">Senda rukkun</button>
+
+      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="send()" ng-disabled="isTimerRunning">Senda rukkun</button>
     </div>
   
   </div>

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { DataService } from '../data.service';
 import { Player } from '../models/player';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-newuser',
@@ -14,13 +15,22 @@ import { Location } from '@angular/common';
 export class NewuserComponent implements OnInit {
   confirm: string;
   gender: number;
+
+  /* Used when creating new user while registering for a tournament */
   navigateBack: boolean;
 
   public player: Player;
+  public modalRef: BsModalRef;
 
-  constructor(private _data: DataService, private route: ActivatedRoute, private location: Location) {
+  constructor(private _data: DataService,
+    private route: ActivatedRoute,
+    private location: Location,
+    private modalService: BsModalService,
+    private router: Router) {
     this.gender = 0;
     this.player = new Player();
+
+    this.navigateBack = false;
 
     this.route.params.subscribe((res: any) => {
       if (res.id != null && res.id.length > 0) {
@@ -51,28 +61,33 @@ export class NewuserComponent implements OnInit {
   register() {
 
     if (this.player.id == null) {
-      console.log("Error: id must be supplied");
+      this.showMessage("Villa", "Vinsamlegast sláið inn kennitölu!")
       return;
     }
 
     var idLen = this.player.id.length;
     if (!(idLen == 10 || idLen == 11)) {
-      console.log("invalid id length");
+      this.showMessage("Villa", "Vinsamlegast sláið inn kennitölu!")
+      return;
+    }
+
+    if (this.player.name == null || this.player.name.length < 5) {
+      this.showMessage("Villa", "Vinsamlegast sláið inn nafn!")
       return;
     }
 
     if (this.player.email == null || this.player.email.length == 0) {
-      console.log("Error: Email must be supplied");
+      this.showMessage("Villa", "Vinsamlegast sláið inn netfang!")
       return;
     }
 
     if (this.player.password == null || this.player.password.length == 0) {
-      console.log("Error: password must be supplied");
+      this.showMessage("Villa", "Vinsamlegast sláið inn lykilorð!")
       return;
     }
 
     if (this.player.password != this.confirm) {
-      console.log("Error: Passwords do not match!");
+      this.showMessage("Villa", "Lykilorð eru ekki eins!")
       return;
     }
 
@@ -80,13 +95,53 @@ export class NewuserComponent implements OnInit {
     this._data.register(this.player).subscribe(data => {
 
       console.log(data);
-      //console.log("logging: " + m.statusText);
       if (this.navigateBack) {
+        // User was being registered to a tournament
         this.location.back();
+      } else {
+        this.showMessage("Aðgerð tókst", "Skráning leikmanns tókst.");
+        this.router.navigate(['/login']);
       }
     }, err => {
-      console.log("Got error");
+
       console.log(err);
+
+      if (err.status == 0) {
+        this.showMessage("Villa", "Bakendi svarar ekki!");
+        return;
+      }
+
+      if (err.status == 409) {
+        this.showMessage("Villa", "Leikmaður þegar skráður!");
+        return;
+      }
+
+      var errorMessage = err.json().message;
+      if (errorMessage == "EMAIL_ERROR") {
+        this.showMessage("Villa", "Ógilt netfang!")
+      } else if (errorMessage == "ID_ERROR") {
+        this.showMessage("Villa", "Ógild kennitala!")
+      } else if (errorMessage == "NAME_ERROR") {
+        this.showMessage("Villa", "Of stutt nafn!")
+      } else if (errorMessage == "PASSWORD_ERROR") {
+        this.showMessage("Villa", "Of stutt lykilorð!")
+      } else {
+        this.showMessage("Óþekkt villa", errorMessage);
+      }
     });
+
+  }
+
+  public modalHeader: string;
+  public modalBody: string;
+
+  showMessage(header: string, body: string) {
+    this.modalHeader = header;
+    this.modalBody = body;
+    document.getElementById("openMessageButton").click();
+  }
+
+  public openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template); // {3}
   }
 }

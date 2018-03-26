@@ -27,7 +27,7 @@ export class ChangePasswordComponent implements OnInit {
     console.log("change password");
 
     if(this.player.password != this.confirm) {
-      console.log("Passwords to not match");
+      this.showMessage("Villa", "Lykilorð eru ekki eins!");
       return;
     }
 

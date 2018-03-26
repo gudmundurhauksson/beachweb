@@ -8,6 +8,6 @@ export class Tournament {
     date: string;
     isRegistrationOpen: boolean;
     type: number;
-
+    isStarted: boolean;
     location: BeachLocation;
 }

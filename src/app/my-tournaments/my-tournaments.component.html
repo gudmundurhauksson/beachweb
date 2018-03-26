@@ -14,8 +14,8 @@
       </div>
 
       <div>
-        <button class="btn btn-m btn-primary btn-block" type="submit" (click)="pay(team)">Greiða</button>
-        <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="cancel(team)">Hætta við</button>
+        <button class="btn btn-m btn-primary btn-block" type="submit" (click)="pay(team)" *ngIf="!team.tournament.isStarted">Greiða</button>
+        <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="cancel(team)" *ngIf="!team.tournament.isStarted" >Hætta við</button>
       </div>
 
     </div>
