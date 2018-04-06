@@ -18,6 +18,7 @@ export class ScoresComponent implements OnInit {
   constructor(private route: ActivatedRoute, private data : DataService, private auth : AuthService) {     
     
     this.route.params.subscribe((res: any) => {
+      console.log("in ScoresComponent");
       var year = res.year;
       console.log(year);
       data.getTotalPlayerScoresByTypeAndYear(0x02, year).subscribe((s: any) => {      

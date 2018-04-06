@@ -89,14 +89,17 @@ const routes: Routes = [
     path:'payment/:id/aur',
     component: AurComponent
   },
+  
   {
-    path:'scores/:year',
-    component:ScoresComponent
-  },
-  {
-    path:'scores/tournaments/:year',
+    path:'scores/tournaments',    
     component: TournamentScoresComponent
   },  
+  
+  /*{
+    path:'scores/:year',
+    component:ScoresComponent
+  },*/
+
   {
     path:'all-registrations/:tournamentId',
     component: AllRegistrationsComponent

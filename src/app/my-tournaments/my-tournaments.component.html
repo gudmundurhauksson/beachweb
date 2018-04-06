@@ -4,7 +4,7 @@
     <div *ngFor="let team of getTeams()">
 
       <div>
-        <h4>{{team.tournament.name}} ({{getTournamentType(team)}}) </h4>
+        <h4>{{team.tournament.name}} ({{getTournamentType(team)}}) <small>{{team.tournament.date}}</small> </h4>
       </div>
 
       <div>

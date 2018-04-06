@@ -12,10 +12,10 @@
       </a>
     </div>-->
 
-    <div class="col-sm-4">
-      <a routerLink="/scores/2017">
+    <div class="col-sm-6">
+      <a routerLink="/scores/tournaments/">
         <div class="panel panel-primary">
-          <div class="panel-heading">STIGASTAÐA</div>
+          <div class="panel-heading">MÓTASTAÐA</div>
           <div class="panel-body">
             <img src="./assets/trophy.jpg" class="img-responsive" style="width:100%" alt="Image">
           </div>
@@ -24,7 +24,7 @@
       </a>
     </div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-6">
       <a routerLink="/tournaments">
         <div class="panel panel-primary">
           <div class="panel-heading">MÓT SUMARSINS</div>
@@ -36,7 +36,7 @@
       </a>
     </div>
 
-    <div class="col-sm-4" *ngIf="isAdmin()">
+    <div class="col-sm-6" *ngIf="isAdmin()">
         <a routerLink="/all-registrations">
           <div class="panel panel-primary">
             <div class="panel-heading">SKRÁNINGAR Í MÓT</div>
@@ -49,7 +49,7 @@
   
       </div>  
 
-    <div class="col-sm-4" *ngIf="isLoggedIn()">
+    <div class="col-sm-6" *ngIf="isLoggedIn()">
       <a routerLink="/my-tournaments">
         <div class="panel panel-primary">
           <div class="panel-heading">MÍNAR SKRÁNINGAR</div>
@@ -62,7 +62,7 @@
 
     </div>
 
-    <div class="col-sm-4" *ngIf="isAdmin()">
+    <div class="col-sm-6" *ngIf="isAdmin()">
       <a routerLink="/admin-tournaments">
         <div class="panel panel-primary">
           <div class="panel-heading">MÓT Í GANGI</div>
@@ -75,7 +75,7 @@
 
     </div>
 
-    <div class="col-sm-4" *ngIf="isAdmin()">
+    <div class="col-sm-6" *ngIf="isAdmin()">
       <a routerLink="/new-tournament">
         <div class="panel panel-primary">
           <div class="panel-heading">SKRÁ NÝTT MÓT</div>

@@ -10,9 +10,7 @@
         <form class="form-signin">
             <span id="reauth-email" class="reauth-email"></span>
             <input type="text" id="inputEmail" name="inputEmail" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="player.id">
-            <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="lykilorð" required [(ngModel)]="player.password">
-
-            <label *ngIf="isServerNotResponding" class="error">Þjónusta svarar ekki. Reynið síðar.</label>
+            <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="lykilorð" required [(ngModel)]="player.password">            
 
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="login()">Innskrá</button>
         </form>

@@ -99,7 +99,7 @@ export class DataService {
     return options;
   }
 
-  changePassword(password: string) :Observable<Response> {
+  changePassword(password: string) : Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
     var result = this.http.post(this.apiUrl + "players/changepassword", { "Password": password },
