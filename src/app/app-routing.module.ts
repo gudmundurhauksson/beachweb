@@ -22,6 +22,7 @@ import { ScoresComponent } from './scores/scores.component';
 import { TournamentScoresComponent } from './tournament-scores/tournament-scores.component';
 import { AllRegistrationsComponent } from './all-registrations/all-registrations.component';
 import { ArrangeMatchesComponent } from './arrange-matches/arrange-matches.component';
+import { FortgotPasswordComponent } from './fortgot-password/fortgot-password.component';
 
 const routes: Routes = [
   {
@@ -95,10 +96,10 @@ const routes: Routes = [
     component: TournamentScoresComponent
   },  
   
-  /*{
-    path:'scores/:year',
-    component:ScoresComponent
-  },*/
+  {
+    path:'forgotpassword',
+    component: FortgotPasswordComponent
+  },
 
   {
     path:'all-registrations/:tournamentId',

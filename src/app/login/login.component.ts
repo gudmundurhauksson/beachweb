@@ -3,6 +3,7 @@ import { DataService } from '../data.service';
 import { Player } from '../models/player';
 import { AuthService } from '../auth.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   public player: Player;
 
-  constructor(private _data: DataService, private _auth: AuthService, private modalService: BsModalService) {
+  constructor(private _data: DataService, private _auth: AuthService, private modalService: BsModalService, private router : Router) {
     this.player = new Player();
   }
 
@@ -38,6 +39,14 @@ export class LoginComponent implements OnInit {
         this.showMessage("Villa!", "Rangt notendanafn eða lykilorð.");
       }
     });
+  }
+
+  register() {
+    this.router.navigate(['/newuser']);
+  }
+
+  forgotPassword() {
+    this.router.navigate(['/forgotpassword']);
   }
 
   public modalHeader: string;

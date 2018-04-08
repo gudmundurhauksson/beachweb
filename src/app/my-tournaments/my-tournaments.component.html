@@ -51,12 +51,15 @@
     </div>
     <div class="modal-body">
       <span id="modalMessage">{{modalBody}}</span>
+
+      <div>
+          <button class="btn btn-m btn-primary btn-block" type="submit" (click)="confirmCancel()">Já</button>
+          <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="modalRef.hide()">Nei</button>
+        </div>
+        
     </div>
 
-    <div>
-        <button class="btn btn-m btn-primary btn-block" type="submit" (click)="confirmCancel()">Já</button>
-        <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="modalRef.hide()">Nei</button>
-      </div>
+    
 
   </ng-template>
 

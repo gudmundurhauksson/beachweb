@@ -37,6 +37,7 @@ import { ScoresComponent } from './scores/scores.component';
 import { TournamentScoresComponent } from './tournament-scores/tournament-scores.component';
 import { AllRegistrationsComponent } from './all-registrations/all-registrations.component';
 import { ArrangeMatchesComponent } from './arrange-matches/arrange-matches.component';
+import { FortgotPasswordComponent } from './fortgot-password/fortgot-password.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { ArrangeMatchesComponent } from './arrange-matches/arrange-matches.compo
     AurComponent,
     ScoresComponent,
     TournamentScoresComponent,    
-    AllRegistrationsComponent, ArrangeMatchesComponent
+    AllRegistrationsComponent, ArrangeMatchesComponent, FortgotPasswordComponent
   ],
   imports: [
     BrowserModule,

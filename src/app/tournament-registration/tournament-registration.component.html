@@ -12,8 +12,7 @@
       <a *ngIf="tournament.isRegistrationOpen" routerLink="{{tournament.id}}/register">
         - Opið fyrir skráningu!
       </a>
-
-      <span *ngIf="tournament.isRegistrationOpen && !isLoggedIn()"> - Opið fyrir skráningu!</span>
+      
       <a *ngIf="isAdmin()" routerLink="/all-registrations/{{tournament.id}}"> Allar Skráningar (admin) </a>
     </div>
 

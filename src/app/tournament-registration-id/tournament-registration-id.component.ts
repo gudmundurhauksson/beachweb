@@ -182,6 +182,7 @@ export class TournamentRegistrationIdComponent implements OnInit {
 
       if (errorMessage == "PLAYER_IN_ANOTHER_TEAM") {
         this.showMessage("Villa", "Leikmaður 2 er skráður í annað lið.");
+        
         return;
       }
 
