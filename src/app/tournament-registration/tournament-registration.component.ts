@@ -18,6 +18,9 @@ export class TournamentRegistrationComponent implements OnInit {
     this.tournaments = new Array();
     var date = new Date();
     console.log(date.getFullYear());
+
+    var wait = false;
+
     for (var i = date.getFullYear(); i >= 2016; i--) {
 
       _data.getTournaments(i).subscribe((s: any) => {
@@ -35,15 +38,15 @@ export class TournamentRegistrationComponent implements OnInit {
               }
             }
           }
-          
-          for (var ll = 0; ll < local.length; ll++ ){
+
+          for (var ll = 0; ll < local.length; ll++) {
             this.tournaments.push(local[ll]);
           }
+
+          this.tournaments.sort(function (a, b) { return b.dateTicks - a.dateTicks });
         }, (err: any) => {
 
         });
-
-
       }, (error: any) => {
         console.log(error);
       });
@@ -60,6 +63,10 @@ export class TournamentRegistrationComponent implements OnInit {
     }
 
     return this._auth.player.isAdmin;
+  }
+
+  isLoggedIn(): boolean {
+    return this._auth.isLoggedIn();
   }
 
 }

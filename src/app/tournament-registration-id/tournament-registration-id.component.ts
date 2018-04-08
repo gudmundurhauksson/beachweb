@@ -33,6 +33,11 @@ export class TournamentRegistrationIdComponent implements OnInit {
     this.player = new Player();
     this.tournament = new Tournament();
 
+    if (!_auth.isLoggedIn()) {
+      this.router.navigate(['login']);
+      return;
+    }
+
     this.route.params.subscribe((res: any) => {
       this.id = res.id
 
@@ -44,6 +49,17 @@ export class TournamentRegistrationIdComponent implements OnInit {
         console.log("get tournament!");
         _data.getTournament(this.id).subscribe((s: any) => {
           this.tournament = s;
+
+          if(this.isMaleTournament()) {
+            this.tournamentType = 0x01;
+          } else if (this.isFemaleTournament()) {
+            this.tournamentType = 0x02;
+          } else if (this.isMaleYouthTournament()) {
+            this.tournamentType = 0x04;
+          } else {
+            this.tournamentType = 0x08;
+          }
+
         }, (err: any) => {
           console.log(err);
         });
@@ -94,16 +110,30 @@ export class TournamentRegistrationIdComponent implements OnInit {
   }
 
   search(): void {
+    if(this.existingId === undefined || this.existingId == null || this.existingId.length == 0) {
+      this.showMessage("Villa", "Vantar kennitölu");
+      return;
+    }
+
     this._data.findPlayerById(this.existingId).subscribe((s: any) => {
       var found: Player;
       found = s;
-      if (found.id == this.loggedInPlayer().id) {
-        console.log("Error, same player");
+
+      if (found.id == this.loggedInPlayer().id) {        
+        this.showMessage("Villa", "Þessi leikmaður er þegar skráður í liðið.")
         return;
       }
 
       console.log("found player");
+
+      if(found.isMale != this.loggedInPlayer().isMale) {
+        this.showMessage("Villa", "Ekki er hægt að skrá blönduð lið!");
+        return;
+      }
+
       this.otherPlayer = found;
+
+
     }, (err: any) => {
       if (err.status == 404) {
         document.getElementById('openModalButton').click();
@@ -146,7 +176,15 @@ export class TournamentRegistrationIdComponent implements OnInit {
 
     this._data.registerTeam(team).subscribe((s: any) => {
       this.router.navigate(['/my-tournaments']);
-    }, (err: any) => {
+    }, err => {
+
+      var errorMessage= err.json().message;
+
+      if (errorMessage == "PLAYER_IN_ANOTHER_TEAM") {
+        this.showMessage("Villa", "Leikmaður 2 er skráður í annað lið.");
+        return;
+      }
+
       this.showMessage("Villa", err);
       console.log(err);
     });

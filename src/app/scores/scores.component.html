@@ -1,7 +1,11 @@
 <div class="container">
   <div class="card card-container">
-      <h4><a routerLink="/scores">Heildarstaða</a></h4>
-    <h4><a routerLink="/scores/tournaments/2017" >Mótastaða 2017</a></h4>
+    <h4>
+      <a routerLink="/scores">Heildarstaða</a>
+    </h4>
+    <h4>
+      <a routerLink="/scores/tournaments/2017">Mótastaða 2017</a>
+    </h4>
 
     <div name="women" id="women">
       <h4>Konur</h4>
@@ -23,7 +27,7 @@
     </div>
     <div>
       <div *ngFor="let score of mensScores">
-        <label >{{score.playerName}} - {{score.score}}</label>
+        <label>{{score.playerName}} - {{score.score}}</label>
       </div>
     </div>
 

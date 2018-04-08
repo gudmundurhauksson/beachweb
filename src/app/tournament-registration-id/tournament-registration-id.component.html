@@ -3,7 +3,7 @@
     <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
     <form class="form-signin">
 
-      <h4>Veldu mót</h4>
+      <h4>Veldu flokk</h4>
       <div class="radio-gender" *ngIf="isMaleTournament()">
         <label class="radioLabel">
           <input type="radio" id="tournamentType" name="tournamentType" [value]="1" [(ngModel)]="tournamentType">Fullorðnir-Karlar</label>
@@ -30,7 +30,7 @@
 
     <h4>Leikmaður 1</h4>
     <label>{{loggedInPlayer().name}} ({{loggedInPlayer().id}})</label>
- 
+
     <div>&nbsp;</div>
 
     <form class="form-signin">
@@ -59,16 +59,24 @@
 
 
 <ng-template #messageModal>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left"><span id="modalHeader">{{modalHeader}}</span></h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <span id="modalHeader">{{modalHeader}}</span>
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <span id="modalMessage">{{modalBody}}</span>
+
+    <div>
+      <button type="button" class="btn btn-sm center-block" aria-label="Close" (click)="modalRef.hide()">
+        Loka
       </button>
     </div>
-    <div class="modal-body">
-      <span id="modalMessage">{{modalBody}}</span>      
-    </div>
-  </ng-template>
+  </div>
+</ng-template>
 
 <ng-template #playerNotFoundModal>
   <div class="modal-header">
@@ -79,7 +87,11 @@
   </div>
   <div class="modal-body">
     <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="newPlayer()">Skrá nýjan leikmann</button>
-  </div>
+  
+      <button type="button" class="btn btn-sm btn-block" aria-label="Close" (click)="modalRef.hide()">
+        Loka
+      </button>
+    </div>
 </ng-template>
 
 <button id="openModalButton" [hidden]="true" (click)="openModal(playerNotFoundModal)">Open Modal</button>

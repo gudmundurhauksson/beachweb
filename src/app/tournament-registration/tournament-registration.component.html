@@ -1,6 +1,23 @@
 <div class="container">
-    <div class="row">
-        <div class="col-sm-4" *ngFor="let tournament of tournaments">
+  <div class="card card-container">
+
+    <h3>Mót sumarsins</h3>
+
+    <div *ngFor="let tournament of tournaments">
+      <label>{{tournament.date}} - </label>
+      <span>{{tournament.name}}</span>
+
+      <span>{{tournament.location.name}}</span>
+
+      <a *ngIf="tournament.isRegistrationOpen" routerLink="{{tournament.id}}/register">
+        - Opið fyrir skráningu!
+      </a>
+
+      <span *ngIf="tournament.isRegistrationOpen && !isLoggedIn()"> - Opið fyrir skráningu!</span>
+      <a *ngIf="isAdmin()" routerLink="/all-registrations/{{tournament.id}}"> Allar Skráningar (admin) </a>
+    </div>
+
+    <!--<div class="col-sm-4" *ngFor="let tournament of tournaments">
             <a routerLink="{{tournament.id}}/register">
               <div class="panel panel-primary">
                 <div class="panel-heading">{{tournament.name}} ( {{tournament.date}})
@@ -18,9 +35,8 @@
               
             </a>
                 
-          </div>
+          </div>-->
 
 
-    </div>
+  </div>
 </div>
-
