@@ -237,4 +237,18 @@ export class DataService {
 
     return tmp;
   }
+
+  requestPasswordReset(playerId: string) : Observable<Response> {
+    var result= this.http.get(this.apiUrl + "players/" + playerId + "/requestresetpassword");
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+
+  resetPassword(requestId: string) : Observable<Response> {
+    var result= this.http.get(this.apiUrl + "players/" + requestId + "/resetpassword");
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
 }

@@ -22,7 +22,8 @@ import { ScoresComponent } from './scores/scores.component';
 import { TournamentScoresComponent } from './tournament-scores/tournament-scores.component';
 import { AllRegistrationsComponent } from './all-registrations/all-registrations.component';
 import { ArrangeMatchesComponent } from './arrange-matches/arrange-matches.component';
-import { FortgotPasswordComponent } from './fortgot-password/fortgot-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -98,7 +99,12 @@ const routes: Routes = [
   
   {
     path:'forgotpassword',
-    component: FortgotPasswordComponent
+    component: ForgotPasswordComponent
+  },
+
+  {
+    path: 'resetpassword/:requestId',
+    component: ResetPasswordComponent
   },
 
   {
