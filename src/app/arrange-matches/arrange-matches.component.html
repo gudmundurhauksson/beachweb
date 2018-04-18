@@ -4,19 +4,83 @@
       <div class="panel panel-primary">
         <div class="panel-body">
           <div>
-            
+
           </div>
 
           <div>
-            
+
             <label>
-              <input type="radio" name="type" value="1" (check)="update(1)"> 2 riðlar - allir við alla + efstu 2 í kross
+              <input type="radio" name="type" value="1" (click)="update(1)"> 2 riðlar - allir við alla + efstu 2 í kross
             </label>
           </div>
           <div>
             <label>
-              <input type="radio" name="type" value="2"  (check)="update(2)"> 1 riðill - allir við alla
+              <input type="radio" name="type" value="2" (click)="update(2)"> 1 riðill - allir við alla
             </label>
+          </div>
+
+          <div>
+            <table>
+              <thead>
+                <th>Lið</th>
+                <th style="width:175px;">Heildarstig</th>
+                <th style="width:175px;">Breyta</th>
+              </thead>
+
+              <ng-container *ngFor="let group of groups">
+
+                <tr>
+                  <td colspan=4>
+                    <h4>Riðill {{group.name}}</h4>
+                  </td>
+                </tr>
+                <tr *ngFor="let team of group.teamIds">
+                  <td>{{getTeamRegistration(team).player1Name}}/{{getTeamRegistration(team).player2Name}}</td>
+
+                  <td>{{getTeamRegistration(team).totalTeamPoints}}</td>
+                  <td>
+                    <button *ngFor="let changegroup of getRemainingGroups(group)" (click)="change(team, group, changegroup)">{{changegroup.name}}</button>
+                  </td>
+
+                </tr>
+
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+              </ng-container>
+
+            </table>
+
+            <span *ngIf="loaded()">
+              <button (click)="calculateMatches()">Reikna leikjaniðurröðun</button>
+            </span>
+
+            <table *ngIf="matchFetchCount == 0">
+              <thead>
+                <th>Lið 1</th>
+                <th>Lið 2</th>
+              </thead>
+
+              <ng-container *ngFor="let group of groups">
+                <tr>
+                  <td colspan=2>
+                    <h4>Riðill {{group.name}}</h4>
+                  </td>
+                </tr>
+
+                <tr *ngFor="let match of group.matches">
+                  <td>{{getTeamRegistration(match.team1Id).player1Name}} / {{getTeamRegistration(match.team1Id).player2Name}}</td>
+                  <td>{{getTeamRegistration(match.team2Id).player1Name}} / {{getTeamRegistration(match.team2Id).player2Name}}</td>
+                </tr>
+
+              </ng-container>
+
+              <button (click)="confirm()">Staðfesta</button>
+
+            </table>
           </div>
         </div>
       </div>

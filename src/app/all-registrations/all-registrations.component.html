@@ -3,8 +3,13 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="panel panel-primary">
+
         <div class="panel-body">
-          <table *ngIf="isMensRegistrationsLoaded">
+          <button style="margin: 1px" (click)="refresh(2)" [ngClass]="{'btn': true, 'btn-sm':true, 'btn-primary': typeSelected == 2}">Konur</button>
+          <button style="margin: 1px" (click)="refresh(1)" [ngClass]="{'btn': true, 'btn-sm':true, 'btn-primary': typeSelected == 1}">Karlar</button>
+        </div>
+        <div class="panel-body">
+          <table *ngIf="isRegistrationsLoaded">
             <thead>
               <th style="width:175px;">Leikmaður 1</th>
               <th style="width:175px">Stig</th>
@@ -12,9 +17,9 @@
               <th style="width:175px">Stig</th>
               <th style="width:175px">Heildarstig</th>
               <th style="width:175px">Deild</th>
-              
+
             </thead>
-            <ng-container *ngFor="let division of mensRegistrations">
+            <ng-container *ngFor="let division of registrations">
               <tr *ngFor="let registration of division">
                 <td>{{registration.player1Name}}</td>
                 <td>{{registration.totalPlayer1Points}}</td>
@@ -22,23 +27,30 @@
                 <td>{{registration.totalPlayer2Points}}</td>
                 <td>{{registration.totalTeamPoints}}</td>
                 <td>{{registration.teamDivision}}
+                  <div *ngIf='!registration.isReadOnly'>
                     <button btn bt-sm (click)="assignDivision(registration.teamId, 1)">1</button>
                     <button btn bt-sm (click)="assignDivision(registration.teamId, 2)">2</button>
                     <button btn bt-sm (click)="assignDivision(registration.teamId, 3)">3</button>
                     <button btn bt-sm (click)="assignDivision(registration.teamId, 4)">4</button>
                     <button btn bt-sm (click)="assignDivision(registration.teamId, 0)">0</button>
+                  </div>
                 </td>
               </tr>
 
-              <tr *ngIf="division[0].teamDivision != 0">
+              <tr *ngIf="division[0].teamDivision != 0 && !division[0].isReadOnly">
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="arrangeMatches(division[0].teamDivision)">Leikjaniðurröðun</button>
-              </tr>  
-          </ng-container>
-          
+              </tr>
+
+              <tr>
+                <div></div>
+              </tr>
+
+            </ng-container>
+
 
           </table>
 
-          
+
 
         </div>
       </div>

@@ -68,7 +68,7 @@ const routes: Routes = [
     component: NewLocationComponent
   },
   {
-    path: 'new-tournament',
+    path: 'admin-new-tournament',
     component: NewTournamentComponent
   },
   {
@@ -108,11 +108,11 @@ const routes: Routes = [
   },
 
   {
-    path:'all-registrations/:tournamentId',
+    path:'admin-all-registrations/:tournamentId',
     component: AllRegistrationsComponent
   },
   {
-    path: 'arrange-matches/:tournamentId/:division',
+    path: 'arrange-matches/:tournamentId/:type/:division',
     component: ArrangeMatchesComponent
   }
 

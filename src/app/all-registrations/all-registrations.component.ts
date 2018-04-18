@@ -16,49 +16,56 @@ import { digest } from '@angular/compiler/src/i18n/serializers/xmb';
 })
 export class AllRegistrationsComponent implements OnInit {
 
-  public mensRegistrations: Array<Array<Registration>>;
-  public isMensRegistrationsLoaded: boolean;
+  public registrations: Array<Array<Registration>>;
+  public isRegistrationsLoaded: boolean;
   private tournamentId: number;
+  public typeSelected: number;
 
   constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute, private router: Router) {    
-    this.isMensRegistrationsLoaded = false;    
+    this.isRegistrationsLoaded = false;    
+    this.typeSelected = 2;
 
     this.route.params.subscribe((res: any) => {
       this.tournamentId = res.tournamentId;
-      this.refresh(this.tournamentId);
+      console.log('in here');
+      this.refresh(this.typeSelected);
     });
   }
 
-  private refresh(tournamentId: number) {
-    this.isMensRegistrationsLoaded = false;
+  public refresh(teamType: number) {
 
-    this.data.getRegistration(tournamentId, 0x01).subscribe((s: any) => {
+    console.log("Refreshing: " + teamType);
+
+    this.isRegistrationsLoaded = false;
+    this.typeSelected = teamType;    
+
+    this.data.getRegistration(this.tournamentId, teamType).subscribe((s: any) => {
       console.log(s);
 
-      this.mensRegistrations = new Array<Array<Registration>>();
+      this.registrations = new Array<Array<Registration>>();
 
-      var mensRegistrations = <Registration[]>s;
+      var registrations = <Registration[]>s;
 
-      if (mensRegistrations.length == 0) {
-        this.isMensRegistrationsLoaded = true;
+      if (registrations.length == 0) {
+        this.isRegistrationsLoaded = true;
         return;
       }
 
-      var currentDivision = mensRegistrations[0].teamDivision;
+      var currentDivision = registrations[0].teamDivision;
       var currentGroup : Array<Registration>;
       currentGroup = new Array<Registration>();
-      this.mensRegistrations.push(currentGroup);
-      for (var i = 0; i < mensRegistrations.length; i++) {
-        if (mensRegistrations[i].teamDivision != currentDivision) {
+      this.registrations.push(currentGroup);
+      for (var i = 0; i < registrations.length; i++) {
+        if (registrations[i].teamDivision != currentDivision) {
           currentGroup = new Array<Registration>();
-          currentDivision = mensRegistrations[i].teamDivision;
-          this.mensRegistrations.push(currentGroup);
+          currentDivision = registrations[i].teamDivision;
+          this.registrations.push(currentGroup);
         }
 
-        currentGroup.push(mensRegistrations[i]);
+        currentGroup.push(registrations[i]);
       }
 
-      this.isMensRegistrationsLoaded = true;
+      this.isRegistrationsLoaded = true;
     });
   }
 
@@ -72,6 +79,6 @@ export class AllRegistrationsComponent implements OnInit {
   }
 
   arrangeMatches(division: number) {
-    this.router.navigate(['/arrange-matches/' + this.tournamentId + '/' + division]);
-  }
+    this.router.navigate(['/arrange-matches/' + this.tournamentId + '/' + this.typeSelected + "/" + division]);
+  }  
 }

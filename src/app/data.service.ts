@@ -15,6 +15,7 @@ import { BeachLocation } from './models/beachlocation';
 import { Tournament } from './models/tournament';
 import { Team } from './models/team';
 import { ScoresModel } from './models/scoresmodel';
+import { GroupModel } from './models/groupModel';
 
 @Injectable()
 export class DataService {
@@ -228,6 +229,16 @@ export class DataService {
     return tmp;
   }
 
+  getTeamRegistration(tournamentId: number, teamType: number, teamId: number) : Observable<Response> {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamType + "/" + teamId, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+
   assignDivision(teamId: number, division: number) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
@@ -267,6 +278,37 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "payments/" + teamId + "/verify", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+
+  getGroups(tournamentId: number, teamTypeId: number, division: number, groupRule: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    console.log("Calling: " + this.apiUrl + "registrations/" + tournamentId + "/" + teamTypeId + "/" + division + "/" + groupRule + "/calculate_groups");
+    var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamTypeId + "/" + division + "/" + groupRule  + "/calculate_groups", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+
+  getMatches(group: GroupModel) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.post(this.apiUrl + "registrations/calculate_matches", group, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+  
+  confirmMatchList(groups: GroupModel[]) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.post(this.apiUrl + "registrations/confirm_matches", groups, this.getAuthorizationRequestOption(data));
     var tmp = result.map(s=>s.json());
 
     return tmp;

@@ -8,4 +8,5 @@ export class Registration {
     player2Name: string;
     totalTeamPoints: number;
     teamDivision: number;
+    isReadOnly: boolean;
 }

@@ -6,6 +6,7 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { _appIdRandomProviderFactory } from '@angular/core/src/application_tokens';
 
+/* FOR ADMINS */
 @Component({
   selector: 'app-tournaments',
   templateUrl: './tournaments.component.html',
