@@ -251,4 +251,24 @@ export class DataService {
 
     return tmp;
   }
+
+  canPay(teamId: number, payingPlayerId: string) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "payments/" + teamId + "/canpay/" + payingPlayerId, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+
+  verifyPayment(teamId: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "payments/" + teamId + "/verify", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
 }

@@ -1,8 +1,9 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Player } from '../models/player';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+
 
 @Component({
   selector: 'app-forgot-password',
@@ -19,6 +20,11 @@ export class ForgotPasswordComponent implements OnInit {
    }
 
   reset() {
+    if (this.player.id == null ||this.player.id.length < 10 || this.player.id.length > 12) {
+      this.showMessage('Villa', 'Vinsamlegast sláið inn kennitölu');
+      return;
+    }
+
     this.data.requestPasswordReset(this.player.id).subscribe(s => {
       this.router.navigate(['/login']);
 
@@ -31,12 +37,14 @@ export class ForgotPasswordComponent implements OnInit {
       if (json == "PLAYER_NOT_FOUND") {
         this.showMessage("Villa", "Leikmaður fannst ekki. Vinsamlegast skráðu nýjan leikmann.");
         return;
-      }
-      else if (json == "PLAYER_NOT_REGISTERED") {
+      } else if (json == "PLAYER_NOT_REGISTERED") {
         this.showMessage("Villa", "Leikmaður fannst ekki. Vinsamlegast skráðu nýjan leikmann.");        
         return;
       } else if (json == "EMAIL_ERROR") { 
         this.showMessage("Villa", "Sending tölvupósts mistókst. Vinsamlegast hafið samband við bli.strandblak@gmail.com");
+        return;
+      } else if (json == "ID_ERROR") {
+        this.showMessage("Villa", "Ógild kennitala!")
         return;
       } else {
         this.showMessage("Villa", "Óþekkt villa. Vinsamlegast reynið síðar.");

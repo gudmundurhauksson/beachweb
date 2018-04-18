@@ -39,6 +39,7 @@ import { AllRegistrationsComponent } from './all-registrations/all-registrations
 import { ArrangeMatchesComponent } from './arrange-matches/arrange-matches.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SimpleTimer } from 'ng2-simple-timer';
 
 @NgModule({
   declarations: [
@@ -60,20 +61,20 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     KassComponent,
     AurComponent,
     ScoresComponent,
-    TournamentScoresComponent,    
+    TournamentScoresComponent,  
     AllRegistrationsComponent, ArrangeMatchesComponent, ForgotPasswordComponent, ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpModule,
-    FormsModule,
+    FormsModule,    
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot()
   ],
-  providers: [DataService, AuthService, CookieService],
+  providers: [DataService, AuthService, CookieService, SimpleTimer],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -20,18 +20,26 @@ export class TournamentsComponent implements OnInit {
     this.selected = new Tournament();
     this.selected.id = -1;
 
-    if(!_auth.isLoggedIn() ||!_auth.player.isAdmin) {
+    if (!_auth.isLoggedIn() || !_auth.player.isAdmin) {
       router.navigate(['']);
     }
+
+    var date = new Date();
+    this._data.getTournaments(date.getFullYear()).subscribe((s: any) => {
+      this.tournaments = <Tournament[]>s;
+    }, error => {
+
+    });
 
   }
 
   open(): void {
     if (this.selected == null || this.selected.id < 0) {
+      console.log(this.selected);
       return;
     }
 
-    this._data.openRegistration(this.selected.id).subscribe((s : any) => {
+    this._data.openRegistration(this.selected.id).subscribe((s: any) => {
       console.log(s);
 
       var idx = this.tournaments.indexOf(this.selected);
@@ -53,7 +61,7 @@ export class TournamentsComponent implements OnInit {
 
     this._data.closeRegistration(this.selected.id).subscribe((s: any) => {
       console.log(s);
-      
+
       var idx = this.tournaments.indexOf(this.selected);
       this.tournaments.splice(idx, 1, <Tournament>s);
 
@@ -65,9 +73,6 @@ export class TournamentsComponent implements OnInit {
   }
 
   ngOnInit() {
-
-   
-
   }
 
   onTournamentSelected(tournament: Tournament): void {

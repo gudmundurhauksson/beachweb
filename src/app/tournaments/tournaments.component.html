@@ -7,14 +7,14 @@
 
         <div class="radio-gender">
           <label class="radioLabel">
-            <input type="radio" name="tournament" [value]="tournament.id" (change)="onTournamentSelected(tournament)" />{{tournament.name}} - {{tournament.date}}
-            <span *ngIf="tournament.isRegistrationOpen">(Opið f. skráningu)</span>
+            <input type="radio" name="tournament" [value]="tournament.id" (change)="onTournamentSelected(tournament)" />{{tournament.name}} - {{tournament.date}} - {{tournament.location.name}}
+            <span *ngIf="tournament.isRegistrationOpen">(Opið fyrir skráningu)</span>
           </label>
         </div>
       </div>
 
-      <button class="btn btn-m btn-primary btn-success" type="submit" (click)="open()" [disabled]="selected.isRegistrationOpen">Opna f. skráningu</button>
-      <button class="btn btn-m btn-primary btn-fail" type="submit" (click)="close()" [disabled]="!selected.isRegistrationOpen">Loka f. skráningu</button>
+      <button class="btn btn-m btn-primary btn-success" type="submit" (click)="open()" [disabled]="selected.id < 0 || selected.isRegistrationOpen">Opna fyrir skráningu</button>
+      <button class="btn btn-m btn-primary btn-fail" type="submit" (click)="close()" [disabled]="selected.id < 0 || !selected.isRegistrationOpen">Loka fyrir skráningu</button>
     </form>
   </div>
 </div>

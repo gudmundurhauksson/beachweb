@@ -10,5 +10,5 @@ export class Tournament {
     type: number;
     isStarted: boolean;
     location: BeachLocation;
-    dateTicks: number;
+    dateTicks: number;    
 }

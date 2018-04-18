@@ -1,11 +1,35 @@
 <div class="container">
   <div class="card card-container">
 
-    <label>Símanúmer</label>
-    <input type="text" id="gsm" name="gsm" class="form-control" placeholder="gsm" required autofocus [(ngModel)]="gsm">
-    <label>Athugið: Rukkun er send á símanúmerið og þarf að greiðast innan 90 sekúndna.</label>
+    <label *ngIf="!isWaiting">Símanúmer</label>
+    <input *ngIf="!isWaiting" type="text" id="gsm" name="gsm" class="form-control" placeholder="gsm" required autofocus [(ngModel)]="gsm">
+    <label *ngIf="!isWaiting">Athugið: Rukkun er send á símanúmerið og þarf að greiðast innan 90 sekúndna.</label>
 
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="send()">Senda rukkun</button>
+    <button *ngIf="!isWaiting" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="send()">Senda rukkun</button>
+
+    <label *ngIf="isWaiting">Beðið eftir greiðslu. Vinsamlegast bíðið ...</label>
+    <h1 *ngIf="isWaiting" style="text-align: center">{{timerCount}}</h1>
+
   </div>
-
 </div>
+
+<ng-template #messageModal>
+  <div class="modal-header">
+      <h4 class="modal-title pull-left">
+          <span id="modalHeader">{{modalHeader}}</span>
+      </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+      <span id="modalMessage">{{modalBody}}</span>
+
+      <div>
+          <button type="button" class="btn btn-sm center-block" aria-label="Close" (click)="modalRef.hide()">
+            Loka
+          </button>
+        </div>
+  </div>
+</ng-template>
+<button id="openMessageButton" [hidden]="true" (click)="openModal(messageModal)">Open Modal</button>
