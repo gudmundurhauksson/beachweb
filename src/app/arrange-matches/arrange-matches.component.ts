@@ -50,7 +50,11 @@ export class ArrangeMatchesComponent implements OnInit {
   }
 
   confirm() {
-    
+    this.data.confirmMatchList(this.groups).subscribe(s => {
+
+    }, error => {
+
+    });
   }
 
   update(groupRule: number) {

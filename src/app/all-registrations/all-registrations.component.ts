@@ -37,7 +37,7 @@ export class AllRegistrationsComponent implements OnInit {
     console.log("Refreshing: " + teamType);
 
     this.isRegistrationsLoaded = false;
-    this.typeSelected = teamType;    
+    this.typeSelected = teamType;
 
     this.data.getRegistration(this.tournamentId, teamType).subscribe((s: any) => {
       console.log(s);
@@ -71,7 +71,7 @@ export class AllRegistrationsComponent implements OnInit {
 
   public assignDivision(teamId: number, division: number) {
     this.data.assignDivision(teamId, division).subscribe((s: any) => {
-      this.refresh(this.tournamentId);
+      this.refresh(this.typeSelected);
     });
   }
 
