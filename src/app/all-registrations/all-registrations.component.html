@@ -27,22 +27,23 @@
                 <td>{{registration.totalPlayer2Points}}</td>
                 <td>{{registration.totalTeamPoints}}</td>
                 <td>{{registration.teamDivision}}
-                  <div *ngIf='!registration.isReadOnly'>
-                    <button btn bt-sm (click)="assignDivision(registration.teamId, 1)">1</button>
-                    <button btn bt-sm (click)="assignDivision(registration.teamId, 2)">2</button>
-                    <button btn bt-sm (click)="assignDivision(registration.teamId, 3)">3</button>
-                    <button btn bt-sm (click)="assignDivision(registration.teamId, 4)">4</button>
-                    <button btn bt-sm (click)="assignDivision(registration.teamId, 0)">0</button>
+                  <div *ngIf='!registration.isReadOnly && !isLocked(division[0].teamDivision)'>
+                    <ng-container *ngFor="let d of divisions">
+                      <button *ngIf="!isLocked(d)" class="btn btn-xs" (click)="assignDivision(registration.teamId, d)">{{d}}</button>
+                    </ng-container>
                   </div>
                 </td>
               </tr>
 
-              <tr *ngIf="division[0].teamDivision != 0 && !division[0].isReadOnly">
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="arrangeMatches(division[0].teamDivision)">Leikjaniðurröðun</button>
+              <tr *ngIf="division[0].teamDivision != 0 && !division[0].isReadOnly && !isLocked(division[0].teamDivision)">
+                <button class="btn btn-primary btn-block btn-signin" type="submit" (click)="arrangeMatches(division[0].teamDivision)">Leikjaniðurröðun</button>
               </tr>
 
-              <tr>
-                <div></div>
+              <tr *ngIf="isLocked(division[0].teamDivision)">
+                <td colspan="6">
+                  <button (click)="viewMatches(division[0].teamDivision)" style="margin: 1px" class="btn btn-sm">Skoða tímaplan</button>
+                  
+                </td>
               </tr>
 
             </ng-container>

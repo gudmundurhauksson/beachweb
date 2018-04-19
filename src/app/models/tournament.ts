@@ -11,4 +11,5 @@ export class Tournament {
     isStarted: boolean;
     location: BeachLocation;
     dateTicks: number;    
+    unixDateTicks: number;
 }

@@ -286,15 +286,14 @@ export class DataService {
   getGroups(tournamentId: number, teamTypeId: number, division: number, groupRule: number) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
-
-    console.log("Calling: " + this.apiUrl + "registrations/" + tournamentId + "/" + teamTypeId + "/" + division + "/" + groupRule + "/calculate_groups");
+    
     var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamTypeId + "/" + division + "/" + groupRule  + "/calculate_groups", this.getAuthorizationRequestOption(data));
     var tmp = result.map(s=>s.json());
 
     return tmp;
   }
 
-  getMatches(group: GroupModel) {
+  calculateMatches(group: GroupModel) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -313,4 +312,19 @@ export class DataService {
 
     return tmp;
   }
+
+  getMatches(tournamentId: number, teamType?: number, division?: number) {
+
+    var tmp = null;
+    if (teamType != null && division != null)
+    {
+      var result = this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamType + "/" + division);
+      tmp = result.map(s=>s.json());
+    } else {
+      var result = this.http.get(this.apiUrl + "matches/" + tournamentId);
+      tmp = result.map(s=>s.json());
+    }
+
+    return tmp;
+  }  
 }

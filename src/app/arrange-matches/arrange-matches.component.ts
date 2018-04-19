@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { DataService } from '../data.service';
 import { GroupModel } from '../models/groupModel';
@@ -23,8 +23,9 @@ export class ArrangeMatchesComponent implements OnInit {
   private registrations: Registration[];
   public matchFetchCount: number;
   public groups: GroupModel[];
+  
+  constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute, private router: Router) {
 
-  constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute) {
     this.matchFetchCount = -1;
     this.registrations = null;
     this.groups = null;
@@ -51,9 +52,9 @@ export class ArrangeMatchesComponent implements OnInit {
 
   confirm() {
     this.data.confirmMatchList(this.groups).subscribe(s => {
-
+      this.router.navigate(['/admin-all-registrations/' + this.tournamentId]);
     }, error => {
-
+      console.log(error);
     });
   }
 
@@ -108,7 +109,7 @@ export class ArrangeMatchesComponent implements OnInit {
   }
 
   private loadMatches(group: GroupModel) {
-    this.data.getMatches(group).subscribe((s:any) => {
+    this.data.calculateMatches(group).subscribe((s:any) => {
       var matches = <Match[]>s;
       group.matches = matches;
       this.matchFetchCount--;

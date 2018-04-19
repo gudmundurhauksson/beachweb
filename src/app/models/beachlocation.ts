@@ -1,8 +1,10 @@
+import { Court } from "./court";
+
 export class BeachLocation {
     id: number;
     name: string;
     description: string;
-    courts: number;
+    courts: Court[];
     gps: string;
     address: string;
     website: string;

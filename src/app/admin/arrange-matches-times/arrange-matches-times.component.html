@@ -1,0 +1,52 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+
+          <div class="col-lg-8">
+            <table>
+              <thead>
+                <th style="width:50px">Tími</th>
+
+                <ng-container *ngFor="let court of courts">
+                  <th style="width: 150px">{{court.name}}</th>
+                </ng-container>
+              </thead>
+
+              <ng-container *ngFor="let time of timeSlots">
+                <tr *ngIf="time.slot == 0">
+                  <td colspan="3">{{time.day}}</td>
+                </tr>
+                <tr>
+                  <td >{{time.time}}</td>
+                  <td *ngFor="let name of time.names">                    
+                    <label>
+                      <input type="radio" name="TimeSlots" value="{{name}}">{{name}}
+                  </label>
+                  </td>
+                </tr>
+              </ng-container>
+
+            </table>
+          </div>
+
+          <div class="col-lg-4">
+
+            <table>
+              <thead>
+                <th>Leikur</th>
+              </thead>
+              <tr>
+                <td>Gamamn</td>
+              </tr>
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

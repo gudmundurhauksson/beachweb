@@ -24,6 +24,7 @@ import { AllRegistrationsComponent } from './all-registrations/all-registrations
 import { ArrangeMatchesComponent } from './arrange-matches/arrange-matches.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ArrangeMatchesTimesComponent } from './admin/arrange-matches-times/arrange-matches-times.component';
 
 const routes: Routes = [
   {
@@ -112,10 +113,13 @@ const routes: Routes = [
     component: AllRegistrationsComponent
   },
   {
-    path: 'arrange-matches/:tournamentId/:type/:division',
+    path: 'admin-arrange-matches/:tournamentId/:type/:division',
     component: ArrangeMatchesComponent
+  },
+  {
+    path: 'admin-arrange-matches-times/:tournamentId/:type/:division',
+    component: ArrangeMatchesTimesComponent
   }
-
 ];
 
 @NgModule({
