@@ -16,6 +16,7 @@ import { Tournament } from './models/tournament';
 import { Team } from './models/team';
 import { ScoresModel } from './models/scoresmodel';
 import { GroupModel } from './models/groupModel';
+import { DivisionMatch } from './models/divisionMatch';
 
 @Injectable()
 export class DataService {
@@ -327,4 +328,14 @@ export class DataService {
 
     return tmp;
   }  
+
+  cancelMatch(match: DivisionMatch) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.post(this.apiUrl + "matches/cancel_match", match, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
 }

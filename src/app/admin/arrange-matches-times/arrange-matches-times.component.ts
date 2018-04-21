@@ -4,7 +4,11 @@ import { AuthService } from '../../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Court } from '../../models/court';
 import { Tournament } from '../../models/tournament';
-import { TimeSlot } from '../../models/timeslot';
+import { TimeSlot, TimeSlotName } from '../../models/timeslot';
+import { Match } from '../../models/match';
+import { GroupView } from '../../models/groupView';
+import { DivisionMatch } from '../../models/divisionMatch';
+import { MockNgModuleResolver } from '@angular/compiler/testing';
 
 @Component({
   selector: 'app-arrange-matches-times',
@@ -16,6 +20,8 @@ export class ArrangeMatchesTimesComponent implements OnInit {
   private tournamentId: number;
   private courts: Court[];
   private timeSlots: Array<TimeSlot>;
+  private groupViews: Array<GroupView>;
+  private selectedTimeSlot: TimeSlotName;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,13 +46,105 @@ export class ArrangeMatchesTimesComponent implements OnInit {
 
         this.generateTimeSlots(date);
 
-        this.data.getMatches(this.tournamentId).subscribe((s:any) => {
-          console.log(s);
+        this.data.getMatches(this.tournamentId).subscribe((s: any) => {
+          this.sortMatches(<DivisionMatch[]>s);          
         });
       });
-
     });
+  }
 
+  sortMatches(matches: DivisionMatch[]) {
+    this.groupViews = new Array();
+
+    if (matches.length == 0) {
+      return;
+    }
+
+    var currentView = new GroupView();
+    currentView.division = matches[0].division;
+    currentView.group = matches[0].divisionGroup;
+    currentView.matches = new Array();
+    currentView.type = matches[0].type;
+    this.groupViews.push(currentView);
+
+    for (var i = 0; i < matches.length; i++) {
+      var match = matches[i];
+      if (match.division != currentView.division ||
+        match.divisionGroup != currentView.group ||
+        match.type != currentView.type) {
+        currentView = new GroupView();
+        currentView.division = match.division;
+        currentView.group = match.divisionGroup;
+        currentView.type = match.type;
+        currentView.matches = new Array();
+
+        this.groupViews.push(currentView);
+      }
+
+      currentView.matches.push(match);
+
+      var slot = this.findSlot(match.date, match.time);
+      if (slot != null) {
+        var slotName = this.findSlotName(slot, match);
+        if (slotName != null) {
+          this.assignMatchToSlot(slotName, match);
+        }
+      }
+    }
+  }
+
+  findSlotName(slot: TimeSlot, match: DivisionMatch) {
+    for (var i = 0; i < slot.names.length; i++) {
+      var name = slot.names[i];
+      if (name.courtId == match.courtId) {
+        // Assign
+        return name;
+      }
+    }
+
+    return null;
+  }
+
+  findSlot(date: string, time: string) {
+    for (var i = 0; i < this.timeSlots.length; i++) {
+      var slot = this.timeSlots[i];
+
+      if (slot.day == date && slot.time == time) {
+        return slot;      
+      };
+    }
+
+    return null;
+  }
+
+  selectTimeslot(slot: TimeSlotName) {
+    this.selectedTimeSlot = slot;
+  }
+
+  assignMatchToSlot(timeSlotName: TimeSlotName, match: DivisionMatch) {
+
+    if (timeSlotName == null) {
+      return;
+    }
+
+    // is the match in another slot?
+    this.clearMatchFromSlot(match);    
+    timeSlotName.match = match;    
+  }
+
+  clearMatchFromSlot(match: DivisionMatch) {
+    for (var i = 0; i < this.timeSlots.length; i++) {
+      var slot = this.timeSlots[i];
+      for (var n = 0; n < slot.names.length; n++) {
+        if (slot.names[n].match == match) {
+          slot.names[n].match = null;          
+        }
+      }
+    }
+
+    this.data.cancelMatch(match).subscribe(s => {    
+         
+    });
   }
 
   generateTimeSlots(startDate: Date) {
@@ -66,18 +164,22 @@ export class ArrangeMatchesTimesComponent implements OnInit {
 
       var slot = 0;
       while (startOfSlot.getHours() < 22) {
-        
+
         var timeslot = new TimeSlot();
-        timeslot.day = startOfSlot.toISOString();
-        timeslot.time = startOfSlot.toLocaleTimeString("is-IS", options);        
+        timeslot.date = startOfSlot.toISOString();
+        timeslot.day = startOfSlot.toISOString().substr(0, 10);
+        timeslot.time = startOfSlot.toLocaleTimeString("is-IS", options);
 
         timeslot.names = new Array();
         timeslot.slot = slot;
 
-        for (var c = 0; c < this.courts.length; c++)
-        {          
-           var name = "D" + i + "-S" + slot + "-C" + c;
-           timeslot.names.push(name);
+        for (var c = 0; c < this.courts.length; c++) {
+          var court = this.courts[c];
+          var courtId = court.id;
+          var slotName = new TimeSlotName();
+          slotName.courtId = courtId;
+          slotName.match = null;
+          timeslot.names.push(slotName);
         }
 
         startOfSlot.setMinutes(startOfSlot.getMinutes() + minutesForEachGame);
@@ -90,6 +192,45 @@ export class ArrangeMatchesTimesComponent implements OnInit {
     }
 
     console.log("Generated timeslots: " + this.timeSlots.length);
+  }
+
+  getDescriptionFromType(type: number) {
+    if (type == 1) {
+      return "Karlar";
+    } else if (type == 2) {
+      return "Konur";
+    }
+
+    return ""
+  }
+
+  getDescriptionFromGroup(group: number) {
+    if (group == 0) {
+      return "A";
+    } else if (group == 1) {
+      return "B";
+    } else if (group == 2) {
+      return "C";
+    } else if (group == 3) {
+      return "D";
+    }
+  }
+
+  getColor(match: DivisionMatch): string {
+    if (match.type == 1) {
+      if (match.division == 1) {
+        if (match.divisionGroup == 1) {
+          return "#007194";
+        } else if (match.divisionGroup == 2) {
+          return "#0099D3";
+        } else {
+          return "#6FBEE5";
+        }
+      }
+    }
+
+    return "#445566";
+
   }
 
   ngOnInit() {

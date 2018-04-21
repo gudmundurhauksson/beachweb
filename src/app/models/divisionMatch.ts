@@ -8,4 +8,7 @@ export class DivisionMatch {
     time: string;
     team1: Team;
     team2: Team;
+    divisionGroup: number;
+    label: string;
+    courtId: number;
 }

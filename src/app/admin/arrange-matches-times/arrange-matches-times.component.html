@@ -20,11 +20,12 @@
                   <td colspan="3">{{time.day}}</td>
                 </tr>
                 <tr>
-                  <td >{{time.time}}</td>
-                  <td *ngFor="let name of time.names">                    
+                  <td>{{time.time}}</td>
+                  <td *ngFor="let name of time.names"  [ngStyle]="{'background-color':name.match != null ? getColor(name.match) : 'white'}">
                     <label>
-                      <input type="radio" name="TimeSlots" value="{{name}}">{{name}}
-                  </label>
+                      <input type="radio" name="TimeSlots" [value]="name" (change)="selectTimeslot(name)"  >
+                      <span *ngIf="name.match != null">{{name.match.label}}</span>
+                    </label>
                   </td>
                 </tr>
               </ng-container>
@@ -36,13 +37,21 @@
 
             <table>
               <thead>
-                <th>Leikur</th>
+                <th>Leikir</th>
               </thead>
-              <tr>
-                <td>Gamamn</td>
-              </tr>
-            </table>
+              <ng-container *ngFor="let groupView of groupViews">
+                <tr>
+                  <td>{{getDescriptionFromType(groupView.type)}} - {{groupView.division}} deild - Riðill {{getDescriptionFromGroup(groupView.group)}}</td>
+                </tr>
 
+                <ng-container *ngFor="let match of groupView.matches">
+                  <tr>
+                    <td [ngStyle]="{'background-color':getColor(match),'color':'white','font-weight':bold}" (click)="assignMatchToSlot(selectedTimeSlot, match)">{{match.label}}</td>
+                  </tr>
+                </ng-container>
+
+              </ng-container>
+            </table>
           </div>
 
         </div>
