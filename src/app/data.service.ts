@@ -348,4 +348,14 @@ export class DataService {
 
     return tmp;
   }
+
+  deleteMatches(tournamentId: number, teamType: number, division: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamType + "/" + division +"/delete/", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  };
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { DataService } from '../data.service';
 import { AuthData } from '../models/authdata';
 import { AuthService } from '../auth.service';
@@ -9,6 +9,7 @@ import { isEmbeddedView } from '@angular/core/src/view/util';
 import { Router } from '@angular/router';
 import { digest } from '@angular/compiler/src/i18n/serializers/xmb';
 import { DivisionMatch } from '../models/divisionMatch';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-all-registrations',
@@ -23,8 +24,9 @@ export class AllRegistrationsComponent implements OnInit {
   public typeSelected: number; 
   public lockedDivisions: Array<number>;
   public divisions: Array<number>;
+  public modalRef: BsModalRef; // {1}
 
-  constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute, private router: Router) {    
+  constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute, private router: Router, private modalService: BsModalService) {    
     var maxNumberOfDivisions = 5;
     this.divisions = new Array();
 
@@ -121,4 +123,40 @@ export class AllRegistrationsComponent implements OnInit {
   arrangeMatches(division: number) {
     this.router.navigate(['/admin-arrange-matches/' + this.tournamentId + '/' + this.typeSelected + "/" + division]);
   }  
+
+  clearMatches(division: number) {
+    this.divisionToDelete = division;
+    this.showMessage("Aðvörun", "Ertu viss um að þú viljir eyða tímaplani fyrir deildina (deild " + division + ")?");    
+  };
+
+  confirmDelete() {
+
+    this.data.deleteMatches(this.tournamentId, this.typeSelected, this.divisionToDelete).subscribe(s=> {
+      this.refresh(this.typeSelected);
+      
+    });
+
+    this.divisionToDelete = -1;
+    this.modalRef.hide();
+  }
+
+  cancelDelete() {
+    this.divisionToDelete = -1;
+    this.modalRef.hide();
+  }
+
+  public modalHeader: string;
+  public modalBody: string;
+  public divisionToDelete: number;
+
+  showMessage(header: string, body: string) {
+    this.modalHeader = header;
+    this.modalBody = body;
+    document.getElementById("openMessageButton").click();
+  }
+
+  public openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template); // {3}
+  }
+
 }
