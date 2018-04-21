@@ -242,14 +242,36 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       return "#D3D3D3";
     }
 
+    console.log(match.divisionGroup);
+
     if (match.type == 1) {
       if (match.division == 1) {
-        if (match.divisionGroup == 1) {
+        if (match.divisionGroup == 0) {
           return "#007194";
-        } else if (match.divisionGroup == 2) {
+        } else if (match.divisionGroup == 1) {
           return "#0099D3";
         } else {
           return "#6FBEE5";
+        }
+      } else if (match.division == 2) {
+        if (match.divisionGroup == 0) {
+          return "#007251";
+        } else if (match.divisionGroup == 1) {
+          return "#4EA32A";
+        } else {
+          return "#66883F";
+        }
+      }
+    } else if (match.type == 2) {
+      if (match.division == 1) {
+        if (match.divisionGroup == 0) {
+          return "#982257";
+        } else if (match.divisionGroup == 1) {
+          return "#D2434E";
+        } else if (match.divisionGroup == 2) {
+          return "#D76776";
+        } else {
+          return "#633686";
         }
       }
     }
