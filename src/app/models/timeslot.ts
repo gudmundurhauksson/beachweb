@@ -11,4 +11,6 @@ export class TimeSlot {
 export class TimeSlotName {
     courtId: number;
     match: DivisionMatch;
+    time: string;
+    date: string;
 }

@@ -85,9 +85,10 @@ export class ArrangeMatchesTimesComponent implements OnInit {
 
       var slot = this.findSlot(match.date, match.time);
       if (slot != null) {
+        console.log("Found slot for match: " + match.label);
         var slotName = this.findSlotName(slot, match);
         if (slotName != null) {
-          this.assignMatchToSlot(slotName, match);
+          this.assignMatchToSlot(slotName, match, true);
         }
       }
     }
@@ -121,30 +122,46 @@ export class ArrangeMatchesTimesComponent implements OnInit {
     this.selectedTimeSlot = slot;
   }
 
-  assignMatchToSlot(timeSlotName: TimeSlotName, match: DivisionMatch) {
+  assignMatchToSlot(timeSlotName: TimeSlotName, match: DivisionMatch, initializing: boolean) {
 
+    console.log('assigning: ' + match.label + " to " + timeSlotName.courtId);
     if (timeSlotName == null) {
       return;
     }
 
+    if (timeSlotName.match != null) {
+      this.clearMatchFromSlot(timeSlotName.match, initializing);
+    }
+
     // is the match in another slot?
-    this.clearMatchFromSlot(match);    
+    this.clearMatchFromSlot(match, initializing);    
     timeSlotName.match = match;    
+    match.courtId = timeSlotName.courtId;
+    match.time = timeSlotName.time;
+    match.date = timeSlotName.date;
+
+    if (!initializing) {
+      this.data.scheduleMatch(match).subscribe(s=>{});
+    }
   }
 
-  clearMatchFromSlot(match: DivisionMatch) {
+  clearMatchFromSlot(match: DivisionMatch, initializing: boolean) {
+
+    console.log("Clearing: " + match.label);
+
+    match.courtId = -1;    
     for (var i = 0; i < this.timeSlots.length; i++) {
       var slot = this.timeSlots[i];
       for (var n = 0; n < slot.names.length; n++) {
         if (slot.names[n].match == match) {
-          slot.names[n].match = null;          
+          slot.names[n].match = null;
         }
       }
     }
 
-    this.data.cancelMatch(match).subscribe(s => {    
-         
-    });
+    if(!initializing) {
+      this.data.cancelMatch(match).subscribe(s => {});
+    }
   }
 
   generateTimeSlots(startDate: Date) {
@@ -179,7 +196,10 @@ export class ArrangeMatchesTimesComponent implements OnInit {
           var slotName = new TimeSlotName();
           slotName.courtId = courtId;
           slotName.match = null;
-          timeslot.names.push(slotName);
+          slotName.date = timeslot.day;
+          slotName.time = timeslot.time;
+
+          timeslot.names.push(slotName);          
         }
 
         startOfSlot.setMinutes(startOfSlot.getMinutes() + minutesForEachGame);
@@ -216,7 +236,12 @@ export class ArrangeMatchesTimesComponent implements OnInit {
     }
   }
 
-  getColor(match: DivisionMatch): string {
+  getColor(match: DivisionMatch, inGameList: boolean): string {
+
+    if (inGameList && match.courtId >= 0) {
+      return "#D3D3D3";
+    }
+
     if (match.type == 1) {
       if (match.division == 1) {
         if (match.divisionGroup == 1) {

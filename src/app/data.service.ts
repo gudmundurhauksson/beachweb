@@ -298,7 +298,7 @@ export class DataService {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
-    var result = this.http.post(this.apiUrl + "registrations/calculate_matches", group, this.getAuthorizationRequestOption(data));
+    var result = this.http.post(this.apiUrl + "matches/calculate", group, this.getAuthorizationRequestOption(data));
     var tmp = result.map(s=>s.json());
 
     return tmp;
@@ -308,7 +308,7 @@ export class DataService {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
-    var result = this.http.post(this.apiUrl + "registrations/confirm_matches", groups, this.getAuthorizationRequestOption(data));
+    var result = this.http.post(this.apiUrl + "matches/confirm", groups, this.getAuthorizationRequestOption(data));
     var tmp = result.map(s=>s.json());
 
     return tmp;
@@ -333,7 +333,17 @@ export class DataService {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
-    var result = this.http.post(this.apiUrl + "matches/cancel_match", match, this.getAuthorizationRequestOption(data));
+    var result = this.http.post(this.apiUrl + "matches/cancel", match, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+
+  scheduleMatch(match: DivisionMatch) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.post(this.apiUrl + "matches/schedule", match, this.getAuthorizationRequestOption(data));
     var tmp = result.map(s=>s.json());
 
     return tmp;
