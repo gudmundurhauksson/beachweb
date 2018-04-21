@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
@@ -9,6 +9,8 @@ import { GroupModel } from '../models/groupModel';
 import { Registration } from '../models/registration';
 import { Subscription } from 'rxjs';
 import { Match } from '../models/match';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { DivisionMatch } from '../models/divisionMatch';
 
 @Component({
   selector: 'app-arrange-matches',
@@ -23,12 +25,20 @@ export class ArrangeMatchesComponent implements OnInit {
   private registrations: Registration[];
   public matchFetchCount: number;
   public groups: GroupModel[];
-  
-  constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute, private router: Router) {
+  public finals: DivisionMatch[];
+  public isFinalsDecided : boolean;
+  private groupRule: number;
+  public modalRef: BsModalRef; // {1}  
 
+  constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
+
+    this.groupRule = 0;
     this.matchFetchCount = -1;
     this.registrations = null;
     this.groups = null;
+    this.isFinalsDecided = false;
+    this.finals = null;
+
     this.route.params.subscribe((res: any) => {
       this.division = res.division;
       this.tournamentId = res.tournamentId;
@@ -59,6 +69,12 @@ export class ArrangeMatchesComponent implements OnInit {
   }
 
   update(groupRule: number) {
+    this.isFinalsDecided = false;
+    this.groupRule = groupRule;
+    this.groups = null;
+    this.matchFetchCount = -1;
+    this.finals = null;
+
     console.log('Selected: ' + groupRule);
     this.data.getGroups(this.tournamentId, this.teamType, this.division, groupRule).subscribe((s: any) => {
       var groups = <GroupModel[]>s;
@@ -66,11 +82,17 @@ export class ArrangeMatchesComponent implements OnInit {
     });
   }
 
+  updateFinals(finalsGroupRule: number) {
+    this.isFinalsDecided = false;
+    this.data.getFinals(this.tournamentId, this.teamType, this.division, this.groupRule, finalsGroupRule).subscribe((s: any) =>{
+      this.finals = <DivisionMatch[]>s;
+      this.isFinalsDecided = true;
+    });
+  }
+
   getRemainingGroups(group: GroupModel) : GroupModel[]  {
     var models: Array<GroupModel>;
     models = new Array<GroupModel>();
-
-    console.log('calculating ...');
 
     for (var i = 0; i < this.groups.length; i++) {      
       if(this.groups[i].name == group.name) {        
@@ -105,7 +127,11 @@ export class ArrangeMatchesComponent implements OnInit {
     for (var i = 0; i < this.groups.length; i++) {
       var group = this.groups[i];
       this.loadMatches(group);
-    }
+
+      if (this.groupRule == 2) {
+        this.isFinalsDecided = true;
+      }
+    } 
   }
 
   private loadMatches(group: GroupModel) {
@@ -113,8 +139,22 @@ export class ArrangeMatchesComponent implements OnInit {
       var matches = <Match[]>s;
       group.matches = matches;
       this.matchFetchCount--;
+    }, error => {
+      this.showMessage("Villa", "Of margir leikir í deild.");
     });
   }
   
+  public modalHeader: string;
+  public modalBody: string;
+
+  showMessage(header: string, body: string) {
+    this.modalHeader = header;
+    this.modalBody = body;
+    document.getElementById("openMessageButton").click();
+  }
+
+  public openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template); // {3}
+  }
 
 }

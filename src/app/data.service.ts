@@ -294,6 +294,16 @@ export class DataService {
     return tmp;
   }
 
+  getFinals(tournamentId: number, teamTypeId: number, division: number, groupRule: number, finalsGroupRule: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+    
+    var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamTypeId + "/" + division + "/" + groupRule  + "/" + finalsGroupRule + "/calculate_finals", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s=>s.json());
+
+    return tmp;
+  }
+
   calculateMatches(group: GroupModel) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");

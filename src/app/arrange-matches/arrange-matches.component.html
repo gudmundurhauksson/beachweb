@@ -10,7 +10,7 @@
           <div>
 
             <label>
-              <input type="radio" name="type" value="1" (click)="update(1)"> 2 riðlar - allir við alla + efstu 2 í kross
+              <input type="radio" name="type" value="1" (click)="update(1)"> 2 riðlar - allir við alla
             </label>
           </div>
           <div>
@@ -18,8 +18,13 @@
               <input type="radio" name="type" value="2" (click)="update(2)"> 1 riðill - allir við alla
             </label>
           </div>
-
           <div>
+            <label>
+              <input type="radio" name="type" value="2" (click)="update(3)"> 1 riðill - allir við alla, tvöföld umferð.
+            </label>
+          </div>
+
+          <div *ngIf="groupRule > 0">
             <table>
               <thead>
                 <th>Lið</th>
@@ -77,13 +82,66 @@
                 </tr>
 
               </ng-container>
-
-              <button (click)="confirm()">Staðfesta</button>
-
             </table>
+
+            <div *ngIf="groupRule == 1 && matchFetchCount >= 0">
+
+              <div>
+                <h4>Fyrirkomulag úrslita</h4>
+              </div>
+
+              <div>
+                <label>
+                  <input type="radio" name="finaltype" value="1" (click)="updateFinals(10)"> Efstu 2 í kross + úrslit, jafningaleikir í neðri hluta
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input type="radio" name="finaltype" value="2" (click)="updateFinals(11)"> Efstu 2 í kross + úrslit, neðri hluti allir við alla
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input type="radio" name="finaltype" value="2" (click)="updateFinals(12)"> Jafningaleikir, engin úrslit
+                </label>
+              </div>
+            </div>
+
+            <div *ngIf="finals != null && finals.length > 0">
+              <ng-container *ngFor="let match of finals">
+                <div>{{match.label}}</div>
+              </ng-container>
+
+            </div>
+
+            <button *ngIf="isFinalsDecided" (click)="confirm()">Staðfesta</button>
+
+
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
+<ng-template #messageModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <span id="modalHeader">{{modalHeader}}</span>
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <span id="modalMessage">{{modalBody}}</span>
+
+    <div>
+      <button type="button" class="btn btn-sm center-block" aria-label="Close" (click)="modalRef.hide()">
+        Loka
+      </button>
+    </div>
+  </div>
+</ng-template>
+<button id="openMessageButton" [hidden]="true" (click)="openModal(messageModal)">Open Modal</button>

@@ -21,12 +21,14 @@
                 </tr>
                 <tr>
                   <td>{{time.time}}</td>
-                  <td *ngFor="let name of time.names"  [ngStyle]="{'background-color':name.match != null ? getColor(name.match, false) : 'white'}">
+                  <td *ngFor="let name of time.names" [ngStyle]="{'background-color':name.match != null ? getColor(name.match, false) : 'white'}">
                     <label>
                       <input type="radio" name="TimeSlots" [value]="name" (change)="selectTimeslot(name)" />
                       <span *ngIf="name.match == null">---------</span>
                       <span *ngIf="name.match != null">{{name.match.label}}</span>
-                      <span><button style="margin:0px; padding:0px; " *ngIf="name.match != null" (click)="clearMatchFromSlot(name.match, false)">x</button></span>
+                      <span>
+                        <button style="margin:0px; padding:0px; " *ngIf="name.match != null" (click)="clearMatchFromSlot(name.match, false)">x</button>
+                      </span>
                     </label>
                   </td>
                 </tr>
