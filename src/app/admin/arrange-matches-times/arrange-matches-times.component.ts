@@ -36,8 +36,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       this.courts = null;
 
       this.data.getTournament(this.tournamentId).subscribe((s: any) => {
-        var tournament = <Tournament>s;
-        console.log(tournament.unixDateTicks);
+        var tournament = <Tournament>s;        
 
         var date = new Date(tournament.unixDateTicks);
         date.setHours(8);
@@ -47,7 +46,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
         this.generateTimeSlots(date);
 
         this.data.getMatches(this.tournamentId).subscribe((s: any) => {
-          this.sortMatches(<DivisionMatch[]>s);          
+          this.sortMatches(<DivisionMatch[]>s);
         });
       });
     });
@@ -84,8 +83,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       currentView.matches.push(match);
 
       var slot = this.findSlot(match.date, match.time);
-      if (slot != null) {
-        console.log("Found slot for match: " + match.label);
+      if (slot != null) {        
         var slotName = this.findSlotName(slot, match);
         if (slotName != null) {
           this.assignMatchToSlot(slotName, match, true);
@@ -111,7 +109,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       var slot = this.timeSlots[i];
 
       if (slot.day == date && slot.time == time) {
-        return slot;      
+        return slot;
       };
     }
 
@@ -123,8 +121,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
   }
 
   assignMatchToSlot(timeSlotName: TimeSlotName, match: DivisionMatch, initializing: boolean) {
-
-    console.log('assigning: ' + match.label + " to " + timeSlotName.courtId);
+    
     if (timeSlotName == null) {
       return;
     }
@@ -134,22 +131,19 @@ export class ArrangeMatchesTimesComponent implements OnInit {
     }
 
     // is the match in another slot?
-    this.clearMatchFromSlot(match, initializing);    
-    timeSlotName.match = match;    
+    this.clearMatchFromSlot(match, initializing);
+    timeSlotName.match = match;
     match.courtId = timeSlotName.courtId;
     match.time = timeSlotName.time;
     match.date = timeSlotName.date;
 
     if (!initializing) {
-      this.data.scheduleMatch(match).subscribe(s=>{});
+      this.data.scheduleMatch(match).subscribe(s => { });
     }
   }
 
   clearMatchFromSlot(match: DivisionMatch, initializing: boolean) {
-
-    console.log("Clearing: " + match.label);
-
-    match.courtId = -1;    
+    match.courtId = -1;
     for (var i = 0; i < this.timeSlots.length; i++) {
       var slot = this.timeSlots[i];
       for (var n = 0; n < slot.names.length; n++) {
@@ -159,8 +153,8 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       }
     }
 
-    if(!initializing) {
-      this.data.cancelMatch(match).subscribe(s => {});
+    if (!initializing) {
+      this.data.cancelMatch(match).subscribe(s => { });
     }
   }
 
@@ -172,7 +166,6 @@ export class ArrangeMatchesTimesComponent implements OnInit {
 
     var minutesForEachGame = 40;
     this.timeSlots = new Array();
-    console.log("Generating timeslots: " + startDate);
 
     for (var i = 0; i < 3; i++) {
       var currentDate = new Date(startDate);
@@ -199,19 +192,15 @@ export class ArrangeMatchesTimesComponent implements OnInit {
           slotName.date = timeslot.day;
           slotName.time = timeslot.time;
 
-          timeslot.names.push(slotName);          
+          timeslot.names.push(slotName);
         }
 
         startOfSlot.setMinutes(startOfSlot.getMinutes() + minutesForEachGame);
-        console.log("StartOfSlot: " + startOfSlot);
-
         slot++;
 
         this.timeSlots.push(timeslot);
       }
     }
-
-    console.log("Generated timeslots: " + this.timeSlots.length);
   }
 
   getDescriptionFromType(type: number) {
@@ -226,13 +215,21 @@ export class ArrangeMatchesTimesComponent implements OnInit {
 
   getDescriptionFromGroup(group: number) {
     if (group == 0) {
-      return "A";
+      return "Riðill A";
     } else if (group == 1) {
-      return "B";
+      return "Riðill B";
     } else if (group == 2) {
-      return "C";
+      return "Riðill C";
     } else if (group == 3) {
-      return "D";
+      return "Riðill D";
+    } else if (group == 1000) {
+      return "Úrslit - 1. deild";
+    } else if (group == 2000) {
+      return "Úrslit - 2. deild";
+    } else if (group == 3000) {
+      return "Úrslit - 3. deild";
+    } else if (group == 4000) {
+      return "Úrslit - 4. deild";
     }
   }
 
@@ -240,9 +237,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
 
     if (inGameList && match.courtId >= 0) {
       return "#D3D3D3";
-    }
-
-    console.log(match.divisionGroup);
+    }    
 
     if (match.type == 1) {
       if (match.division == 1) {

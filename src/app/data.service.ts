@@ -58,8 +58,8 @@ export class DataService {
     var tmp = result.map((res: Response) => res.json());
     return tmp;
   }
-  
-  getTournament(id: number): Observable<Response> { 
+
+  getTournament(id: number): Observable<Response> {
     var result = this.http.get(this.apiUrl + "tournaments/" + id);
     var tmp = result.map((res: Response) => res.json());
     return tmp;
@@ -101,7 +101,7 @@ export class DataService {
     return options;
   }
 
-  changePassword(password: string) : Observable<Response> {
+  changePassword(password: string): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
     var result = this.http.post(this.apiUrl + "players/changepassword", { "Password": password },
@@ -166,22 +166,22 @@ export class DataService {
     return tmp;
   }
 
-  getTournamentsStatus(player: Player) : Observable<Response> {
+  getTournamentsStatus(player: Player): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "players/" + player.id + "/tournaments", this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
 
-  cancelRegistration(teamId: number) : Observable<Response> {
+  cancelRegistration(teamId: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "teams/" + teamId + "/cancel", this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
@@ -191,7 +191,7 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "payments/kass/" + gsm, this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
@@ -201,41 +201,41 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "payments/aur/" + gsm, this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
 
-  getTotalPlayerScoresByTypeAndYear(type: number, year: number) : Observable<Response> {
-    var result= this.http.get(this.apiUrl + "scores/" + type + "/total/" + year);
-    var tmp = result.map(s=>s.json());
+  getTotalPlayerScoresByTypeAndYear(type: number, year: number): Observable<Response> {
+    var result = this.http.get(this.apiUrl + "scores/" + type + "/total/" + year);
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
 
-  getTournamentPlayersScoresByTypeAndYear(type: number, year: number) : Observable<Response> {
-    var result= this.http.get(this.apiUrl + "scores/" + type + "/tournaments/" + year);
-    var tmp = result.map(s=>s.json());
+  getTournamentPlayersScoresByTypeAndYear(type: number, year: number): Observable<Response> {
+    var result = this.http.get(this.apiUrl + "scores/" + type + "/tournaments/" + year);
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
 
-  getRegistration(tournamentId: number, teamType: number) : Observable<Response> {
+  getRegistration(tournamentId: number, teamType: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamType, this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
 
-  getTeamRegistration(tournamentId: number, teamType: number, teamId: number) : Observable<Response> {
+  getTeamRegistration(tournamentId: number, teamType: number, teamId: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamType + "/" + teamId, this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
@@ -245,21 +245,21 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "teams/" + teamId + "/division/" + division, this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
 
-  requestPasswordReset(playerId: string) : Observable<Response> {
-    var result= this.http.get(this.apiUrl + "players/" + playerId + "/requestresetpassword");
-    var tmp = result.map(s=>s.json());
+  requestPasswordReset(playerId: string): Observable<Response> {
+    var result = this.http.get(this.apiUrl + "players/" + playerId + "/requestresetpassword");
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
 
-  resetPassword(requestId: string) : Observable<Response> {
-    var result= this.http.get(this.apiUrl + "players/" + requestId + "/resetpassword");
-    var tmp = result.map(s=>s.json());
+  resetPassword(requestId: string): Observable<Response> {
+    var result = this.http.get(this.apiUrl + "players/" + requestId + "/resetpassword");
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
@@ -269,7 +269,7 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "payments/" + teamId + "/canpay/" + payingPlayerId, this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
@@ -279,7 +279,7 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "payments/" + teamId + "/verify", this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
@@ -287,9 +287,9 @@ export class DataService {
   getGroups(tournamentId: number, teamTypeId: number, division: number, groupRule: number) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
-    
-    var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamTypeId + "/" + division + "/" + groupRule  + "/calculate_groups", this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+
+    var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamTypeId + "/" + division + "/" + groupRule + "/calculate_groups", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
@@ -297,9 +297,9 @@ export class DataService {
   getFinals(tournamentId: number, teamTypeId: number, division: number, groupRule: number, finalsGroupRule: number) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
-    
-    var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamTypeId + "/" + division + "/" + groupRule  + "/" + finalsGroupRule + "/calculate_finals", this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+
+    var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamTypeId + "/" + division + "/" + groupRule + "/" + finalsGroupRule + "/calculate_finals", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
@@ -309,17 +309,17 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.post(this.apiUrl + "matches/calculate", group, this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
-  
-  confirmMatchList(groups: GroupModel[]) {
+
+  confirmMatchList(groups: GroupModel[], finals?: DivisionMatch[]) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
-    var result = this.http.post(this.apiUrl + "matches/confirm", groups, this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var result = this.http.post(this.apiUrl + "matches/confirm", { groups: groups, finals: finals }, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
@@ -327,24 +327,23 @@ export class DataService {
   getMatches(tournamentId: number, teamType?: number, division?: number) {
 
     var tmp = null;
-    if (teamType != null && division != null)
-    {
+    if (teamType != null && division != null) {
       var result = this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamType + "/" + division);
-      tmp = result.map(s=>s.json());
+      tmp = result.map(s => s.json());
     } else {
       var result = this.http.get(this.apiUrl + "matches/" + tournamentId);
-      tmp = result.map(s=>s.json());
+      tmp = result.map(s => s.json());
     }
 
     return tmp;
-  }  
+  }
 
   cancelMatch(match: DivisionMatch) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
     var result = this.http.post(this.apiUrl + "matches/cancel", match, this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
@@ -354,7 +353,7 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.post(this.apiUrl + "matches/schedule", match, this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var tmp = result.map(s => s.json());
 
     return tmp;
   }
@@ -363,8 +362,8 @@ export class DataService {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
-    var result = this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamType + "/" + division +"/delete/", this.getAuthorizationRequestOption(data));
-    var tmp = result.map(s=>s.json());
+    var result = this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamType + "/" + division + "/delete/", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
 
     return tmp;
   };

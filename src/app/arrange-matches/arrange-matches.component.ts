@@ -61,7 +61,7 @@ export class ArrangeMatchesComponent implements OnInit {
   }
 
   confirm() {
-    this.data.confirmMatchList(this.groups).subscribe(s => {
+    this.data.confirmMatchList(this.groups, this.finals).subscribe(s => {
       this.router.navigate(['/admin-all-registrations/' + this.tournamentId]);
     }, error => {
       console.log(error);

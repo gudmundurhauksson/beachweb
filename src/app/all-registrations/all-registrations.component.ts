@@ -49,16 +49,11 @@ export class AllRegistrationsComponent implements OnInit {
   public refresh(teamType: number) {
 
     this.lockedDivisions = new Array();
-    console.log("Refreshing: " + teamType);
-
     this.isRegistrationsLoaded = false;
     this.typeSelected = teamType;
 
     this.data.getRegistration(this.tournamentId, teamType).subscribe((s: any) => {
-      console.log(s);
-
       this.registrations = new Array<Array<Registration>>();
-
       var registrations = <Registration[]>s;
 
       if (registrations.length == 0) {

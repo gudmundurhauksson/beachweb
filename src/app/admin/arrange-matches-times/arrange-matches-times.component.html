@@ -25,7 +25,7 @@
                     <label>
                       <input type="radio" name="TimeSlots" [value]="name" (change)="selectTimeslot(name)" />
                       <span *ngIf="name.match == null">---------</span>
-                      <span *ngIf="name.match != null">{{name.match.label}}</span>
+                      <span *ngIf="name.match != null" style="color: white">{{name.match.label}}({{name.match.team1.id}}-{{name.match.team2.id}})</span>
                       <span>
                         <button style="margin:0px; padding:0px; " *ngIf="name.match != null" (click)="clearMatchFromSlot(name.match, false)">x</button>
                       </span>
@@ -45,12 +45,12 @@
               </thead>
               <ng-container *ngFor="let groupView of groupViews">
                 <tr>
-                  <td>{{getDescriptionFromType(groupView.type)}} - {{groupView.division}} deild - Riðill {{getDescriptionFromGroup(groupView.group)}}</td>
+                  <td>{{getDescriptionFromType(groupView.type)}} - {{groupView.division}} deild - {{getDescriptionFromGroup(groupView.group)}}</td>
                 </tr>
 
                 <ng-container *ngFor="let match of groupView.matches">
                   <tr>
-                    <td [ngStyle]="{'background-color':getColor(match, true),'color':'white','font-weight':bold}" (click)="assignMatchToSlot(selectedTimeSlot, match, false)">{{match.label}}</td>
+                    <td [ngStyle]="{'background-color':getColor(match, true),'color':'white','font-weight':bold}" (click)="assignMatchToSlot(selectedTimeSlot, match, false)">{{match.label}}({{match.team1.id}}-{{match.team2.id}})</td>
                   </tr>
                 </ng-container>
 
