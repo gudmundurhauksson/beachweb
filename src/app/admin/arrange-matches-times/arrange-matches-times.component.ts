@@ -36,7 +36,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       this.courts = null;
 
       this.data.getTournament(this.tournamentId).subscribe((s: any) => {
-        var tournament = <Tournament>s;        
+        var tournament = <Tournament>s;
 
         var date = new Date(tournament.unixDateTicks);
         date.setHours(8);
@@ -83,7 +83,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       currentView.matches.push(match);
 
       var slot = this.findSlot(match.date, match.time);
-      if (slot != null) {        
+      if (slot != null) {
         var slotName = this.findSlotName(slot, match);
         if (slotName != null) {
           this.assignMatchToSlot(slotName, match, true);
@@ -121,7 +121,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
   }
 
   assignMatchToSlot(timeSlotName: TimeSlotName, match: DivisionMatch, initializing: boolean) {
-    
+
     if (timeSlotName == null) {
       return;
     }
@@ -213,6 +213,16 @@ export class ArrangeMatchesTimesComponent implements OnInit {
     return ""
   }
 
+  downloadScoresheet(tournamentId: number, teamType: number, division: number) {
+    console.log("...");
+    this.data.getScoreSheets(tournamentId, teamType, division).subscribe(blob => {
+      console.log("in here");
+      console.log(blob);
+      var downloadUrl= URL.createObjectURL(blob);
+      window.open(downloadUrl);
+    });
+  }
+
   getDescriptionFromGroup(group: number) {
     if (group == 0) {
       return "Riðill A";
@@ -237,7 +247,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
 
     if (inGameList && match.courtId >= 0) {
       return "#D3D3D3";
-    }    
+    }
 
     if (match.type == 1) {
       if (match.division == 1) {

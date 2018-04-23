@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Http, Response } from '@angular/http';
+import { Http, Response, ResponseContentType } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Player } from './models/player';
@@ -362,9 +362,14 @@ export class DataService {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
-    var result = this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamType + "/" + division + "/delete/", this.getAuthorizationRequestOption(data));
+    var result = this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamType + "/" + division + "/delete", this.getAuthorizationRequestOption(data));
     var tmp = result.map(s => s.json());
 
     return tmp;
+  };
+
+  getScoreSheets(tournamentId: number, teamTypeId: number, division: number) {
+    return this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamTypeId + "/" + division + "/scoresheets", {responseType: ResponseContentType.Blob}).map(response => 
+      (<Response>response).blob());
   };
 }

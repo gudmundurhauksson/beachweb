@@ -42,10 +42,13 @@
             <table>
               <thead>
                 <th>Leikir</th>
+                <button></button>
               </thead>
               <ng-container *ngFor="let groupView of groupViews">
                 <tr>
-                  <td>{{getDescriptionFromType(groupView.type)}} - {{groupView.division}} deild - {{getDescriptionFromGroup(groupView.group)}}</td>
+                  <td>{{getDescriptionFromType(groupView.type)}} - {{groupView.division}} deild - {{getDescriptionFromGroup(groupView.group)}}
+                    <button class="btn btn-primary btn-sm" (click)="downloadScoresheet(tournamentId, groupView.type, groupView.division)">Leikskýrslur</button>
+                  </td>
                 </tr>
 
                 <ng-container *ngFor="let match of groupView.matches">
