@@ -9,6 +9,7 @@ import { Match } from '../../models/match';
 import { GroupView } from '../../models/groupView';
 import { DivisionMatch } from '../../models/divisionMatch';
 import { MockNgModuleResolver } from '@angular/compiler/testing';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-arrange-matches-times',
@@ -216,10 +217,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
   downloadScoresheet(tournamentId: number, teamType: number, division: number) {
     console.log("...");
     this.data.getScoreSheets(tournamentId, teamType, division).subscribe(blob => {
-      console.log("in here");
-      console.log(blob);
-      var downloadUrl= URL.createObjectURL(blob);
-      window.open(downloadUrl);
+      FileSaver.saveAs(blob, "scoresheet-" + tournamentId + "-" + teamType+ "-" + division + ".zip");      
     });
   }
 
