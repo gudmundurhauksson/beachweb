@@ -6,6 +6,7 @@ export class TimeSlot {
     day: string;
     names: Array<TimeSlotName>;
     slot: number;    
+    next: TimeSlot;
 }
 
 export class TimeSlotName {
@@ -13,4 +14,17 @@ export class TimeSlotName {
     match: DivisionMatch;
     time: string;
     date: string;
+}
+
+export class DateVisibility {
+    buttonIndex: number;
+    isVisible: boolean;
+
+    /**
+     *
+     */
+    constructor(isVisible: boolean, buttonIndex: number) {
+        this.isVisible = isVisible;
+        this.buttonIndex = buttonIndex;
+    }
 }

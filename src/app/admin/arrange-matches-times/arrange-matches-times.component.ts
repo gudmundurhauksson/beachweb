@@ -4,7 +4,7 @@ import { AuthService } from '../../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Court } from '../../models/court';
 import { Tournament } from '../../models/tournament';
-import { TimeSlot, TimeSlotName } from '../../models/timeslot';
+import { TimeSlot, TimeSlotName, DateVisibility } from '../../models/timeslot';
 import { Match } from '../../models/match';
 import { GroupView } from '../../models/groupView';
 import { DivisionMatch } from '../../models/divisionMatch';
@@ -23,6 +23,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
   private timeSlots: Array<TimeSlot>;
   private groupViews: Array<GroupView>;
   private selectedTimeSlot: TimeSlotName;
+  private dateVisibility: Array<DateVisibility>;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,7 +31,13 @@ export class ArrangeMatchesTimesComponent implements OnInit {
     private auth: AuthService,
     private router: Router) {
 
+    if (!this.auth.isLoggedIn()) {
+      //this.router.navigate(['/login']);
+      //return;
+    }
+
     this.courts = new Array();
+    this.dateVisibility = new Array();
 
     this.route.params.subscribe((res: any) => {
       this.tournamentId = res.tournamentId;
@@ -51,6 +58,30 @@ export class ArrangeMatchesTimesComponent implements OnInit {
         });
       });
     });
+  }
+
+  toggleButton(index: number) {
+    this.getVisibility(index).isVisible = !this.getVisibility(index).isVisible;
+  }
+
+  prepareButton(index: number) {
+    var current = this.getVisibility(index);
+    if (current.buttonIndex == index) {
+      return;
+    }
+
+    var visibility = new DateVisibility(true, index);
+    this.dateVisibility.push(visibility);
+  }
+
+  getVisibility(index: number): DateVisibility {
+    for (var i = this.dateVisibility.length - 1; i >= 0; i--) {
+      if (this.dateVisibility[i].buttonIndex <= index) {
+        return this.dateVisibility[i];
+      }
+    }
+
+    return new DateVisibility(true, -1);
   }
 
   sortMatches(matches: DivisionMatch[]) {
@@ -122,10 +153,12 @@ export class ArrangeMatchesTimesComponent implements OnInit {
   }
 
   assignMatchToSlot(timeSlotName: TimeSlotName, match: DivisionMatch, initializing: boolean) {
-
+    
     if (timeSlotName == null) {
       return;
     }
+
+    console.log("assigning match: " + timeSlotName.time + " m: " + match.label);
 
     if (timeSlotName.match != null) {
       this.clearMatchFromSlot(timeSlotName.match, initializing);
@@ -133,6 +166,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
 
     // is the match in another slot?
     this.clearMatchFromSlot(match, initializing);
+
     timeSlotName.match = match;
     match.courtId = timeSlotName.courtId;
     match.time = timeSlotName.time;
@@ -143,13 +177,37 @@ export class ArrangeMatchesTimesComponent implements OnInit {
     }
   }
 
+  autoAssignment(matches: DivisionMatch[]) {
+    console.log("assigning");
+    var current = matches[0];
+
+    // start by clearing all 
+    for (var i = 1; i < matches.length; i++) {
+      this.clearMatchFromSlot(matches[i], false);
+    }
+
+    for (var i = 1; i < matches.length; i++) {
+      var slot = this.findSlot(current.date, current.time).next;      
+      var slotName = this.findSlotName(slot, current);
+      
+      current = matches[i];
+      console.log("SlotName. " + slotName.time + " match: " + current.label);
+      this.assignMatchToSlot(slotName, current, false);
+    }
+  }
+
   clearMatchFromSlot(match: DivisionMatch, initializing: boolean) {
-    match.courtId = -1;
+    
+    if (match.courtId == -1) {
+      return;
+    }
+
     for (var i = 0; i < this.timeSlots.length; i++) {
       var slot = this.timeSlots[i];
       for (var n = 0; n < slot.names.length; n++) {
         if (slot.names[n].match == match) {
           slot.names[n].match = null;
+          match.courtId = -1;
         }
       }
     }
@@ -172,11 +230,16 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       var currentDate = new Date(startDate);
       currentDate.setDate(startDate.getDate() + i);
       var startOfSlot = new Date(startDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), startDate.getHours(), startDate.getMinutes());
-
       var slot = 0;
+      var currentTimeSlot = null;
       while (startOfSlot.getHours() < 22) {
-
+        
         var timeslot = new TimeSlot();
+        if (currentTimeSlot != null) {
+          currentTimeSlot.next = timeslot;
+        }
+        currentTimeSlot = timeslot;
+
         timeslot.date = startOfSlot.toISOString();
         timeslot.day = startOfSlot.toISOString().substr(0, 10);
         timeslot.time = startOfSlot.toLocaleTimeString("is-IS", options);
@@ -217,7 +280,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
   downloadScoresheet(tournamentId: number, teamType: number, division: number) {
     console.log("...");
     this.data.getScoreSheets(tournamentId, teamType, division).subscribe(blob => {
-      FileSaver.saveAs(blob, "scoresheet-" + tournamentId + "-" + teamType+ "-" + division + ".zip");      
+      FileSaver.saveAs(blob, "scoresheet-" + tournamentId + "-" + teamType + "-" + division + ".zip");
     });
   }
 
@@ -281,6 +344,23 @@ export class ArrangeMatchesTimesComponent implements OnInit {
 
     return "#445566";
 
+  }
+
+  getDateString(date: string): string {
+    var dateObj = new Date(date);
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+    return this.translate(dateObj.toLocaleDateString('en-US', options));
+  }
+
+  translate(date: string): string {
+    return date.replace("Friday", "Föstudagur")
+      .replace("Saturday", "Laugardagur")
+      .replace("Sunday", "Sunnudagur")
+      .replace("June", "Júní")
+      .replace("May", "Maí")
+      .replace("July", "Júlí")
+      .replace("August", "Ágúst");
   }
 
   ngOnInit() {

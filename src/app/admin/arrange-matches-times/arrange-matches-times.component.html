@@ -15,11 +15,14 @@
                 </ng-container>
               </thead>
 
-              <ng-container *ngFor="let time of timeSlots">
+              <ng-container *ngFor="let time of timeSlots; let i = index">
                 <tr *ngIf="time.slot == 0">
-                  <td colspan="3">{{time.day}}</td>
+                  <td [attr.colspan]="time.names.length" style="background-color: lightgray; font-weight: bold">{{getDateString(time.date)}}</td>
+                  <td>
+                    <button class="btn btn-block btn-primary" id="{{prepareButton(i)}}" (click)="toggleButton(i)">{{(getVisibility(i).isVisible ? "Fela" : "Sýna")}}</button>
+                  </td>
                 </tr>
-                <tr>
+                <tr *ngIf="getVisibility(i).isVisible">
                   <td>{{time.time}}</td>
                   <td *ngFor="let name of time.names" [ngStyle]="{'background-color':name.match != null ? getColor(name.match, false) : 'white'}">
                     <label>
@@ -42,22 +45,30 @@
             <table>
               <thead>
                 <th>Leikir</th>
-                <button></button>
               </thead>
               <ng-container *ngFor="let groupView of groupViews">
                 <tr>
                   <td>{{getDescriptionFromType(groupView.type)}} - {{groupView.division}} deild - {{getDescriptionFromGroup(groupView.group)}}
-                    <button class="btn btn-primary btn-sm" (click)="downloadScoresheet(tournamentId, groupView.type, groupView.division)">Leikskýrslur</button>
                   </td>
                 </tr>
 
-                <ng-container *ngFor="let match of groupView.matches">
+                <ng-container *ngFor="let match of groupView.matches; let i = index">
                   <tr>
-                    <td [ngStyle]="{'background-color':getColor(match, true),'color':'white','font-weight':bold}" (click)="assignMatchToSlot(selectedTimeSlot, match, false)">{{match.label}}({{match.team1.id}}-{{match.team2.id}})</td>
+                    <td [ngStyle]="{'background-color':getColor(match, true),'color':'white','font-weight':bold}" (click)="assignMatchToSlot(selectedTimeSlot, match, false)">{{match.label}}({{match.team1.id}}-{{match.team2.id}})
+                    </td>
+                    <td>&nbsp;<button *ngIf="match.courtId >= 0 && i == 0" (click)="autoAssignment(groupView.matches)" class="btn btn-sm btn-primary" style="height: 18px; padding: 0px;">Sjálfvirk röðun</button></td>
                   </tr>
                 </ng-container>
 
+                <br />
+                <button class="btn btn-primary btn-sm" (click)="downloadScoresheet(tournamentId, groupView.type, groupView.division)">Leikskýrslur</button>
+                <br />
+                <br />
+
               </ng-container>
+
+
+
             </table>
           </div>
 
