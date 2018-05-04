@@ -12,19 +12,23 @@ import { BeachLocation } from '../models/beachlocation';
 export class TournamentRegistrationComponent implements OnInit {
 
   public tournaments: Array<Tournament>;
+  public oldTournaments: Array<Tournament>;
+  public yearNow: number;
 
   constructor(private _auth: AuthService, private _data: DataService) {
 
     this.tournaments = new Array();
+    this.oldTournaments = new Array();
+
     var date = new Date();
-    console.log(date.getFullYear());
+    this.yearNow = date.getFullYear();
 
     var wait = false;
 
     for (var i = date.getFullYear(); i >= 2016; i--) {
 
       _data.getTournaments(i).subscribe((s: any) => {
-        var local = <Tournament[]>s;
+        var local = <Tournament[]>s;        
 
         _data.getLocations().subscribe((l: any) => {
           for (var t = 0; t < local.length; t++) {
@@ -34,16 +38,22 @@ export class TournamentRegistrationComponent implements OnInit {
             for (var tmp = 0; tmp < locations.length; tmp++) {
               if (locations[tmp].id == local[t].locationId) {
                 local[t].location = locations[tmp];
+                local[t].year = parseInt(local[t].date.split('-')[0]);
                 break;
               }
             }
           }
 
           for (var ll = 0; ll < local.length; ll++) {
-            this.tournaments.push(local[ll]);
+            if (local[ll].year == this.yearNow) {
+              this.tournaments.push(local[ll]);
+            } else {
+              this.oldTournaments.push(local[ll]);
+            }
           }
 
           this.tournaments.sort(function (a, b) { return b.dateTicks - a.dateTicks });
+          this.oldTournaments.sort(function (a, b) { return b.dateTicks - a.dateTicks });
         }, (err: any) => {
 
         });

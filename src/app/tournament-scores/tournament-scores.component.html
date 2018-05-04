@@ -3,52 +3,32 @@
     <div class="col-sm-12">
       <div class="panel panel-primary">
         <div class="panel-body">
-            <button  style="margin: 1px" (click)="loadScores(selectedYear, false)" [ngClass]="{'btn': true, 'btn-sm':true, 'btn-primary': !isMenSelected}">Konur</button>
-            <button  style="margin: 1px" (click)="loadScores(selectedYear, true)" [ngClass]="{'btn': true, 'btn-sm':true, 'btn-primary': isMenSelected}">Karlar</button>
+            <button  style="margin: 1px" (click)="loadScores(selectedYear, false)" [ngClass]="{'btn': true, 'btn-primary': !isMenSelected}">Konur</button>
+            <button  style="margin: 1px" (click)="loadScores(selectedYear, true)" [ngClass]="{'btn': true, 'btn-primary': isMenSelected}">Karlar</button>
 
-            <button *ngFor="let year of years" [ngClass]="{'btn': true, 'btn-sm': true, 'btn-primary': year == selectedYear}" (click)="loadScores(year, isMenSelected)" style="margin: 1px">{{year}}</button>
+            <button *ngFor="let year of years" [ngClass]="{'btn': true, 'btn-primary': year == selectedYear}" (click)="loadScores(year, isMenSelected)" style="margin: 1px">{{year}}</button>
           <div>
-            <table *ngIf="isWomenScoreLoaded">
+            <table *ngIf="isScoreLoaded">
               <tr>
                 <td style="width:175px">Nafn</td>
-                <td style="text-align: center;width:75px" *ngFor="let tournament of womenScores.tournaments">{{tournament.name}}</td>
+                <td style="text-align: center;width:75px" *ngFor="let tournament of scores.tournaments">{{tournament.name}}</td>
                 <td style="text-align: center;width:75px">Samtals</td>
               </tr>
 
-              <tr *ngFor="let player of womenScores.playerScores">
-                <td >{{player.name}}</td>
+              <tr *ngFor="let player of scores.playerScores">
+                <td nowrap>{{player.name}}</td>
                 <td *ngFor="let score of player.score" style="text-align:center;">
                   <div *ngIf="score > 0">{{score}}</div>
                   <div *ngIf="score == 0">&nbsp;</div>
                 </td>
                 <td style="text-align: center;">{{player.totalScore}}</td>
+                <td style="width: 100%">&nbsp;</td>
               </tr>
 
             </table>
           </div>
 
-          
-            <div>
-              <table *ngIf="isMenScoreLoaded">
-                <tr>
-                  <td style="width:175px">Nafn</td>
-                  <td style="text-align: center;width:75px" *ngFor="let tournament of mensScores.tournaments">{{tournament.name}}</td>
-                  <td style="text-align: center;width:75px">Samtals</td>
-                </tr>
-  
-                <tr *ngFor="let player of mensScores.playerScores">
-                  <td>{{player.name}}</td>
-                  <td *ngFor="let score of player.score" style="text-align:center">
-                    <div *ngIf="score > 0">{{score}}</div>
-                    <div *ngIf="score == 0">&nbsp;</div>
-                  </td>
-                  <td style="text-align: center;">{{player.totalScore}}</td>
-                </tr>
-  
-              </table>
-            </div>
-  
-
+       
           
         </div>
       </div>

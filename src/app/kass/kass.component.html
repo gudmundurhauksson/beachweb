@@ -5,7 +5,7 @@
     <input *ngIf="!isWaiting" type="text" id="gsm" name="gsm" class="form-control" placeholder="gsm" required autofocus [(ngModel)]="gsm">
     <label *ngIf="!isWaiting">Athugið: Rukkun er send á símanúmerið og þarf að greiðast innan 90 sekúndna.</label>
 
-    <button *ngIf="!isWaiting" class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="send()">Senda rukkun</button>
+    <button *ngIf="!isWaiting" class="btn btn-primary btn-block" type="submit" (click)="send()">Senda rukkun</button>
 
     <label *ngIf="isWaiting">Beðið eftir greiðslu. Vinsamlegast bíðið ...</label>
     <h1 *ngIf="isWaiting" style="text-align: center">{{timerCount}}</h1>
@@ -26,7 +26,7 @@
       <span id="modalMessage">{{modalBody}}</span>
 
       <div>
-          <button type="button" class="btn btn-sm center-block" aria-label="Close" (click)="modalRef.hide()">
+          <button type="button" class="btn center-block" aria-label="Close" (click)="modalRef.hide()">
             Loka
           </button>
         </div>

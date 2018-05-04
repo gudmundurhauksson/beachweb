@@ -5,8 +5,8 @@
       <div class="panel panel-primary">
 
         <div class="panel-body">
-          <button style="margin: 1px" (click)="refresh(2)" [ngClass]="{'btn': true, 'btn-sm':true, 'btn-primary': typeSelected == 2}">Konur</button>
-          <button style="margin: 1px" (click)="refresh(1)" [ngClass]="{'btn': true, 'btn-sm':true, 'btn-primary': typeSelected == 1}">Karlar</button>
+          <button style="margin: 1px" (click)="refresh(2)" [ngClass]="{'btn': true, 'btn-primary': typeSelected == 2}">Konur</button>
+          <button style="margin: 1px" (click)="refresh(1)" [ngClass]="{'btn': true, 'btn-primary': typeSelected == 1}">Karlar</button>
         </div>
         <div class="panel-body">
           <table *ngIf="isRegistrationsLoaded">
@@ -41,8 +41,8 @@
 
               <tr *ngIf="isLocked(division[0].teamDivision)">
                 <td colspan="6">
-                  <button (click)="viewMatches(division[0].teamDivision)" style="margin: 1px" class="btn btn-sm">Stilla upp tímaplani</button>
-                  <button (click)="clearMatches(division[0].teamDivision)" style="margin: 1px" class="btn btn-sm">Hreinsa tímaplan</button>
+                  <button (click)="viewMatches(division[0].teamDivision)" style="margin: 1px" class="btn">Stilla upp tímaplani</button>
+                  <button (click)="clearMatches(division[0].teamDivision)" style="margin: 1px" class="btn">Hreinsa tímaplan</button>
                   
                 </td>
               </tr>

@@ -12,11 +12,9 @@ import { AuthService } from '../auth.service';
 })
 export class TournamentScoresComponent implements OnInit {
 
-  public womenScores: TournamentScore[];
-  public mensScores: TournamentScore[];
+  public scores: TournamentScore[];
 
-  public isWomenScoreLoaded: boolean;
-  public isMenScoreLoaded: boolean;
+  public isScoreLoaded: boolean;
 
   public yearNow: number;
   public years: number[];
@@ -25,8 +23,7 @@ export class TournamentScoresComponent implements OnInit {
 
   constructor(private data: DataService, private auth: AuthService) {
 
-    this.isWomenScoreLoaded = false;
-    this.isMenScoreLoaded = false;    
+    this.isScoreLoaded = false;
 
     if (auth.isLoggedIn()) {
       this.isMenSelected = auth.player.isMale;
@@ -51,19 +48,18 @@ export class TournamentScoresComponent implements OnInit {
     this.selectedYear = year;
     this.isMenSelected = isMen;
 
-    this.isMenScoreLoaded = false;
-    this.isWomenScoreLoaded = false;
+    this.isScoreLoaded = false;
 
     if (!isMen) {
       this.data.getTournamentPlayersScoresByTypeAndYear(0x02, year).subscribe((s: any) => {
-        this.womenScores = s;
-        this.isWomenScoreLoaded = true;
+        this.scores = s;
+        this.isScoreLoaded = true;
       });
     }
     else {
       this.data.getTournamentPlayersScoresByTypeAndYear(0x01, year).subscribe((s: any) => {
-        this.mensScores = s;
-        this.isMenScoreLoaded = true;
+        this.scores = s;
+        this.isScoreLoaded = true;
       });
     }
   }

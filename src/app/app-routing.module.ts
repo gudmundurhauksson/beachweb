@@ -25,6 +25,7 @@ import { ArrangeMatchesComponent } from './arrange-matches/arrange-matches.compo
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ArrangeMatchesTimesComponent } from './admin/arrange-matches-times/arrange-matches-times.component';
+import { TournamentOverviewComponent } from './tournament-overview/tournament-overview.component';
 
 const routes: Routes = [
   {
@@ -119,6 +120,10 @@ const routes: Routes = [
   {
     path: 'admin-arrange-matches-times/:tournamentId/:type/:division',
     component: ArrangeMatchesTimesComponent
+  },
+  {
+    path: 'tournaments/:id',
+    component: TournamentOverviewComponent
   }
 ];
 

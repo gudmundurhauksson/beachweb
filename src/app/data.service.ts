@@ -21,6 +21,7 @@ import { DivisionMatch } from './models/divisionMatch';
 @Injectable()
 export class DataService {
 
+  //private baseUrl = "https://kass.lifelinesieeg.com/";
   private baseUrl = "http://localhost:3564/";
   private apiUrl = this.baseUrl + "api/";
 
@@ -372,4 +373,29 @@ export class DataService {
     return this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamTypeId + "/" + division + "/scoresheets", {responseType: ResponseContentType.Blob}).map(response => 
       (<Response>response).blob());
   };
+
+  startTournament(tournamentId: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "tournaments/" + tournamentId + "/start", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  };
+
+  endTournament(tournamentId: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "tournaments/" + tournamentId + "/end", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  };
+
+  getOngoingTournaments() {
+    var result = this.http.get(this.apiUrl + "tournaments/ongoing");
+    return result.map(s => s.json());
+  }
 }

@@ -1,20 +1,28 @@
 <div class="container">
-  <div class="card card-container">
-    <p id="profile-name" class="profile-name-card"></p>
-    <form class="form-signin">
-      
-      <div *ngFor="let tournament of tournaments">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <p id="profile-name" class="profile-name-card"></p>
+          <form class="form-signin">
 
-        <div class="radio-gender">
-          <label class="radioLabel">
-            <input type="radio" name="tournament" [value]="tournament.id" (change)="onTournamentSelected(tournament)" />{{tournament.name}} - {{tournament.date}} - {{tournament.location.name}}
-            <span *ngIf="tournament.isRegistrationOpen">(Opið fyrir skráningu)</span>
-          </label>
+            <div *ngFor="let tournament of tournaments">
+
+              <div class="radio-gender">
+                <label class="radioLabel">
+                  <input type="radio" name="tournament" [value]="tournament.id" (change)="onTournamentSelected(tournament)" />{{tournament.name}} - {{tournament.date}} - {{tournament.location.name}}
+                  <span *ngIf="tournament.isRegistrationOpen">(Opið fyrir skráningu)</span>
+                </label>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-block" type="submit" (click)="open()" *ngIf="selected != null && selected.id >= 0 && !selected.isRegistrationOpen">Opna fyrir skráningu</button>
+            <button class="btn btn-primary btn-block" type="submit" (click)="close()" *ngIf="selected != null && selected.id >= 0 && selected.isRegistrationOpen">Loka fyrir skráningu</button>
+            <button class="btn btn-primary btn-block" type="submit" (click)="start()" *ngIf="selected != null && selected.id >= 0 && !selected.isOngoing">Hefja mót</button>
+            <button class="btn btn-primary btn-block" type="submit" (click)="end()" *ngIf="selected != null && selected.id >= 0 && selected.isOngoing">Ljúka móti</button>
+          </form>
         </div>
       </div>
-
-      <button class="btn btn-m btn-primary btn-success" type="submit" (click)="open()" [disabled]="selected.id < 0 || selected.isRegistrationOpen">Opna fyrir skráningu</button>
-      <button class="btn btn-m btn-primary btn-fail" type="submit" (click)="close()" [disabled]="selected.id < 0 || !selected.isRegistrationOpen">Loka fyrir skráningu</button>
-    </form>
+    </div>
   </div>
 </div>

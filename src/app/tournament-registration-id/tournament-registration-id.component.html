@@ -39,13 +39,13 @@
 
       <div *ngIf="otherPlayer == null">
         <input type="text" id="existingId" name="existingId" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="existingId">
-        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="search()">Leita</button>
+        <button class="btn btn-primary btn-block" type="submit" (click)="search()">Leita</button>
       </div>
 
       <div *ngIf="otherPlayer != null">
         <label>{{otherPlayer.name}} ({{otherPlayer.id}})</label>
-        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" [disabled]="!canConfirm()" (click)="confirm()">Skrá lið</button>
-        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="cancel()">Hætta við</button>
+        <button class="btn btn-primary btn-block" type="submit" [disabled]="!canConfirm()" (click)="confirm()">Skrá lið</button>
+        <button class="btn btn-primary btn-block" type="submit" (click)="cancel()">Hætta við</button>
       </div>
 
     </form>
@@ -71,7 +71,7 @@
     <span id="modalMessage">{{modalBody}}</span>
 
     <div>
-      <button type="button" class="btn btn-sm center-block" aria-label="Close" (click)="modalRef.hide()">
+      <button type="button" class="btn center-block" aria-label="Close" (click)="modalRef.hide()">
         Loka
       </button>
     </div>
@@ -86,9 +86,9 @@
     </button>
   </div>
   <div class="modal-body">
-    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="newPlayer()">Skrá nýjan leikmann</button>
+    <button class="btn btn-primary btn-block" type="submit" (click)="newPlayer()">Skrá nýjan leikmann</button>
   
-      <button type="button" class="btn btn-sm btn-block" aria-label="Close" (click)="modalRef.hide()">
+      <button type="button" class="btn btn-block" aria-label="Close" (click)="modalRef.hide()">
         Loka
       </button>
     </div>

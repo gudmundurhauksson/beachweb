@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { DataService } from '../data.service';
 import { AuthService } from '../auth.service';
+import { Tournament } from '../models/tournament';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,11 +12,14 @@ import { AuthService } from '../auth.service';
 })
 export class HomeComponent implements OnInit {
 
+  public ongoings: Tournament[];
 
+  constructor(private _data: DataService, private _auth: AuthService, private router : Router) {
+    this.ongoings = new Array();
 
-  constructor(private _data: DataService, private _auth: AuthService) {
-
-
+    this._data.getOngoingTournaments().subscribe((s:any) => {
+      this.ongoings = <Tournament[]>s;
+    });
   }
 
   isAdmin(): boolean {
@@ -27,6 +32,13 @@ export class HomeComponent implements OnInit {
 
   isLoggedIn():boolean {
     return this._auth.isLoggedIn();
+  }
+
+  openTournament(tournamentId: number) {
+    console.log("navigating:" + tournamentId);
+
+    this.router.navigate(['/tournaments/' + tournamentId]);
+
   }
 
   ngOnInit() {

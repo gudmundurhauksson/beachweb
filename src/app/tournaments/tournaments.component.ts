@@ -25,9 +25,15 @@ export class TournamentsComponent implements OnInit {
       router.navigate(['']);
     }
 
+    this.refresh();
+    
+  }
+
+  refresh() {
     var date = new Date();
     this._data.getTournaments(date.getFullYear()).subscribe((s: any) => {
       this.tournaments = <Tournament[]>s;
+      console.log(this.tournaments);
     }, error => {
 
     });
@@ -36,17 +42,12 @@ export class TournamentsComponent implements OnInit {
 
   open(): void {
     if (this.selected == null || this.selected.id < 0) {
-      console.log(this.selected);
       return;
     }
 
     this._data.openRegistration(this.selected.id).subscribe((s: any) => {
-      console.log(s);
-
-      var idx = this.tournaments.indexOf(this.selected);
-      this.tournaments.splice(idx, 1, <Tournament>s);
-
       this.selected = new Tournament();
+    this.refresh();
     },
       (error: any) => {
         console.log(error);
@@ -58,15 +59,39 @@ export class TournamentsComponent implements OnInit {
       return;
     }
 
-    console.log(this.selected);
+    console.log("closing: " + this.selected);
 
     this._data.closeRegistration(this.selected.id).subscribe((s: any) => {
-      console.log(s);
-
-      var idx = this.tournaments.indexOf(this.selected);
-      this.tournaments.splice(idx, 1, <Tournament>s);
-
       this.selected = new Tournament();
+      this.refresh();
+    },
+      (error: any) => {
+        console.log(error);
+      });
+  }
+
+  start(): void {
+    if (this.selected == null || this.selected.id < 0) {
+      return;
+    }
+
+    this._data.startTournament(this.selected.id).subscribe((s: any) => {
+      this.selected = new Tournament();
+      this.refresh();
+    },
+      (error: any) => {
+        console.log(error);
+      });
+  }
+
+  end(): void {
+    if (this.selected == null || this.selected.id < 0) {
+      return;
+    }
+
+    this._data.endTournament(this.selected.id).subscribe((s: any) => {
+      this.selected = new Tournament();
+      this.refresh();
     },
       (error: any) => {
         console.log(error);

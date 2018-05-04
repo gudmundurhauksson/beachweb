@@ -12,4 +12,6 @@ export class Tournament {
     location: BeachLocation;
     dateTicks: number;    
     unixDateTicks: number;
+    year: number;
+    isOngoing: boolean;
 }

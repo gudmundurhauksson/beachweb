@@ -56,12 +56,12 @@
                   <tr>
                     <td [ngStyle]="{'background-color':getColor(match, true),'color':'white','font-weight':bold}" (click)="assignMatchToSlot(selectedTimeSlot, match, false)">{{match.label}}({{match.team1.id}}-{{match.team2.id}})
                     </td>
-                    <td>&nbsp;<button *ngIf="match.courtId >= 0 && i == 0" (click)="autoAssignment(groupView.matches)" class="btn btn-sm btn-primary" style="height: 18px; padding: 0px;">Sjálfvirk röðun</button></td>
+                    <td>&nbsp;<button *ngIf="match.courtId >= 0 && i == 0" (click)="autoAssignment(groupView.matches)" class="btn btn-primary" style="height: 18px; padding: 0px;">Sjálfvirk röðun</button></td>
                   </tr>
                 </ng-container>
 
                 <br />
-                <button class="btn btn-primary btn-sm" (click)="downloadScoresheet(tournamentId, groupView.type, groupView.division)">Leikskýrslur</button>
+                <button class="btn btn-primary" (click)="downloadScoresheet(tournamentId, groupView.type, groupView.division)">Leikskýrslur</button>
                 <br />
                 <br />
 

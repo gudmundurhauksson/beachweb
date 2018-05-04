@@ -12,10 +12,26 @@
       </a>
     </div>-->
 
+    <div class="col-sm-6" *ngIf="ongoings.length > 0">
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">MÓT Í GANGI</div>
+        <div class="panel-body">
+          <div *ngFor="let tournament of ongoings" style="margin: 4px; font-size:10px">
+            <button class="btn btn-block btn-primary" (click)="openTournament(tournament.id)">            
+              {{tournament.name}} - {{tournament.location.name}}
+            </button>
+          </div>
+        </div>
+        <div class="panel-footer">Mót í gangi</div>
+      </div>
+
+    </div>
+
     <div class="col-sm-6">
       <a routerLink="/scores/tournaments/">
         <div class="panel panel-primary">
-          <div class="panel-heading">MÓTASTAÐA</div>
+          <div class="panel-heading">STIGASTAÐA</div>
           <div class="panel-body">
             <img src="./assets/trophy.jpg" class="img-responsive" style="width:100%" alt="Image">
           </div>
@@ -35,7 +51,7 @@
         </div>
       </a>
     </div>
-   
+
     <div class="col-sm-6" *ngIf="isLoggedIn()">
       <a routerLink="/my-tournaments">
         <div class="panel panel-primary">

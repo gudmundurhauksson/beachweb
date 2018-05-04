@@ -2,7 +2,6 @@
 @import 'defines.scss';
 
 // http://www.color-hex.com/color-palette/895
-
 body {
     background: linear-gradient(
         rgba(255,204,92, 0.45), 
@@ -16,6 +15,42 @@ body {
     font-family:  'Raleway', 'Arial';    
     color: gray;
     padding-top: 75px;      
+}
+
+.panel-footer {
+    display: none;
+}
+
+
+
+.panel {
+  
+    border: 0px;
+    border-radius: 0px;
+}   
+
+.btn {
+    border-radius: 0px;
+}
+
+.btn-primary {
+    background-color: rgb(255,111,105);  
+    border-color: rgb(255,111,105);      
+}
+
+.btn-primary:hover  {
+    background-color: rgb(255,111,105);      
+    border-color: rgb(255,111,105);  
+}
+
+.btn-primary:active  {
+    background-color: rgb(255,111,105);      
+    border-color: rgb(255,111,105);  
+}
+
+.btn-primary:focus  {
+    background-color: rgb(255,111,105);      
+    border-color: rgb(255,111,105);  
 }
 
 ul {
@@ -203,13 +238,6 @@ footer {
     min-height:200px;
 }
 
-/* Hide the carousel text when the screen is less than 600 pixels wide */
-@media (max-width: 600px) {
-  .carousel-caption {
-    display: none; 
-  }
-}
-
 h3 {
     color: rgb(255,111,105);
     font-weight: 900
@@ -228,3 +256,51 @@ h3 {
 $border-radius-base: 0px;
 $border-radius-small: 0px;
 $border-radius-large: 0px;
+
+tr:nth-child(even) {
+    background-color: rgb(255,238,173);
+}
+
+@media (max-width: 699px) { 
+    
+
+    body {        
+        background: white;
+        padding: 0em;
+        padding-top: 51px;      
+        font-family:  'Arial';
+        font-size: 10px;
+    }
+
+    .card-container.card {        
+        padding: 0px;
+    }
+
+    .col-sm-12 {
+        padding: 0px;
+    }
+
+    .panel-body {
+        padding: 0px;
+        border-radius: 0px;
+    }    
+
+    .panel {
+        margin-bottom: 0px;
+        border: 0px;
+        border-radius: 0px;
+    }   
+
+    .col-sm-6 {
+        padding:0px;
+    }
+
+    .panel-footer {
+        display: none;
+    }
+
+    .btn {
+        font-size: 8px;
+    }
+
+}

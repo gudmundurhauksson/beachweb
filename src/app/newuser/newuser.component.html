@@ -23,7 +23,7 @@
             <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="lykilorð" required [(ngModel)]="player.password">
             <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="lykilorð endurtekið" required [(ngModel)]="confirm">
             
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" (click)="register()">Nýskrá</button>
+            <button class="btn btn-primary btn-block" type="submit" (click)="register()">Nýskrá</button>
         </form><!-- /form -->
         <div>        
       </div>      
@@ -43,7 +43,7 @@
         <span id="modalMessage">{{modalBody}}</span>
 
         <div>
-                <button type="button" class="btn btn-sm center-block" aria-label="Close" (click)="modalRef.hide()">
+                <button type="button" class="btn center-block" aria-label="Close" (click)="modalRef.hide()">
                   Loka
                 </button>
               </div>

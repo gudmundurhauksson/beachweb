@@ -1,20 +1,43 @@
 <div class="container">
-  <div class="card card-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-primary">
+        <div class="panel-body">
 
-    <h3>Mót sumarsins</h3>
+          <h3>{{yearNow}}</h3>
 
-    <div *ngFor="let tournament of tournaments">
-      <label>{{tournament.date}} - </label>
-      <span>{{tournament.name}}</span>
+          <div *ngFor="let tournament of tournaments">
 
-      <span>{{tournament.location.name}}</span>
+            <label>{{tournament.date}} - </label>
+            <span>{{tournament.name}}</span>
 
-      <a *ngIf="tournament.isRegistrationOpen" routerLink="{{tournament.id}}/register">
-        - Opið fyrir skráningu!
-      </a>
-      
-      <a *ngIf="isAdmin()" routerLink="/admin-all-registrations/{{tournament.id}}"> Allar Skráningar (admin) </a>
+            <span>{{tournament.location.name}}</span>
+
+            <a *ngIf="tournament.isRegistrationOpen" routerLink="{{tournament.id}}/register">
+              - Opið fyrir skráningu!
+            </a>
+
+            <a *ngIf="isAdmin()" routerLink="/admin-all-registrations/{{tournament.id}}"> Allar Skráningar (admin) </a>
+          </div>
+
+          <h4>Eldri mót</h4>
+
+          <div *ngFor="let tournament of oldTournaments">
+
+            <label>{{tournament.date}} - </label>
+            <span>{{tournament.name}}</span>
+
+            <span>{{tournament.location.name}}</span>
+
+            <a *ngIf="tournament.isRegistrationOpen" routerLink="{{tournament.id}}/register">
+              - Opið fyrir skráningu!
+            </a>
+
+            <a *ngIf="isAdmin()" routerLink="/admin-all-registrations/{{tournament.id}}"> Allar Skráningar (admin) </a>
+          </div>
+
+        </div>
+      </div>
     </div>
-
   </div>
 </div>
