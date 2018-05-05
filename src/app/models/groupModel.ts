@@ -2,7 +2,7 @@ import { ArrangeMatchesComponent } from "../arrange-matches/arrange-matches.comp
 import { Match } from "./match";
 
 export class GroupModel {
-    name: string;
+    name: string;    
     teamIds: Array<number>;
     matches: Array<Match>;
 }

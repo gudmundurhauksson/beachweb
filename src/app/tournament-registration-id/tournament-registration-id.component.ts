@@ -26,7 +26,7 @@ export class TournamentRegistrationIdComponent implements OnInit {
   public modalRef: BsModalRef; // {1}
   public otherPlayer: Player;
 
-  constructor(private route: ActivatedRoute, private _data: DataService,
+  constructor(private route: ActivatedRoute, private data: DataService,
     private _auth: AuthService, private modalService: BsModalService,
     private router: Router) {
 
@@ -41,13 +41,13 @@ export class TournamentRegistrationIdComponent implements OnInit {
     this.route.params.subscribe((res: any) => {
       this.id = res.id
 
-      _data.getTeamByPlayerIdAndTournamentId(this._auth.player.id, this.id).subscribe((s: any) => {
+      data.getTeamByPlayerIdAndTournamentId(this._auth.player.id, this.id).subscribe((s: any) => {
           console.log("already registered!");
           this.router.navigate(['my-tournaments']);
           return;
       }, (error: any) => {
         console.log("get tournament!");
-        _data.getTournament(this.id).subscribe((s: any) => {
+        data.getTournament(this.id).subscribe((s: any) => {
           this.tournament = s;
 
           if(this.isMaleTournament()) {
@@ -115,7 +115,7 @@ export class TournamentRegistrationIdComponent implements OnInit {
       return;
     }
 
-    this._data.findPlayerById(this.existingId).subscribe((s: any) => {
+    this.data.findPlayerById(this.existingId).subscribe((s: any) => {
       var found: Player;
       found = s;
 
@@ -174,7 +174,7 @@ export class TournamentRegistrationIdComponent implements OnInit {
     team.tournamentId = this.tournament.id;
     team.teamTypeId = this.tournamentType;
 
-    this._data.registerTeam(team).subscribe((s: any) => {
+    this.data.registerTeam(team).subscribe((s: any) => {
       this.router.navigate(['/my-tournaments']);
     }, err => {
 

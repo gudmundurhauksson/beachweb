@@ -14,10 +14,10 @@ export class HomeComponent implements OnInit {
 
   public ongoings: Tournament[];
 
-  constructor(private _data: DataService, private _auth: AuthService, private router : Router) {
+  constructor(private data: DataService, private _auth: AuthService, private router : Router) {
     this.ongoings = new Array();
 
-    this._data.getOngoingTournaments().subscribe((s:any) => {
+    this.data.getOngoingTournaments().subscribe((s:any) => {
       this.ongoings = <Tournament[]>s;
     });
   }

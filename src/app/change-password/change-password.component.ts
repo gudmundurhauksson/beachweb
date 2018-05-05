@@ -15,7 +15,7 @@ export class ChangePasswordComponent implements OnInit {
   public confirm: string;
   public modalRef: BsModalRef; // {1}
 
-  constructor(private _data: DataService, private modalService: BsModalService, private router: Router) {
+  constructor(private data: DataService, private modalService: BsModalService, private router: Router) {
     this.player = new Player();
    }
 
@@ -36,7 +36,7 @@ export class ChangePasswordComponent implements OnInit {
       return;
     }
 
-    this._data.changePassword(this.player.password).subscribe(s => {
+    this.data.changePassword(this.player.password).subscribe(s => {
         this.showMessage("Aðgerð tókst", "Lykilorði var breytt.");
         this.router.navigate(['/']);
     }, err=> {

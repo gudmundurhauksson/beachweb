@@ -398,4 +398,9 @@ export class DataService {
     var result = this.http.get(this.apiUrl + "tournaments/ongoing");
     return result.map(s => s.json());
   }
+
+  getDivisions(tournamentId: number, type: number) {
+    var result = this.http.get(this.apiUrl + "tournaments/" + tournamentId + "/divisions/" + type);
+    return result.map(s => s.json());
+  }
 }

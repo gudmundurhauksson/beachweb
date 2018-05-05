@@ -15,7 +15,7 @@ export class TournamentRegistrationComponent implements OnInit {
   public oldTournaments: Array<Tournament>;
   public yearNow: number;
 
-  constructor(private _auth: AuthService, private _data: DataService) {
+  constructor(private _auth: AuthService, private data: DataService) {
 
     this.tournaments = new Array();
     this.oldTournaments = new Array();
@@ -27,10 +27,10 @@ export class TournamentRegistrationComponent implements OnInit {
 
     for (var i = date.getFullYear(); i >= 2016; i--) {
 
-      _data.getTournaments(i).subscribe((s: any) => {
+      data.getTournaments(i).subscribe((s: any) => {
         var local = <Tournament[]>s;        
 
-        _data.getLocations().subscribe((l: any) => {
+        data.getLocations().subscribe((l: any) => {
           for (var t = 0; t < local.length; t++) {
 
             var locations = <BeachLocation[]>l;

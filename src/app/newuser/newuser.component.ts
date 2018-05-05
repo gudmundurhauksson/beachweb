@@ -22,7 +22,7 @@ export class NewuserComponent implements OnInit {
   public player: Player;
   public modalRef: BsModalRef;
 
-  constructor(private _data: DataService,
+  constructor(private data: DataService,
     private route: ActivatedRoute,
     private location: Location,
     private modalService: BsModalService,
@@ -92,7 +92,7 @@ export class NewuserComponent implements OnInit {
     }
 
     // Create user 
-    this._data.register(this.player).subscribe(data => {
+    this.data.register(this.player).subscribe(data => {
 
       console.log(data);
       if (this.navigateBack) {

@@ -21,7 +21,7 @@ export class NewTournamentComponent implements OnInit {
   public isYouthKk: boolean;
   public isYouthKvk: boolean;
 
-  constructor(private _data: DataService, private _auth: AuthService, private _router: Router) {
+  constructor(private data: DataService, private _auth: AuthService, private _router: Router) {
     this.tournament = new Tournament();
     this.isKk = false;
     this.isKvk = false;
@@ -44,7 +44,7 @@ export class NewTournamentComponent implements OnInit {
 
     this.tournament.locationId = this.selectedLocation.id;
 
-    this._data.registerTournament(this.tournament).subscribe(s => {
+    this.data.registerTournament(this.tournament).subscribe(s => {
 
     },
       (error: any) => {
@@ -53,7 +53,7 @@ export class NewTournamentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._data.getLocations().subscribe((s: any) => {
+    this.data.getLocations().subscribe((s: any) => {
       this.locations = <BeachLocation[]>s;
       console.log(s);
     });

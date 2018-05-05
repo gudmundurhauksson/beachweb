@@ -25,7 +25,7 @@ export class KassComponent implements OnInit {
   constructor(private _auth : AuthService, 
     private router : Router, 
     private location : Location, 
-    private _data : DataService, 
+    private data : DataService, 
     private route: ActivatedRoute,
     private timer: SimpleTimer,
     private modalService: BsModalService) { 
@@ -40,7 +40,7 @@ export class KassComponent implements OnInit {
     }
 
     this.route.params.subscribe(res => this.teamId = res.id);
-    _data.canPay(this.teamId, _auth.player.id).subscribe(s => {
+    data.canPay(this.teamId, _auth.player.id).subscribe(s => {
     }, error => {
       //this.router.navigate(['/login']);
     });
@@ -84,7 +84,7 @@ export class KassComponent implements OnInit {
     }
 
     this.isVerifying = true;
-    this._data.verifyPayment(this.teamId).subscribe(s => {
+    this.data.verifyPayment(this.teamId).subscribe(s => {
       
       this.timer.unsubscribe(this.timerId);
       this.isVerifying = false;

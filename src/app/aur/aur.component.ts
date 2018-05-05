@@ -16,7 +16,7 @@ export class AurComponent implements OnInit {
   private timer: Observable<number>;
   private isTimerRunning: boolean;
 
-  constructor(private _auth : AuthService, private router : Router, private location : Location, private _data : DataService) { 
+  constructor(private _auth : AuthService, private router : Router, private location : Location, private data : DataService) { 
 
     if (_auth.player == null) {
       this.router.navigate([this.location.path().replace('kass', '')]);

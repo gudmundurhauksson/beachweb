@@ -17,7 +17,7 @@ export class TournamentsComponent implements OnInit {
   public tournaments: Tournament[];
   public selected: Tournament;
 
-  constructor(private _data: DataService, router: Router, private _auth: AuthService) {
+  constructor(private data: DataService, router: Router, private _auth: AuthService) {
     this.selected = new Tournament();
     this.selected.id = -1;
 
@@ -31,7 +31,7 @@ export class TournamentsComponent implements OnInit {
 
   refresh() {
     var date = new Date();
-    this._data.getTournaments(date.getFullYear()).subscribe((s: any) => {
+    this.data.getTournaments(date.getFullYear()).subscribe((s: any) => {
       this.tournaments = <Tournament[]>s;
       console.log(this.tournaments);
     }, error => {
@@ -45,7 +45,7 @@ export class TournamentsComponent implements OnInit {
       return;
     }
 
-    this._data.openRegistration(this.selected.id).subscribe((s: any) => {
+    this.data.openRegistration(this.selected.id).subscribe((s: any) => {
       this.selected = new Tournament();
     this.refresh();
     },
@@ -61,7 +61,7 @@ export class TournamentsComponent implements OnInit {
 
     console.log("closing: " + this.selected);
 
-    this._data.closeRegistration(this.selected.id).subscribe((s: any) => {
+    this.data.closeRegistration(this.selected.id).subscribe((s: any) => {
       this.selected = new Tournament();
       this.refresh();
     },
@@ -75,7 +75,7 @@ export class TournamentsComponent implements OnInit {
       return;
     }
 
-    this._data.startTournament(this.selected.id).subscribe((s: any) => {
+    this.data.startTournament(this.selected.id).subscribe((s: any) => {
       this.selected = new Tournament();
       this.refresh();
     },
@@ -89,7 +89,7 @@ export class TournamentsComponent implements OnInit {
       return;
     }
 
-    this._data.endTournament(this.selected.id).subscribe((s: any) => {
+    this.data.endTournament(this.selected.id).subscribe((s: any) => {
       this.selected = new Tournament();
       this.refresh();
     },

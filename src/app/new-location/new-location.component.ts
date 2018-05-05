@@ -11,12 +11,12 @@ export class NewLocationComponent implements OnInit {
 
   public location: BeachLocation;
 
-  constructor(private _data: DataService) {     
+  constructor(private data: DataService) {     
     this.location = new BeachLocation();
   }
 
   register() : void {
-    this._data.registerLocation(this.location).subscribe(data => {      
+    this.data.registerLocation(this.location).subscribe(data => {      
             console.log(data);
             //console.log("logging: " + m.statusText);
           }, err => {

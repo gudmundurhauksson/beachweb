@@ -17,7 +17,7 @@ export class MyTournamentsComponent implements OnInit {
   public teams: Team[];
   public modalRef: BsModalRef; // {1}
 
-  constructor(private _data: DataService, 
+  constructor(private data: DataService, 
     private _auth: AuthService,
     private modalService: BsModalService,
     private router : Router) {
@@ -44,7 +44,7 @@ export class MyTournamentsComponent implements OnInit {
 
     this.fetching = true;
 
-    this._data.getTournamentsStatus(this._auth.player).subscribe((s: any) => {
+    this.data.getTournamentsStatus(this._auth.player).subscribe((s: any) => {
       this.teams = <Team[]>s;
 
       this.fetching = false;
@@ -79,7 +79,7 @@ export class MyTournamentsComponent implements OnInit {
     this.modalRef.hide();
     console.log("Cancelling");
 
-    this._data.cancelRegistration(this.selectedTeam.id).subscribe(s => {
+    this.data.cancelRegistration(this.selectedTeam.id).subscribe(s => {
       this.teams = null;
     }, (err: any) => {
       console.log(err);

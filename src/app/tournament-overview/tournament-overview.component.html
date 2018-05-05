@@ -1,3 +1,22 @@
-<p>
-  tournament-overview works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+
+          <div class="btn-group">
+            <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 2}" *ngIf="isTournament(2)" (click)="loadDivisions(2)">Konur</button>
+            <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 1}" *ngIf="isTournament(1)" (click)="loadDivisions(1)">Karlar</button>
+          </div>
+          <br />
+          <span *ngFor="let division of divisions">
+            <button [ngClass]="{'btn':true, 'btn-primary': selectedDivision==division && selectedGroup==group}" *ngFor="let group of division.groups" (click)="loadDivisionGroup(division, group)">
+              {{division.division}} deild - {{group.name}}
+            </button>
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

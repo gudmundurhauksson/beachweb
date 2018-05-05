@@ -13,7 +13,7 @@ export class CompetitionsComponent implements OnInit {
 
   year: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private _data: DataService) {
+  constructor(private route: ActivatedRoute, private router: Router, private data: DataService) {
     this.route.params.subscribe(
       res => this.year = res.id
     );    

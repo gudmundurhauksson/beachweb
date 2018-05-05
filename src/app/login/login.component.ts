@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   public player: Player;
 
-  constructor(private _data: DataService, private _auth: AuthService, private modalService: BsModalService, private router : Router) {
+  constructor(private data: DataService, private _auth: AuthService, private modalService: BsModalService, private router : Router) {
     this.player = new Player();
   }
 
