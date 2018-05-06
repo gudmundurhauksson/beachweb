@@ -16,25 +16,53 @@
             </button>
           </span>
 
+          <h4 *ngIf="table != null && table.entries != null && table.entries.length > 0">Tafla:</h4>
+          <table *ngIf="table != null && table.entries != null && table.entries.length > 0">
+            <thead>
+              <tr>
+                <th>Lið</th>
+                <th style="text-align: center">Leikir</th>
+                <th style="text-align: center">&nbsp;Unnir</th>
+                <th style="text-align: center">&nbsp;Hrinur</th>
+                <th style="text-align: center">&nbsp;Stig</th>
+                <th style="text-align: center">&nbsp;Hlutföll</th>
+              </tr>
+            </thead>
+
+            <tr *ngFor="let entry of table.entries">
+              <td>{{entry.name}}</td>
+              <td style="text-align: center">{{entry.playedMatches}}</td>
+              <td style="text-align: center">&nbsp;{{entry.wonMatches}}</td>
+              <td style="text-align: center">&nbsp;{{entry.setsWon}} / {{entry.setsLost}}</td>
+              <td style="text-align: center">&nbsp;{{entry.pointsFor}} / {{entry.pointsAgainst}}</td>
+              <td style="text-align: center">&nbsp;{{formatRatio(entry.ratioWon)}} / {{formatRatio(entry.ratioPoints)}}</td>
+            </tr>
+          </table>
+
+          <h4 *ngIf="matchesInGroup.length > 0">Leikir:</h4>
           <table *ngIf="matchesInGroup.length > 0">
             <thead>
               <tr>
                 <th>Tími</th>                
-                <th>Lið</th>
-                <th>Völlur</th>
-                <th>Úrslit</th>                
+                <th>&nbsp;Lið</th>
+                <th>&nbsp;Völlur</th>
+                <th>&nbsp;Úrslit</th>                
               </tr>              
             </thead>
 
             <tr *ngFor="let match of matchesInGroup">
               <td>{{match.date}}</td>
-              <td>{{match.team1}} - {{match.team2}}</td>
-              <td>{{match.courtName}}</td>
+              <td>&nbsp;{{match.team1}} - {{match.team2}}</td>
+              <td>&nbsp;{{match.courtName}}</td>
               <td>&nbsp;
+                {{getMatchResults(match)}}
+
                 <button *ngIf="isAdmin()" (click)="enterResults(match)">Úrslit</button>
               </td>
             </tr>
           </table>
+
+          
         </div>
       </div>
     </div>

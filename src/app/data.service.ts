@@ -411,10 +411,7 @@ export class DataService {
   }
 
   getMatchResult(round: number, team1Id: number, team2Id: number): Observable<Response> {
-    var data: AuthData;
-    data = <AuthData>this.load("authentication");
-
-    var result = this.http.get(this.apiUrl + "matches/" + round + "/" + team1Id + "/" + team2Id + "/result", this.getAuthorizationRequestOption(data));
+    var result = this.http.get(this.apiUrl + "matches/" + round + "/" + team1Id + "/" + team2Id + "/result");
     var tmp = result.map(s => s.json());
 
     return tmp;
@@ -433,8 +430,16 @@ export class DataService {
 
     var result = this.http.post(this.apiUrl + "matches/" + round + "/set", resultSet, this.getAuthorizationRequestOption(data));
     var tmp = result.map((res: Response) => res.json());
-    
+
     return tmp;
   }
+
+  getDivisionGroupTable(tournamentId: number, teamTypeId: number, division: number, divisionGroup: number) {
+    var result = this.http.get(this.apiUrl + "matches/" + tournamentId + "/"+ teamTypeId + "/"+ division + "/"+ divisionGroup + "/table");
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
 
 }

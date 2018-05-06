@@ -7,6 +7,8 @@ import { DivisionMatch } from '../models/divisionMatch';
 import { GroupModel } from '../models/groupModel';
 import { SimpleDivisionMatch } from '../models/simpleDivisionMatch';
 import { AuthService } from '../auth.service';
+import { SimpleDivisionMatchResult } from '../models/simpleDivisionMatchResult';
+import { DivisionGroupTable } from '../models/divisionGroupTable';
 
 @Component({
   selector: 'app-tournament-overview',
@@ -21,6 +23,7 @@ export class TournamentOverviewComponent implements OnInit {
   public selectedDivision: Division;
   public selectedGroup: GroupModel;
   public matchesInGroup: SimpleDivisionMatch[];
+  public table: DivisionGroupTable;
 
   constructor(private route: ActivatedRoute, private data: DataService, private auth : AuthService, private router: Router) {
     this.tournament = null;
@@ -29,6 +32,7 @@ export class TournamentOverviewComponent implements OnInit {
     this.selectedDivision = null;
     this.selectedGroup = null;
     this.matchesInGroup = new Array();
+    this.table = null;
 
     this.route.params.subscribe((res: any) => {
       var tournamentId = res.id;    
@@ -68,6 +72,8 @@ export class TournamentOverviewComponent implements OnInit {
     this.selectedDivision = null;
     this.selectedGroup = null;
     this.divisions = new Array();
+    this.matchesInGroup = new Array();
+    this.table = null;
 
     this.data.getDivisions(this.tournament.id, type).subscribe((s : any) => {
       this.divisions = <Division[]>s;
@@ -81,8 +87,16 @@ export class TournamentOverviewComponent implements OnInit {
       }
       
       if (this.selectedDivision != null && this.selectedGroup != null) {        
-        this.loadDivisionGroup(this.selectedDivision, this.selectedGroup);
+        this.loadDivisionGroup(this.selectedDivision, this.selectedGroup);        
       }
+    });
+  }
+
+  private loadDivisionTable(division: Division, group: GroupModel) {
+    this.data.getDivisionGroupTable(this.tournament.id, this.typeSelected, division.division, group.divisionGroup).subscribe((s:any) => {
+      this.table = <DivisionGroupTable>s;
+      console.log("Got table" + this.table);
+      console.log("entries:" + this.table.entries.length);
     });
   }
 
@@ -111,9 +125,46 @@ export class TournamentOverviewComponent implements OnInit {
     this.selectedGroup = group;
     this.matchesInGroup = new Array();
 
+    this.loadDivisionTable(this.selectedDivision, this.selectedGroup);
+
     this.data.getSimpleDivisionMatches(this.tournament.id, this.typeSelected, this.selectedDivision.division, this.selectedGroup.divisionGroup).subscribe((s:any) => {
       this.matchesInGroup = <SimpleDivisionMatch[]>s;
+
+      for (var i = 0; i < this.matchesInGroup.length; i++) {
+        this.loadResults(this.matchesInGroup[i]);
+      }
     });
+  }
+
+  loadResults(match: SimpleDivisionMatch) {
+    this.data.getMatchResult(match.round, match.team1Id, match.team2Id).subscribe((s:any) => {
+      match.results = <SimpleDivisionMatchResult[]>s;
+    });
+  }
+
+  getMatchResults(match: SimpleDivisionMatch) {
+    var result: string;
+    var hasResults: boolean;
+    hasResults = false;
+    result = "(";
+    if (match != null && match.results != null) {
+      for (var i = 0; i < match.results.length; i++) {
+        var res = match.results[i];
+        if (res.complete) {
+          hasResults = true;
+          result += res.team1Score + ":"  + res.team2Score + ",";
+        }
+      }
+    }
+
+    result = result.slice(0, -1);
+    result += ")";
+
+    if (!hasResults) {
+      return "";
+    }
+
+    return result;
   }
 
   isAdmin() {
@@ -129,6 +180,14 @@ export class TournamentOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  formatRatio(ratio: number) {
+    if (ratio == -1) {
+      return "-";
+    }
+
+    return ratio.toFixed(2);
   }
 
 }

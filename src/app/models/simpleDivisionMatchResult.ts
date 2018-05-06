@@ -4,4 +4,5 @@ export class SimpleDivisionMatchResult {
     team1Score: number;
     team2Score: number;
     setNumber: number;
+    complete: boolean;
 }

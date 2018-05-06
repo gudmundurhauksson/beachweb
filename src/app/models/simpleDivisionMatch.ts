@@ -1,3 +1,5 @@
+import { SimpleDivisionMatchResult } from "./simpleDivisionMatchResult";
+
 export class SimpleDivisionMatch {
     date: string;
     team1Id: number;
@@ -10,4 +12,5 @@ export class SimpleDivisionMatch {
     courtName: string;
     teamTypeId: number;
     round: number;
+    results: SimpleDivisionMatchResult[];
 }
