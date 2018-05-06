@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <table *ngIf="team1 != null && team2 != null && setResults != null && setResults.length > 0">
+            <thead>
+              <tr>
+                <th>Set</th>
+                <th>&nbsp;</th>
+                <th>{{team1.player1}} / {{team1.player2}}</th>
+                <th>&nbsp;-&nbsp;</th>
+                <th>{{team2.player1}} / {{team2.player2}}</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+
+            <tr *ngFor="let set of setResults">
+              <td>{{set.setNumber}}</td>
+              <td>&nbsp;</td>
+              <td><input type="text" [(ngModel)]="set.team1Score"></td>
+              <td>&nbsp;</td>
+              <td><input type="text" [(ngModel)]="set.team2Score"></td>
+              <td><button class="btn" (click)="sendResults(set)">Vista</button></td>
+            </tr>
+          </table>
+
+          <button (click)="navigateBack()">Til baka</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

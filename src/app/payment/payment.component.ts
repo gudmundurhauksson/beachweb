@@ -12,12 +12,12 @@ import { AuthService } from '../auth.service';
 export class PaymentComponent implements OnInit {
 
 
-  private teamId : number;
+  public teamId : number;
 
-  constructor(private _auth : AuthService, private route: ActivatedRoute, private router: Router, private location: Location) {
+  constructor(private auth : AuthService, private route: ActivatedRoute, private router: Router, private location: Location) {
     this.route.params.subscribe(res => this.teamId = res.id);
     
-    if (!_auth.isLoggedIn() || _auth.player == null) {
+    if (!auth.isLoggedIn() || auth.player == null) {
       this.router.navigate(['/login']);
       return;
     }

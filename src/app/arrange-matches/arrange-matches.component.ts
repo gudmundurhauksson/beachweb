@@ -7,7 +7,7 @@ import { AuthService } from '../auth.service';
 import { DataService } from '../data.service';
 import { GroupModel } from '../models/groupModel';
 import { Registration } from '../models/registration';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 import { Match } from '../models/match';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DivisionMatch } from '../models/divisionMatch';
@@ -27,7 +27,7 @@ export class ArrangeMatchesComponent implements OnInit {
   public groups: GroupModel[];
   public finals: DivisionMatch[];
   public isFinalsDecided : boolean;
-  private groupRule: number;
+  public groupRule: number;
   public modalRef: BsModalRef; // {1}  
 
   constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute, private router: Router, private modalService: BsModalService) {

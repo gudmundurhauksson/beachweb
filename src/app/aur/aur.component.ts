@@ -3,7 +3,6 @@ import { DataService } from '../data.service';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import {Observable} from 'rxjs/Rx'
 
 @Component({
   selector: 'app-aur',
@@ -12,27 +11,22 @@ import {Observable} from 'rxjs/Rx'
 })
 export class AurComponent implements OnInit {
 
-  public gsm : string;
-  private timer: Observable<number>;
+  public gsm: string;  
   private isTimerRunning: boolean;
 
-  constructor(private _auth : AuthService, private router : Router, private location : Location, private data : DataService) { 
+  constructor(private auth: AuthService, private router: Router, private location: Location, private data: DataService) {
 
-    if (_auth.player == null) {
+    if (auth.player == null) {
       this.router.navigate([this.location.path().replace('kass', '')]);
       return;
     }
 
-    this.gsm = _auth.player.mobile;
+    this.gsm = auth.player.mobile;
   }
 
-  send() : void {
+  send(): void {
     //this._data.sendAurRequest(this.gsm);
-
-    this.timer = Observable.timer(2000, 1000);
-    this.timer.subscribe(t => {
-      console.log(t);
-    });
+    
 
   }
 

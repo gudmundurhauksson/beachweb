@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   public ongoings: Tournament[];
 
-  constructor(private data: DataService, private _auth: AuthService, private router : Router) {
+  constructor(private data: DataService, private auth: AuthService, private router : Router) {
     this.ongoings = new Array();
 
     this.data.getOngoingTournaments().subscribe((s:any) => {
@@ -23,15 +23,15 @@ export class HomeComponent implements OnInit {
   }
 
   isAdmin(): boolean {
-    if (!this._auth.isLoggedIn()) {
+    if (!this.auth.isLoggedIn()) {
       return false;
     }
 
-    return this._auth.player.isAdmin;
+    return this.auth.player.isAdmin;
   }
 
   isLoggedIn():boolean {
-    return this._auth.isLoggedIn();
+    return this.auth.isLoggedIn();
   }
 
   openTournament(tournamentId: number) {

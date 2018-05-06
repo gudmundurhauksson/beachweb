@@ -13,3 +13,9 @@ export class Team {
     player1: Player;
     player2: Player;
 }
+
+export class SimpleTeam {
+    id: number;
+    player1: string;
+    player2: string;
+}

@@ -17,11 +17,11 @@ export class TournamentsComponent implements OnInit {
   public tournaments: Tournament[];
   public selected: Tournament;
 
-  constructor(private data: DataService, router: Router, private _auth: AuthService) {
+  constructor(private data: DataService, router: Router, private auth: AuthService) {
     this.selected = new Tournament();
     this.selected.id = -1;
 
-    if (!_auth.isLoggedIn() || !_auth.player.isAdmin) {
+    if (!auth.isLoggedIn() || !auth.player.isAdmin) {
       router.navigate(['']);
     }
 

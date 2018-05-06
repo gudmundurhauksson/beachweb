@@ -18,7 +18,7 @@ export class MyTournamentsComponent implements OnInit {
   public modalRef: BsModalRef; // {1}
 
   constructor(private data: DataService, 
-    private _auth: AuthService,
+    private auth: AuthService,
     private modalService: BsModalService,
     private router : Router) {
 
@@ -38,13 +38,13 @@ export class MyTournamentsComponent implements OnInit {
       return this.teams;
     }
 
-    if (this._auth.player == undefined || this._auth.player === undefined || this._auth.player == null) {
+    if (this.auth.player == undefined || this.auth.player === undefined || this.auth.player == null) {
       return null;
     }
 
     this.fetching = true;
 
-    this.data.getTournamentsStatus(this._auth.player).subscribe((s: any) => {
+    this.data.getTournamentsStatus(this.auth.player).subscribe((s: any) => {
       this.teams = <Team[]>s;
 
       this.fetching = false;

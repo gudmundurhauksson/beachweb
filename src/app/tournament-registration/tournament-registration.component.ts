@@ -15,7 +15,7 @@ export class TournamentRegistrationComponent implements OnInit {
   public oldTournaments: Array<Tournament>;
   public yearNow: number;
 
-  constructor(private _auth: AuthService, private data: DataService) {
+  constructor(private auth: AuthService, private data: DataService) {
 
     this.tournaments = new Array();
     this.oldTournaments = new Array();
@@ -68,15 +68,15 @@ export class TournamentRegistrationComponent implements OnInit {
   }
 
   isAdmin(): boolean {
-    if (!this._auth.isLoggedIn()) {
+    if (!this.auth.isLoggedIn()) {
       return false;
     }
 
-    return this._auth.player.isAdmin;
+    return this.auth.player.isAdmin;
   }
 
   isLoggedIn(): boolean {
-    return this._auth.isLoggedIn();
+    return this.auth.isLoggedIn();
   }
 
 }

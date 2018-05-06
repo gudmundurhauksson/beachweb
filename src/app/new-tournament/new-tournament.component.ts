@@ -21,14 +21,14 @@ export class NewTournamentComponent implements OnInit {
   public isYouthKk: boolean;
   public isYouthKvk: boolean;
 
-  constructor(private data: DataService, private _auth: AuthService, private _router: Router) {
+  constructor(private data: DataService, private auth: AuthService, private _router: Router) {
     this.tournament = new Tournament();
     this.isKk = false;
     this.isKvk = false;
     this.isYouthKk = false;
     this.isYouthKvk = false;
 
-    if (!_auth.isLoggedIn() || !_auth.player.isAdmin) {
+    if (!auth.isLoggedIn() || !auth.player.isAdmin) {
       this._router.navigate(['']);
     }
   }

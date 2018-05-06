@@ -3,7 +3,7 @@ import { DataService } from './data.service';
 import { Player } from './models/player';
 import { AuthData } from './models/authdata';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()

@@ -27,13 +27,13 @@ export class TournamentRegistrationIdComponent implements OnInit {
   public otherPlayer: Player;
 
   constructor(private route: ActivatedRoute, private data: DataService,
-    private _auth: AuthService, private modalService: BsModalService,
+    private auth: AuthService, private modalService: BsModalService,
     private router: Router) {
 
     this.player = new Player();
     this.tournament = new Tournament();
 
-    if (!_auth.isLoggedIn()) {
+    if (!auth.isLoggedIn()) {
       this.router.navigate(['login']);
       return;
     }
@@ -41,7 +41,7 @@ export class TournamentRegistrationIdComponent implements OnInit {
     this.route.params.subscribe((res: any) => {
       this.id = res.id
 
-      data.getTeamByPlayerIdAndTournamentId(this._auth.player.id, this.id).subscribe((s: any) => {
+      data.getTeamByPlayerIdAndTournamentId(this.auth.player.id, this.id).subscribe((s: any) => {
           console.log("already registered!");
           this.router.navigate(['my-tournaments']);
           return;
@@ -69,44 +69,44 @@ export class TournamentRegistrationIdComponent implements OnInit {
 
   isMaleTournament(): boolean {
 
-    if (this.tournament == null || this._auth.player == null) {
+    if (this.tournament == null || this.auth.player == null) {
       return false;
     }
 
-    return (this.tournament.type | 0x01) > 0 && this._auth.player.isMale;
+    return (this.tournament.type | 0x01) > 0 && this.auth.player.isMale;
   }
 
   isFemaleTournament(): boolean {
-    if (this.tournament == null || this._auth.player == null) {
+    if (this.tournament == null || this.auth.player == null) {
       return false;
     }
 
-    return (this.tournament.type | 0x02) > 0 && !this._auth.player.isMale;
+    return (this.tournament.type | 0x02) > 0 && !this.auth.player.isMale;
   }
 
   isMaleYouthTournament(): boolean {
-    if (this.tournament == null || this._auth.player == null) {
+    if (this.tournament == null || this.auth.player == null) {
       return false;
     }
 
-    return (this.tournament.type | 0x04) > 0 && this._auth.player.isMale;
+    return (this.tournament.type | 0x04) > 0 && this.auth.player.isMale;
   }
 
   isFemaleYouthTournament(): boolean {
-    if (this.tournament == null || this._auth.player == null) {
+    if (this.tournament == null || this.auth.player == null) {
       return false;
     }
 
-    return (this.tournament.type | 0x08) > 0 && !this._auth.player.isMale;
+    return (this.tournament.type | 0x08) > 0 && !this.auth.player.isMale;
   }
 
   loggedInPlayer(): Player {
 
-    if (this._auth.player == null) {
+    if (this.auth.player == null) {
       return new Player();
     }
 
-    return this._auth.player;
+    return this.auth.player;
   }
 
   search(): void {

@@ -16,13 +16,13 @@ export class KassComponent implements OnInit {
   public gsm : string;
   private teamId : number;
   private timerCount: number;
-  private isWaiting: boolean;
+  public isWaiting: boolean;
   private isVerifying: boolean;
   public modalRef: BsModalRef; // {1}
   private timerName: string;
   private timerId: string;
 
-  constructor(private _auth : AuthService, 
+  constructor(private auth : AuthService, 
     private router : Router, 
     private location : Location, 
     private data : DataService, 
@@ -34,18 +34,18 @@ export class KassComponent implements OnInit {
     this.isWaiting = false;
     this.timerCount = 90;  
 
-    if (!_auth.isLoggedIn() || _auth.player == null) {
+    if (!auth.isLoggedIn() || auth.player == null) {
       this.router.navigate([this.location.path().replace('kass', '')]);
       return;
     }
 
     this.route.params.subscribe(res => this.teamId = res.id);
-    data.canPay(this.teamId, _auth.player.id).subscribe(s => {
+    data.canPay(this.teamId, auth.player.id).subscribe(s => {
     }, error => {
       //this.router.navigate(['/login']);
     });
 
-    this.gsm = _auth.player.mobile;
+    this.gsm = auth.player.mobile;
   }
 
   send() : void {

@@ -19,9 +19,9 @@ import * as FileSaver from 'file-saver';
 export class ArrangeMatchesTimesComponent implements OnInit {
 
   private tournamentId: number;
-  private courts: Court[];
-  private timeSlots: Array<TimeSlot>;
-  private groupViews: Array<GroupView>;
+  public courts: Court[];
+  public timeSlots: Array<TimeSlot>;
+  public groupViews: Array<GroupView>;
   private selectedTimeSlot: TimeSlotName;
   private dateVisibility: Array<DateVisibility>;
 

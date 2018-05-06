@@ -42,6 +42,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SimpleTimer } from 'ng2-simple-timer';
 import { ArrangeMatchesTimesComponent } from './admin/arrange-matches-times/arrange-matches-times.component';
 import { TournamentOverviewComponent } from './tournament-overview/tournament-overview.component';
+import { EnterMatchResultComponent } from './enter-match-result/enter-match-result.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,7 @@ import { TournamentOverviewComponent } from './tournament-overview/tournament-ov
     AurComponent,
     ScoresComponent,
     TournamentScoresComponent,  
-    AllRegistrationsComponent, ArrangeMatchesComponent, ForgotPasswordComponent, ResetPasswordComponent, ArrangeMatchesTimesComponent, TournamentOverviewComponent
+    AllRegistrationsComponent, ArrangeMatchesComponent, ForgotPasswordComponent, ResetPasswordComponent, ArrangeMatchesTimesComponent, TournamentOverviewComponent, EnterMatchResultComponent
   ],
   imports: [
     BrowserModule,

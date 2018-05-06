@@ -5,16 +5,36 @@
         <div class="panel-body">
 
           <div class="btn-group">
-            <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 2}" *ngIf="isTournament(2)" (click)="loadDivisions(2)">Konur</button>
-            <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 1}" *ngIf="isTournament(1)" (click)="loadDivisions(1)">Karlar</button>
+            <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 2}" *ngIf="isTournament(2)" (click)="loadDivisions(2, -1, -1)">Konur</button>
+            <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 1}" *ngIf="isTournament(1)" (click)="loadDivisions(1, -1, -1)">Karlar</button>
           </div>
           <br />
           <span *ngFor="let division of divisions">
-            <button [ngClass]="{'btn':true, 'btn-primary': selectedDivision==division && selectedGroup==group}" *ngFor="let group of division.groups" (click)="loadDivisionGroup(division, group)">
+            <button [ngClass]="{'btn':true, 'btn-primary': selectedDivision==division && selectedGroup==group}" *ngFor="let group of division.groups"
+              (click)="loadDivisionGroup(division, group)">
               {{division.division}} deild - {{group.name}}
             </button>
           </span>
 
+          <table *ngIf="matchesInGroup.length > 0">
+            <thead>
+              <tr>
+                <th>Tími</th>                
+                <th>Lið</th>
+                <th>Völlur</th>
+                <th>Úrslit</th>                
+              </tr>              
+            </thead>
+
+            <tr *ngFor="let match of matchesInGroup">
+              <td>{{match.date}}</td>
+              <td>{{match.team1}} - {{match.team2}}</td>
+              <td>{{match.courtName}}</td>
+              <td>&nbsp;
+                <button *ngIf="isAdmin()" (click)="enterResults(match)">Úrslit</button>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>

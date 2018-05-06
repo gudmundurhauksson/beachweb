@@ -17,6 +17,7 @@ import { Team } from './models/team';
 import { ScoresModel } from './models/scoresmodel';
 import { GroupModel } from './models/groupModel';
 import { DivisionMatch } from './models/divisionMatch';
+import { SimpleDivisionMatchResult } from './models/simpleDivisionMatchResult';
 
 @Injectable()
 export class DataService {
@@ -265,7 +266,7 @@ export class DataService {
     return tmp;
   }
 
-  canPay(teamId: number, payingPlayerId: string) {
+  canPay(teamId: number, payingPlayerId: string): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -275,7 +276,7 @@ export class DataService {
     return tmp;
   }
 
-  verifyPayment(teamId: number) {
+  verifyPayment(teamId: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -285,7 +286,7 @@ export class DataService {
     return tmp;
   }
 
-  getGroups(tournamentId: number, teamTypeId: number, division: number, groupRule: number) {
+  getGroups(tournamentId: number, teamTypeId: number, division: number, groupRule: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -295,7 +296,7 @@ export class DataService {
     return tmp;
   }
 
-  getFinals(tournamentId: number, teamTypeId: number, division: number, groupRule: number, finalsGroupRule: number) {
+  getFinals(tournamentId: number, teamTypeId: number, division: number, groupRule: number, finalsGroupRule: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -305,7 +306,7 @@ export class DataService {
     return tmp;
   }
 
-  calculateMatches(group: GroupModel) {
+  calculateMatches(group: GroupModel): Observable<Response>{
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -315,7 +316,7 @@ export class DataService {
     return tmp;
   }
 
-  confirmMatchList(groups: GroupModel[], finals?: DivisionMatch[]) {
+  confirmMatchList(groups: GroupModel[], finals?: DivisionMatch[]): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -325,7 +326,7 @@ export class DataService {
     return tmp;
   }
 
-  getMatches(tournamentId: number, teamType?: number, division?: number) {
+  getMatches(tournamentId: number, teamType?: number, division?: number): Observable<Response> {
 
     var tmp = null;
     if (teamType != null && division != null) {
@@ -339,7 +340,7 @@ export class DataService {
     return tmp;
   }
 
-  cancelMatch(match: DivisionMatch) {
+  cancelMatch(match: DivisionMatch): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -349,7 +350,7 @@ export class DataService {
     return tmp;
   }
 
-  scheduleMatch(match: DivisionMatch) {
+  scheduleMatch(match: DivisionMatch): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -359,7 +360,7 @@ export class DataService {
     return tmp;
   }
 
-  deleteMatches(tournamentId: number, teamType: number, division: number) {
+  deleteMatches(tournamentId: number, teamType: number, division: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -370,11 +371,11 @@ export class DataService {
   };
 
   getScoreSheets(tournamentId: number, teamTypeId: number, division: number) {
-    return this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamTypeId + "/" + division + "/scoresheets", {responseType: ResponseContentType.Blob}).map(response => 
+    return this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamTypeId + "/" + division + "/scoresheets", { responseType: ResponseContentType.Blob }).map(response =>
       (<Response>response).blob());
   };
 
-  startTournament(tournamentId: number) {
+  startTournament(tournamentId: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -384,7 +385,7 @@ export class DataService {
     return tmp;
   };
 
-  endTournament(tournamentId: number) {
+  endTournament(tournamentId: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -394,13 +395,46 @@ export class DataService {
     return tmp;
   };
 
-  getOngoingTournaments() {
+  getOngoingTournaments(): Observable<Response> {
     var result = this.http.get(this.apiUrl + "tournaments/ongoing");
     return result.map(s => s.json());
   }
 
-  getDivisions(tournamentId: number, type: number) {
+  getDivisions(tournamentId: number, type: number): Observable<Response> {
     var result = this.http.get(this.apiUrl + "tournaments/" + tournamentId + "/divisions/" + type);
     return result.map(s => s.json());
   }
+
+  getSimpleDivisionMatches(tournamentId: number, teamTypeId: number, division: number, divisionGroup: number): Observable<Response> {
+    var result = this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamTypeId + "/" + division + "/" + divisionGroup + "/matches");
+    return result.map(s => s.json());
+  }
+
+  getMatchResult(round: number, team1Id: number, team2Id: number): Observable<Response> {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "matches/" + round + "/" + team1Id + "/" + team2Id + "/result", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  getTeamById(teamId: number) : Observable<Response> {
+    var result = this.http.get(this.apiUrl + "teams/" + teamId);
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  sendResults(round: number, resultSet: SimpleDivisionMatchResult) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.post(this.apiUrl + "matches/" + round + "/set", resultSet, this.getAuthorizationRequestOption(data));
+    var tmp = result.map((res: Response) => res.json());
+    
+    return tmp;
+  }
+
 }

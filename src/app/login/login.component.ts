@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   public player: Player;
 
-  constructor(private data: DataService, private _auth: AuthService, private modalService: BsModalService, private router : Router) {
+  constructor(private data: DataService, private auth: AuthService, private modalService: BsModalService, private router : Router) {
     this.player = new Player();
   }
 
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     console.log('logging in');
-    this._auth.login(this.player).subscribe((s: number) => {
+    this.auth.login(this.player).subscribe((s: number) => {
       console.log("S=" + s);
       console.log(s == 0);
       if (s == 0) {       
