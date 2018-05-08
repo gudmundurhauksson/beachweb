@@ -7,6 +7,7 @@
             <button  style="margin: 1px" (click)="loadScores(selectedYear, true)" [ngClass]="{'btn': true, 'btn-primary': isMenSelected}">Karlar</button>
 
             <button *ngFor="let year of years" [ngClass]="{'btn': true, 'btn-primary': year == selectedYear}" (click)="loadScores(year, isMenSelected)" style="margin: 1px">{{year}}</button>
+            <span *ngIf="isWaiting" ><img src="./assets/loading.gif" height="16" width="16" /></span>
           <div>
             <table *ngIf="isScoreLoaded">
               <tr>

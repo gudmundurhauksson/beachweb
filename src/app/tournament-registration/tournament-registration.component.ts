@@ -14,25 +14,30 @@ export class TournamentRegistrationComponent implements OnInit {
   public tournaments: Array<Tournament>;
   public oldTournaments: Array<Tournament>;
   public yearNow: number;
+  public isWaiting : boolean;
 
   constructor(private auth: AuthService, private data: DataService) {
 
     this.tournaments = new Array();
     this.oldTournaments = new Array();
+    this.isWaiting = false;
 
     var date = new Date();
     this.yearNow = date.getFullYear();
 
     var wait = false;
+    this.isWaiting = true;
 
     for (var i = date.getFullYear(); i >= 2016; i--) {
 
       data.getTournaments(i).subscribe((s: any) => {
         var local = <Tournament[]>s;        
 
+        // just wait for the first call to go through
+        this.isWaiting = false;
+        
         data.getLocations().subscribe((l: any) => {
-          for (var t = 0; t < local.length; t++) {
-
+          for (var t = 0; t < local.length; t++) {            
             var locations = <BeachLocation[]>l;
 
             for (var tmp = 0; tmp < locations.length; tmp++) {
@@ -54,10 +59,13 @@ export class TournamentRegistrationComponent implements OnInit {
 
           this.tournaments.sort(function (a, b) { return b.dateTicks - a.dateTicks });
           this.oldTournaments.sort(function (a, b) { return b.dateTicks - a.dateTicks });
+          
         }, (err: any) => {
-
+          this.isWaiting = false;
         });
+        
       }, (error: any) => {
+        this.isWaiting = false;
         console.log(error);
       });
     }

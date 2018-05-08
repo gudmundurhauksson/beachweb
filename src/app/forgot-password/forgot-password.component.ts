@@ -14,9 +14,11 @@ export class ForgotPasswordComponent implements OnInit {
 
   public player: Player;
   public modalRef: BsModalRef; // {1}
+  public isWaiting : boolean;
 
   constructor(private data : DataService, private router: Router, private modalService: BsModalService) {
     this.player = new Player();
+    this.isWaiting = false;
    }
 
   reset() {
@@ -25,13 +27,16 @@ export class ForgotPasswordComponent implements OnInit {
       return;
     }
 
+    this.isWaiting = true;
     this.data.requestPasswordReset(this.player.id).subscribe(s => {
+      this.isWaiting = true;
       this.router.navigate(['/login']);
 
       this.showMessage("Sending tókst", "Leiðbeiningar hafa verið sendar í tölvupósti");
 
       return;
     }, error => {
+      this.isWaiting = false;
       var json = error.json().message;
 
       if (json == "PLAYER_NOT_FOUND") {

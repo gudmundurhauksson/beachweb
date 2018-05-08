@@ -27,10 +27,15 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ArrangeMatchesTimesComponent } from './admin/arrange-matches-times/arrange-matches-times.component';
 import { TournamentOverviewComponent } from './tournament-overview/tournament-overview.component';
 import { EnterMatchResultComponent } from './enter-match-result/enter-match-result.component';
+import { RootHomeComponent } from './root-home/root-home.component';
 
-const routes: Routes = [
+const routes: Routes = [  
   {
     path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'home',
     component: HomeComponent
   },
   {

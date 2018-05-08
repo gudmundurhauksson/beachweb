@@ -22,23 +22,20 @@ import { SimpleDivisionMatchResult } from './models/simpleDivisionMatchResult';
 @Injectable()
 export class DataService {
 
-  //private baseUrl = "https://kass.lifelinesieeg.com/";
-  private baseUrl = "http://localhost:3564/";
+  private baseUrl = "https://www.stigakerfi.net/api/";
+  //private baseUrl = "http://localhost:3564/";
   private apiUrl = this.baseUrl + "api/";
 
   constructor(private http: Http, private _cookieService: CookieService) {
-    console.log("data service");
   }
 
   register(player: Player): Observable<Response> {
-    console.log("registering");
     var result = this.http.post(this.apiUrl + "players", player);
     var tmp = result.map((res: Response) => res.json());
     return tmp;
   }
 
   registerLocation(location: BeachLocation): Observable<Response> {
-    console.log("registerLocation");
     var result = this.http.post(this.apiUrl + "locations", location);
     var tmp = result.map((res: Response) => res.json());
     return tmp;
@@ -49,7 +46,6 @@ export class DataService {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
-    console.log("registerTournament");
     var result = this.http.post(this.apiUrl + "tournaments", tournament, this.getAuthorizationRequestOption(data));
     var tmp = result.map((res: Response) => res.json());
     return tmp;

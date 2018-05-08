@@ -94,9 +94,7 @@ export class TournamentOverviewComponent implements OnInit {
 
   private loadDivisionTable(division: Division, group: GroupModel) {
     this.data.getDivisionGroupTable(this.tournament.id, this.typeSelected, division.division, group.divisionGroup).subscribe((s:any) => {
-      this.table = <DivisionGroupTable>s;
-      console.log("Got table" + this.table);
-      console.log("entries:" + this.table.entries.length);
+      this.table = <DivisionGroupTable>s;      
     });
   }
 

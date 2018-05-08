@@ -20,10 +20,12 @@ export class TournamentScoresComponent implements OnInit {
   public years: number[];
   public selectedYear: number;
   public isMenSelected: boolean;
+  public isWaiting : boolean;
 
   constructor(private data: DataService, private auth: AuthService) {
 
     this.isScoreLoaded = false;
+    this.isWaiting = false;
 
     if (auth.isLoggedIn()) {
       this.isMenSelected = auth.player.isMale;
@@ -45,21 +47,28 @@ export class TournamentScoresComponent implements OnInit {
 
   loadScores(year: number, isMen: boolean) {
 
+    this.isWaiting = true;
     this.selectedYear = year;
     this.isMenSelected = isMen;
 
     this.isScoreLoaded = false;
 
-    if (!isMen) {
-      this.data.getTournamentPlayersScoresByTypeAndYear(0x02, year).subscribe((s: any) => {
+    if (isMen) {
+      this.data.getTournamentPlayersScoresByTypeAndYear(0x01, year).subscribe((s: any) => {
+        this.isWaiting = false;
         this.scores = s;
         this.isScoreLoaded = true;
+      }, error => {
+        this.isWaiting = false;
       });
     }
     else {
-      this.data.getTournamentPlayersScoresByTypeAndYear(0x01, year).subscribe((s: any) => {
+      this.data.getTournamentPlayersScoresByTypeAndYear(0x02, year).subscribe((s: any) => {
         this.scores = s;
         this.isScoreLoaded = true;
+        this.isWaiting = false;
+      }, error => {
+        this.isWaiting = false;
       });
     }
   }

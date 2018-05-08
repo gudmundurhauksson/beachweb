@@ -1,25 +1,33 @@
-<!--
-    you can substitue the span of reauth email for a input with the email and
-    include the remember me checkbox
-    -->
 <div class="container">
-    <div class="card card-container">
-        <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
-        <!--<img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />-->
-        
-        <form class="form-signin">
-            <span id="reauth-email" class="reauth-email"></span>
-            <input type="text" id="inputEmail" name="inputEmail" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="player.id">
-            <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="lykilorð" required [(ngModel)]="player.password">            
 
-            <button class="btn btn-primary btn-block" type="submit" (click)="login()">Innskrá</button>            
-            <button class="btn btn-block" type="submit" (click)="register()">Nýr notandi</button>            
-            <button class="btn btn-block" type="submit" (click)="forgotPassword()">Gleymt lykilorð</button>
-        </form>
-        <!-- /form -->        
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+                    <!--<img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />-->
+
+                    <form class="form-signin">
+                        <span id="reauth-email" class="reauth-email"></span>
+                        <input type="text" id="inputEmail" name="inputEmail" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="player.id">
+                        <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="lykilorð" required [(ngModel)]="player.password">
+
+                        <button class="btn btn-primary btn-block" type="submit" (click)="login()" [attr.disabled]="isWaiting ? true : null">Innskrá
+                            <span *ngIf="isWaiting">
+                                <img src="./assets/loading.gif" height="16" width="16" />
+                            </span>
+                        </button>
+                        <button class="btn btn-block" type="submit" (click)="register()" [attr.disabled]="isWaiting ? true : null">Nýr notandi</button>
+                        <button class="btn btn-block" type="submit" (click)="forgotPassword()" [attr.disabled]="isWaiting ? true : null">Gleymt lykilorð</button>
+                    </form>
+                    <!-- /form -->
+                </div>
+                <!-- /card-container -->
+            </div>
+        </div>
     </div>
-    <!-- /card-container -->
 </div>
+
 <!-- /container -->
 
 <ng-template #messageModal>
@@ -35,10 +43,10 @@
         <span id="modalMessage">{{modalBody}}</span>
 
         <div>
-                <button type="button" class="btn center-block" aria-label="Close" (click)="modalRef.hide()">
-                  Loka
-                </button>
-              </div>
+            <button type="button" class="btn center-block" aria-label="Close" (click)="modalRef.hide()">
+                Loka
+            </button>
+        </div>
     </div>
 </ng-template>
 <button id="openMessageButton" [hidden]="true" (click)="openModal(messageModal)">Open Modal</button>

@@ -21,7 +21,7 @@ export class NewTournamentComponent implements OnInit {
   public isYouthKk: boolean;
   public isYouthKvk: boolean;
 
-  constructor(private data: DataService, private auth: AuthService, private _router: Router) {
+  constructor(private data: DataService, private auth: AuthService, private router: Router) {
     this.tournament = new Tournament();
     this.isKk = false;
     this.isKvk = false;
@@ -29,7 +29,7 @@ export class NewTournamentComponent implements OnInit {
     this.isYouthKvk = false;
 
     if (!auth.isLoggedIn() || !auth.player.isAdmin) {
-      this._router.navigate(['']);
+      this.router.navigate(['']);
     }
   }
 
@@ -45,11 +45,10 @@ export class NewTournamentComponent implements OnInit {
     this.tournament.locationId = this.selectedLocation.id;
 
     this.data.registerTournament(this.tournament).subscribe(s => {
+      this.router.navigate(['admin-tournaments']);
+    }, (error: any) => {
 
-    },
-      (error: any) => {
-
-      });
+    });
   }
 
   ngOnInit() {

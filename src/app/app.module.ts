@@ -39,10 +39,11 @@ import { AllRegistrationsComponent } from './all-registrations/all-registrations
 import { ArrangeMatchesComponent } from './arrange-matches/arrange-matches.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { SimpleTimer } from 'ng2-simple-timer';
+// import { SimpleTimer } from 'ng2-simple-timer';
 import { ArrangeMatchesTimesComponent } from './admin/arrange-matches-times/arrange-matches-times.component';
 import { TournamentOverviewComponent } from './tournament-overview/tournament-overview.component';
 import { EnterMatchResultComponent } from './enter-match-result/enter-match-result.component';
+import { RootHomeComponent } from './root-home/root-home.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,7 @@ import { EnterMatchResultComponent } from './enter-match-result/enter-match-resu
     AurComponent,
     ScoresComponent,
     TournamentScoresComponent,  
-    AllRegistrationsComponent, ArrangeMatchesComponent, ForgotPasswordComponent, ResetPasswordComponent, ArrangeMatchesTimesComponent, TournamentOverviewComponent, EnterMatchResultComponent
+    AllRegistrationsComponent, ArrangeMatchesComponent, ForgotPasswordComponent, ResetPasswordComponent, ArrangeMatchesTimesComponent, TournamentOverviewComponent, EnterMatchResultComponent, RootHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +78,7 @@ import { EnterMatchResultComponent } from './enter-match-result/enter-match-resu
     TooltipModule.forRoot(),
     ModalModule.forRoot()
   ],
-  providers: [DataService, AuthService, CookieService, SimpleTimer],
+  providers: [DataService, AuthService, CookieService/*, SimpleTimer*/],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

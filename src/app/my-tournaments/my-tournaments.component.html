@@ -1,10 +1,16 @@
 <div class="container">
   <div class="card card-container">
 
-    <div *ngFor="let team of getTeams()">
+    <span *ngIf="isWaiting">
+      <img src="./assets/loading.gif" height="16" width="16" />
+    </span>
+
+    <div *ngFor="let team of teams">
 
       <div>
-        <h4>{{team.tournament.name}} ({{getTournamentType(team)}}) <small>{{team.tournament.date}}</small> </h4>
+        <h4>{{team.tournament.name}} ({{getTournamentType(team)}})
+          <small>{{team.tournament.date}}</small>
+        </h4>
       </div>
 
       <div>
@@ -12,15 +18,20 @@
         <br />
         <label>Leikmaður 2: {{team.player2.name}} ({{team.player2Id}})</label>
       </div>
-      
+
       <div *ngIf="team.payment == null || team.payment.length == 0">
-        <button class="btn btn-m btn-primary btn-block" type="submit" (click)="pay(team)">Greiða</button>
-        <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="cancel(team)">Hætta við</button>
+        <button class="btn btn-m btn-primary btn-block" type="submit" (click)="pay(team)" [attr.disabled]="isCancelling ? true : null">Greiða</button>
+        <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="cancel(team)" [attr.disabled]="isCancelling ? true : null">Hætta við
+            <span *ngIf="isCancelling">
+                <img src="./assets/loading.gif" height="16" width="16" />
+              </span>
+          
+        </button>
       </div>
 
     </div>
 
-    <div *ngIf="getTeams() != null && getTeams().length == 0">
+    <div *ngIf="teams != null && teams.length == 0">
       <h4>Engin mótaskráning fannst</h4>
     </div>
   </div>
@@ -41,27 +52,27 @@
 </ng-template>
 
 <ng-template #yesNoModal>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">
-        <span id="modalHeader">{{modalHeader}}</span>
-      </h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <span id="modalMessage">{{modalBody}}</span>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <span id="modalHeader">{{modalHeader}}</span>
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <span id="modalMessage">{{modalBody}}</span>
 
-      <div>
-          <button class="btn btn-m btn-primary btn-block" type="submit" (click)="confirmCancel()">Já</button>
-          <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="modalRef.hide()">Nei</button>
-        </div>
-        
+    <div>
+      <button class="btn btn-m btn-primary btn-block" type="submit" (click)="confirmCancel()">Já</button>
+      <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="modalRef.hide()">Nei</button>
     </div>
 
-    
+  </div>
 
-  </ng-template>
+
+
+</ng-template>
 
 <button id="openYesNoButton" [hidden]="true" (click)="openModal(yesNoModal)">Open Modal</button>
 <button id="openMessageButton" [hidden]="true" (click)="openModal(messageModal)">Open Modal</button>

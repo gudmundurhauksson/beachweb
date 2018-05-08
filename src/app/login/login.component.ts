@@ -16,9 +16,11 @@ export class LoginComponent implements OnInit {
   public modalRef: BsModalRef; // {1}
 
   public player: Player;
+  public isWaiting: boolean;
 
   constructor(private data: DataService, private auth: AuthService, private modalService: BsModalService, private router : Router) {
     this.player = new Player();
+    this.isWaiting = false;
   }
 
   ngOnInit() {
@@ -26,18 +28,20 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log('logging in');
+    
+    this.isWaiting = true;
     this.auth.login(this.player).subscribe((s: number) => {
-      console.log("S=" + s);
-      console.log(s == 0);
+      this.isWaiting = false;
       if (s == 0) {       
         this.showMessage("Villa!", "Þjónustan svarar ekki. Vinsamlegast reynið síðar.");
       } else if (s==200) {
         // success
         // navigate?
       } else if (s== 400) {        
-        this.showMessage("Villa!", "Rangt notendanafn eða lykilorð.");
+        this.showMessage("Villa!", "Rangt notendanafn eða lykilorð.");        
       }
+    }, error => {
+      this.isWaiting = false;
     });
   }
 

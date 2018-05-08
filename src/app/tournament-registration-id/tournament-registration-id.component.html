@@ -1,61 +1,82 @@
 <div class="container">
-  <div class="card card-container">
-    <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
-    <form class="form-signin">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-primary">
+        <div class="panel-body">
 
-      <h4>Veldu flokk</h4>
-      <div class="radio-gender" *ngIf="isMaleTournament()">
-        <label class="radioLabel">
-          <input type="radio" id="tournamentType" name="tournamentType" [value]="1" [(ngModel)]="tournamentType">Fullorðnir-Karlar</label>
+          <span *ngIf="isWaiting">
+            <img src="./assets/loading.gif" height="16" width="16" />
+          </span>
+
+
+          <div *ngIf="!isWaiting">
+            <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+            <form class="form-signin">
+
+              <h4>Veldu flokk</h4>
+              <div class="radio-gender" *ngIf="isMaleTournament()">
+                <label class="radioLabel">
+                  <input type="radio" id="tournamentType" name="tournamentType" [value]="1" [(ngModel)]="tournamentType">Fullorðnir-Karlar</label>
+              </div>
+
+              <div class="radio-gender" *ngIf="isFemaleTournament()">
+                <label class="radioLabel">
+                  <input type="radio" id="tournamentType" name="tournamentType" [value]="2" [(ngModel)]="tournamentType">Fullorðnir-Konur</label>
+              </div>
+
+              <div class="radio-gender" *ngIf="isMaleYouthTournament()">
+                <label class="radioLabel">
+                  <input type="radio" id="tournamentType" name="tournamentType" [value]="4" [(ngModel)]="tournamentType">Unglingar-Karlar</label>
+              </div>
+
+              <div class="radio-gender" *ngIf="isFemaleYouthTournament()">
+                <label class="radioLabel">
+                  <input type="radio" id="tournamentType" name="tournamentType" [value]="8" [(ngModel)]="tournamentType">Unglingar-Konur</label>
+              </div>
+
+            </form>
+
+            <div>&nbsp;</div>
+
+            <h4>Leikmaður 1</h4>
+            <label>{{loggedInPlayer().name}} ({{loggedInPlayer().id}})</label>
+
+            <div>&nbsp;</div>
+
+            <form class="form-signin">
+
+              <h4>Leikmaður 2</h4>
+
+              <div *ngIf="otherPlayer == null">
+                <input type="text" id="existingId" name="existingId" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="existingId">
+                <button class="btn btn-primary btn-block" type="submit" (click)="search()" [attr.disabled]="isSearching ? true : null">Leita
+                  <span *ngIf="isSearching">
+                    <img src="./assets/loading.gif" height="16" width="16" />
+                  </span>
+                </button>
+              </div>
+
+              <div *ngIf="otherPlayer != null">
+                <label>{{otherPlayer.name}} ({{otherPlayer.id}})</label>
+                <button class="btn btn-primary btn-block" type="submit" [disabled]="!canConfirm()" (click)="confirm()" [attr.disabled]="isRegistering ? true : null">Skrá lið
+                  <span *ngIf="isRegistering">
+                    <img src="./assets/loading.gif" height="16" width="16" />
+                  </span>
+                </button>
+                <button class="btn btn-primary btn-block" type="submit" (click)="cancel()">Hætta við</button>
+              </div>
+
+            </form>
+            <!-- /form -->
+
+          </div>
+        </div>
       </div>
-
-      <div class="radio-gender" *ngIf="isFemaleTournament()">
-        <label class="radioLabel">
-          <input type="radio" id="tournamentType" name="tournamentType" [value]="2" [(ngModel)]="tournamentType">Fullorðnir-Konur</label>
-      </div>
-
-      <div class="radio-gender" *ngIf="isMaleYouthTournament()">
-        <label class="radioLabel">
-          <input type="radio" id="tournamentType" name="tournamentType" [value]="4" [(ngModel)]="tournamentType">Unglingar-Karlar</label>
-      </div>
-
-      <div class="radio-gender" *ngIf="isFemaleYouthTournament()">
-        <label class="radioLabel">
-          <input type="radio" id="tournamentType" name="tournamentType" [value]="8" [(ngModel)]="tournamentType">Unglingar-Konur</label>
-      </div>
-
-    </form>
-
-    <div>&nbsp;</div>
-
-    <h4>Leikmaður 1</h4>
-    <label>{{loggedInPlayer().name}} ({{loggedInPlayer().id}})</label>
-
-    <div>&nbsp;</div>
-
-    <form class="form-signin">
-
-      <h4>Leikmaður 2</h4>
-
-      <div *ngIf="otherPlayer == null">
-        <input type="text" id="existingId" name="existingId" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="existingId">
-        <button class="btn btn-primary btn-block" type="submit" (click)="search()">Leita</button>
-      </div>
-
-      <div *ngIf="otherPlayer != null">
-        <label>{{otherPlayer.name}} ({{otherPlayer.id}})</label>
-        <button class="btn btn-primary btn-block" type="submit" [disabled]="!canConfirm()" (click)="confirm()">Skrá lið</button>
-        <button class="btn btn-primary btn-block" type="submit" (click)="cancel()">Hætta við</button>
-      </div>
-
-    </form>
-    <!-- /form -->
-
-
+    </div>
+    <!-- /card-container -->
   </div>
-  <!-- /card-container -->
+  <!-- /container -->
 </div>
-<!-- /container -->
 
 
 <ng-template #messageModal>
@@ -87,11 +108,11 @@
   </div>
   <div class="modal-body">
     <button class="btn btn-primary btn-block" type="submit" (click)="newPlayer()">Skrá nýjan leikmann</button>
-  
-      <button type="button" class="btn btn-block" aria-label="Close" (click)="modalRef.hide()">
-        Loka
-      </button>
-    </div>
+
+    <button type="button" class="btn btn-block" aria-label="Close" (click)="modalRef.hide()">
+      Loka
+    </button>
+  </div>
 </ng-template>
 
 <button id="openModalButton" [hidden]="true" (click)="openModal(playerNotFoundModal)">Open Modal</button>

@@ -23,8 +23,7 @@ export class AppComponent {
     authService.isLoggedIn();
   }
 
-  logout() : void {
-    console.log("logging out ...");
+  logout() : void {    
     this.authService.logout();
     this.router.navigate(['']);
   }

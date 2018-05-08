@@ -3,7 +3,7 @@ import { AuthService } from '../auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { DataService } from '../data.service';
-import { SimpleTimer } from 'ng2-simple-timer';
+// import { SimpleTimer } from 'ng2-simple-timer';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -27,7 +27,7 @@ export class KassComponent implements OnInit {
     private location : Location, 
     private data : DataService, 
     private route: ActivatedRoute,
-    private timer: SimpleTimer,
+    // private timer: SimpleTimer,
     private modalService: BsModalService) { 
     
     this.timerName ="WaitForKassTimer";
@@ -57,23 +57,23 @@ export class KassComponent implements OnInit {
     }
 
     this.isWaiting = true;    
-    this.timer.newTimer(this.timerName, 1)
-    this.timerCount = 90;
-    this.timerId = this.timer.subscribe(this.timerName, () => {
-      this.timerTick();
-    });
+    //this.timer.newTimer(this.timerName, 1)
+    //this.timerCount = 90;
+    //this.timerId = this.timer.subscribe(this.timerName, () => {
+    //  this.timerTick();
+    //});
   }
 
   private timerTick() {
 
-    console.log(this.timer.getSubscription());
+    // console.log(this.timer.getSubscription());
 
     this.timerCount--;            
 
     if (this.timerCount <= 0) {
       this.timerCount = 0;
 
-      this.timer.unsubscribe(this.timerId);
+      // this.timer.unsubscribe(this.timerId);
       this.showMessage("Villa", "Greiðsla barst ekki. Vinsamlegast reynið aftur.");
       this.router.navigate([this.location.path().replace('kass', '')]);
       return;
@@ -86,7 +86,7 @@ export class KassComponent implements OnInit {
     this.isVerifying = true;
     this.data.verifyPayment(this.teamId).subscribe(s => {
       
-      this.timer.unsubscribe(this.timerId);
+      // this.timer.unsubscribe(this.timerId);
       this.isVerifying = false;
 
       // success!! 

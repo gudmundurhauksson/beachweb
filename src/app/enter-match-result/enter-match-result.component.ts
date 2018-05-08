@@ -19,7 +19,7 @@ export class EnterMatchResultComponent implements OnInit {
   private round: number;
   private team1Id: number;
   private team2Id: number;
-  private setResults: SimpleDivisionMatchResult[];
+  public setResults: SimpleDivisionMatchResult[];
 
   public team1: SimpleTeam;
   public team2: SimpleTeam;

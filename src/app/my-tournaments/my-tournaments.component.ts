@@ -16,45 +16,37 @@ export class MyTournamentsComponent implements OnInit {
 
   public teams: Team[];
   public modalRef: BsModalRef; // {1}
+  public isWaiting : boolean;
+  public isCancelling : boolean;
 
   constructor(private data: DataService, 
     private auth: AuthService,
     private modalService: BsModalService,
     private router : Router) {
 
-    this.fetching = false;
     this.teams = null;
+    this.isWaiting = false;
+    this.isCancelling = false;
+
+    this.getTeams();    
   }
 
-  private fetching: boolean;
+  getTeams(): void {
 
-  getTeams(): Team[] {
-
-    if (this.fetching) {
-      return null;
+    this.teams = null;
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(['/']);
+      return;
     }
 
-    if (this.teams != null) {
-      return this.teams;
-    }
-
-    if (this.auth.player == undefined || this.auth.player === undefined || this.auth.player == null) {
-      return null;
-    }
-
-    this.fetching = true;
-
+    this.isWaiting = true;
     this.data.getTournamentsStatus(this.auth.player).subscribe((s: any) => {
+      this.isWaiting = false;
       this.teams = <Team[]>s;
-
-      this.fetching = false;
     }, (err: any) => {
+      this.isWaiting = false;
       console.log(err);
-
-      this.fetching = false;
-    });
-
-    return null;
+    });    
   }
 
   getTournamentType(team: Team) : string {
@@ -78,11 +70,14 @@ export class MyTournamentsComponent implements OnInit {
   confirmCancel() : void {
     this.modalRef.hide();
     console.log("Cancelling");
+    this.isCancelling = true;
 
     this.data.cancelRegistration(this.selectedTeam.id).subscribe(s => {
-      this.teams = null;
+      this.isCancelling = false;
+      this.getTeams();
     }, (err: any) => {
       console.log(err);
+      this.isCancelling = false;
     });
   }
 

@@ -15,6 +15,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 export class NewuserComponent implements OnInit {
   confirm: string;
   gender: number;
+  public isWaiting : boolean;
 
   /* Used when creating new user while registering for a tournament */
   navigateBack: boolean;
@@ -29,6 +30,7 @@ export class NewuserComponent implements OnInit {
     private router: Router) {
     this.gender = 0;
     this.player = new Player();
+    this.isWaiting = false;
 
     this.navigateBack = false;
 
@@ -91,10 +93,10 @@ export class NewuserComponent implements OnInit {
       return;
     }
 
+    this.isWaiting = true;
     // Create user 
     this.data.register(this.player).subscribe(data => {
-
-      console.log(data);
+      this.isWaiting = false;      
       if (this.navigateBack) {
         // User was being registered to a tournament
         this.location.back();
@@ -104,6 +106,7 @@ export class NewuserComponent implements OnInit {
       }
     }, err => {
 
+      this.isWaiting = false;
       console.log(err);
 
       if (err.status == 0) {

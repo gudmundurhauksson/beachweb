@@ -25,13 +25,19 @@ export class TournamentRegistrationIdComponent implements OnInit {
   public existingId: string;
   public modalRef: BsModalRef; // {1}
   public otherPlayer: Player;
+  public isWaiting : boolean;
+  public isSearching : boolean;
+  public isRegistering : boolean;
 
   constructor(private route: ActivatedRoute, private data: DataService,
     private auth: AuthService, private modalService: BsModalService,
     private router: Router) {
 
+    this.isWaiting = true;
+    this.isSearching = false;
     this.player = new Player();
-    this.tournament = new Tournament();
+    this.tournament = null;
+    this.isRegistering = false;
 
     if (!auth.isLoggedIn()) {
       this.router.navigate(['login']);
@@ -42,13 +48,15 @@ export class TournamentRegistrationIdComponent implements OnInit {
       this.id = res.id
 
       data.getTeamByPlayerIdAndTournamentId(this.auth.player.id, this.id).subscribe((s: any) => {
-          console.log("already registered!");
           this.router.navigate(['my-tournaments']);
           return;
       }, (error: any) => {
-        console.log("get tournament!");
+        
+        console.log("Player not registered in a team");
         data.getTournament(this.id).subscribe((s: any) => {
+          this.isWaiting = false;
           this.tournament = s;
+          console.log("Type: " + this.tournament.type);
 
           if(this.isMaleTournament()) {
             this.tournamentType = 0x01;
@@ -62,6 +70,7 @@ export class TournamentRegistrationIdComponent implements OnInit {
 
         }, (err: any) => {
           console.log(err);
+          this.isWaiting = false;
         });
       });
     });
@@ -73,7 +82,7 @@ export class TournamentRegistrationIdComponent implements OnInit {
       return false;
     }
 
-    return (this.tournament.type | 0x01) > 0 && this.auth.player.isMale;
+    return (this.tournament.type & 0x01) > 0 && this.auth.player.isMale;
   }
 
   isFemaleTournament(): boolean {
@@ -81,15 +90,15 @@ export class TournamentRegistrationIdComponent implements OnInit {
       return false;
     }
 
-    return (this.tournament.type | 0x02) > 0 && !this.auth.player.isMale;
+    return (this.tournament.type & 0x02) > 0 && !this.auth.player.isMale;
   }
 
   isMaleYouthTournament(): boolean {
     if (this.tournament == null || this.auth.player == null) {
       return false;
     }
-
-    return (this.tournament.type | 0x04) > 0 && this.auth.player.isMale;
+    
+    return (this.tournament.type & 0x04) > 0 && this.auth.player.isMale;
   }
 
   isFemaleYouthTournament(): boolean {
@@ -97,7 +106,7 @@ export class TournamentRegistrationIdComponent implements OnInit {
       return false;
     }
 
-    return (this.tournament.type | 0x08) > 0 && !this.auth.player.isMale;
+    return (this.tournament.type & 0x08) > 0 && !this.auth.player.isMale;
   }
 
   loggedInPlayer(): Player {
@@ -115,26 +124,28 @@ export class TournamentRegistrationIdComponent implements OnInit {
       return;
     }
 
+    this.isSearching = true;
     this.data.findPlayerById(this.existingId).subscribe((s: any) => {
       var found: Player;
       found = s;
 
-      if (found.id == this.loggedInPlayer().id) {        
+      this.isSearching = false;
+
+      if (found.id == this.loggedInPlayer().id) {
         this.showMessage("Villa", "Þessi leikmaður er þegar skráður í liðið.")
         return;
       }
 
-      console.log("found player");
-
       if(found.isMale != this.loggedInPlayer().isMale) {
         this.showMessage("Villa", "Ekki er hægt að skrá blönduð lið!");
         return;
-      }
+      } 
 
       this.otherPlayer = found;
 
 
     }, (err: any) => {
+      this.isSearching = false;
       if (err.status == 404) {
         document.getElementById('openModalButton').click();
       }
@@ -173,13 +184,14 @@ export class TournamentRegistrationIdComponent implements OnInit {
     team.player2Id = this.existingId;
     team.tournamentId = this.tournament.id;
     team.teamTypeId = this.tournamentType;
-
+    this.isRegistering = true;
+    
     this.data.registerTeam(team).subscribe((s: any) => {
+      this.isRegistering = false;
       this.router.navigate(['/my-tournaments']);
-    }, err => {
-
+    }, err => {      
       var errorMessage= err.json().message;
-
+      this.isRegistering = false;
       if (errorMessage == "PLAYER_IN_ANOTHER_TEAM") {
         this.showMessage("Villa", "Leikmaður 2 er skráður í annað lið.");
         

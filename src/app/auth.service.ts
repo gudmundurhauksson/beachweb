@@ -12,8 +12,7 @@ export class AuthService {
   private _isLoggedIn: boolean;
   public player: Player;
 
-  constructor(private data: DataService, private router: Router) {
-    console.log("auth service");
+  constructor(private data: DataService, private router: Router) {    
     this._loadLogin();
   }
 
@@ -29,7 +28,7 @@ export class AuthService {
     result.subscribe((player: Object) => {
       this.player = <Player>player;
       this._isLoggedIn = true;
-      console.log(this.player);
+      // console.log(this.player);
     }, err => {
       console.log(err);
       this._isLoggedIn = false;

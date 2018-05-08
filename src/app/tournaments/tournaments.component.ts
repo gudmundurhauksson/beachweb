@@ -16,10 +16,12 @@ export class TournamentsComponent implements OnInit {
 
   public tournaments: Tournament[];
   public selected: Tournament;
+  public isWaiting : boolean;
 
   constructor(private data: DataService, router: Router, private auth: AuthService) {
     this.selected = new Tournament();
     this.selected.id = -1;
+    this.isWaiting = false;
 
     if (!auth.isLoggedIn() || !auth.player.isAdmin) {
       router.navigate(['']);
@@ -30,12 +32,14 @@ export class TournamentsComponent implements OnInit {
   }
 
   refresh() {
+    this.isWaiting = true;
     var date = new Date();
     this.data.getTournaments(date.getFullYear()).subscribe((s: any) => {
+      this.isWaiting = false;
       this.tournaments = <Tournament[]>s;
       console.log(this.tournaments);
     }, error => {
-
+      this.isWaiting = false;
     });
 
   }

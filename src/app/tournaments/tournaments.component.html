@@ -3,6 +3,12 @@
     <div class="col-sm-12">
       <div class="panel panel-primary">
         <div class="panel-body">
+
+            <span *ngIf="isWaiting">
+                <img src="./assets/loading.gif" height="16" width="16" />
+              </span>
+          
+
           <p id="profile-name" class="profile-name-card"></p>
           <form class="form-signin">
 
