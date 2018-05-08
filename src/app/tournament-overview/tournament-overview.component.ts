@@ -24,6 +24,7 @@ export class TournamentOverviewComponent implements OnInit {
   public selectedGroup: GroupModel;
   public matchesInGroup: SimpleDivisionMatch[];
   public table: DivisionGroupTable;
+  public isWaiting : boolean;
 
   constructor(private route: ActivatedRoute, private data: DataService, private auth : AuthService, private router: Router) {
     this.tournament = null;
@@ -33,6 +34,7 @@ export class TournamentOverviewComponent implements OnInit {
     this.selectedGroup = null;
     this.matchesInGroup = new Array();
     this.table = null;
+    this.isWaiting = false;
 
     this.route.params.subscribe((res: any) => {
       var tournamentId = res.id;    
@@ -75,8 +77,10 @@ export class TournamentOverviewComponent implements OnInit {
     this.matchesInGroup = new Array();
     this.table = null;
 
+    this.isWaiting = true;
     this.data.getDivisions(this.tournament.id, type).subscribe((s : any) => {
       this.divisions = <Division[]>s;
+      this.isWaiting = false;
 
       if (division > -1) {
         this.selectedDivision = this.getDivision(division);        
@@ -125,8 +129,10 @@ export class TournamentOverviewComponent implements OnInit {
 
     this.loadDivisionTable(this.selectedDivision, this.selectedGroup);
 
+    this.isWaiting = true;
     this.data.getSimpleDivisionMatches(this.tournament.id, this.typeSelected, this.selectedDivision.division, this.selectedGroup.divisionGroup).subscribe((s:any) => {
       this.matchesInGroup = <SimpleDivisionMatch[]>s;
+      this.isWaiting = false;
 
       for (var i = 0; i < this.matchesInGroup.length; i++) {
         this.loadResults(this.matchesInGroup[i]);
@@ -135,7 +141,9 @@ export class TournamentOverviewComponent implements OnInit {
   }
 
   loadResults(match: SimpleDivisionMatch) {
+    this.isWaiting = true;
     this.data.getMatchResult(match.round, match.team1Id, match.team2Id).subscribe((s:any) => {
+      this.isWaiting = false;
       match.results = <SimpleDivisionMatchResult[]>s;
     });
   }

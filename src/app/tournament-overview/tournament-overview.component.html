@@ -16,6 +16,10 @@
             </button>
           </span>
 
+          <span *ngIf="isWaiting">
+              <img src="./assets/loading.gif" height="16" width="16" />
+          </span>
+
           <h4 *ngIf="table != null && table.entries != null && table.entries.length > 0">Tafla:</h4>
           <table *ngIf="table != null && table.entries != null && table.entries.length > 0">
             <thead>
@@ -62,7 +66,7 @@
             </tr>
           </table>
 
-          
+
         </div>
       </div>
     </div>
