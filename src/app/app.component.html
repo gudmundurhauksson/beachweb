@@ -55,18 +55,18 @@
           </li> -->
 
         <li>
-          <a routerLink="/home">Forsíða</a>
+          <a routerLink="/home" (click)="toggleBack()">Forsíða</a>
         </li>
         
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
         <li *ngIf="!authService.isLoggedIn()">
-          <a routerLink="login">Innskrá</a>
+          <a routerLink="login" (click)="toggleBack()">Innskrá</a>
         </li>
 
         <li class="dropdown" dropdown *ngIf="authService.isLoggedIn()">
-            <a routerLink="change-password">Breyta lykilorði</a>
+            <a routerLink="change-password" (click)="toggleBack()">Breyta lykilorði</a>
         </li>
         <li *ngIf="authService.isLoggedIn()">
           <a (click)="logout()">Útskrá</a>

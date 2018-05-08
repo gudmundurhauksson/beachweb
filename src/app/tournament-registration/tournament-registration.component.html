@@ -8,8 +8,9 @@
 
           <div *ngFor="let tournament of tournaments">
 
-            <label>{{tournament.date}} - </label>
-            <span>{{tournament.name}}</span>
+            <h4>{{tournament.description}}</h4>
+            <label>{{getDateString(tournament.date)}} - </label>
+            
 
             <span>{{tournament.location.name}}</span>
 
@@ -23,7 +24,7 @@
           <h4>Eldri mót</h4>
 
           <div *ngFor="let tournament of oldTournaments">
-
+            
             <label>{{tournament.date}} - </label>
             <span>{{tournament.name}}</span>
 

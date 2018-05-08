@@ -23,7 +23,12 @@ export class AppComponent {
     authService.isLoggedIn();
   }
 
+  toggleBack() {
+    this.isIn = false;    
+  }
+
   logout() : void {    
+    this.isIn = false;
     this.authService.logout();
     this.router.navigate(['']);
   }

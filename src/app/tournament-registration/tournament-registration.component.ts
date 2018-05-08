@@ -57,8 +57,8 @@ export class TournamentRegistrationComponent implements OnInit {
             }
           }
 
-          this.tournaments.sort(function (a, b) { return b.dateTicks - a.dateTicks });
-          this.oldTournaments.sort(function (a, b) { return b.dateTicks - a.dateTicks });
+          this.tournaments.sort(function (a, b) { return a.dateTicks - b.dateTicks });
+          this.oldTournaments.sort(function (a, b) { return a.dateTicks - b.dateTicks });
           
         }, (err: any) => {
           this.isWaiting = false;
@@ -85,6 +85,29 @@ export class TournamentRegistrationComponent implements OnInit {
 
   isLoggedIn(): boolean {
     return this.auth.isLoggedIn();
+  }  
+
+  getDateString(date: string): string {
+    var dateObj = new Date(date);
+    var dateFinal = new Date(dateObj);
+    dateFinal.setDate(dateFinal.getDate() + 2);
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+
+    return dateObj.getDate() + ". " + this.monthToString(dateObj.getMonth()) + " - " + 
+      dateFinal.getDate() + ". " + this.monthToString(dateFinal.getMonth());
+  }
+
+  monthToString(month: number) {
+    if (month == 5) {
+      return "júní";
+    } else if (month == 6) {
+      return "júlí";
+    } else if (month == 7) {
+      return "ágúst";
+    } 
+    
+    return month;
   }
 
 }
