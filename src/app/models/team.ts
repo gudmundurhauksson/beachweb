@@ -12,6 +12,7 @@ export class Team {
     tournament: Tournament;
     player1: Player;
     player2: Player;
+    score: number;
 }
 
 export class SimpleTeam {

@@ -19,18 +19,18 @@ export class TournamentScoresComponent implements OnInit {
   public yearNow: number;
   public years: number[];
   public selectedYear: number;
-  public isMenSelected: boolean;
-  public isWaiting : boolean;
+  public selectedType: number;
+  public isWaiting: boolean;
 
   constructor(private data: DataService, private auth: AuthService) {
 
     this.isScoreLoaded = false;
     this.isWaiting = false;
 
+    this.selectedType = 0x02;
+
     if (auth.isLoggedIn()) {
-      this.isMenSelected = auth.player.isMale;
-    } else {
-      this.isMenSelected = false;
+      this.selectedType = auth.player.isMale ? 0x01 : 0x02;
     }
 
     var date = new Date();
@@ -42,35 +42,32 @@ export class TournamentScoresComponent implements OnInit {
     }
 
     this.selectedYear = this.yearNow;
-    this.loadScores(this.selectedYear, this.isMenSelected);
+    this.loadScores(this.selectedYear, this.selectedType);
   }
 
-  loadScores(year: number, isMen: boolean) {
+  loadScores(year: number, type: number) {
 
     this.isWaiting = true;
     this.selectedYear = year;
-    this.isMenSelected = isMen;
+    this.selectedType = type;
 
     this.isScoreLoaded = false;
 
-    if (isMen) {
-      this.data.getTournamentPlayersScoresByTypeAndYear(0x01, year).subscribe((s: any) => {
-        this.isWaiting = false;
-        this.scores = s;
-        this.isScoreLoaded = true;
-      }, error => {
-        this.isWaiting = false;
-      });
+    this.data.getTournamentPlayersScoresByTypeAndYear(type, year).subscribe((s: any) => {
+      this.isWaiting = false;
+      this.scores = s;
+      this.isScoreLoaded = true;
+    }, error => {
+      this.isWaiting = false;
+    });
+  }
+
+  loggedInPlayerId() {
+    if (!this.auth.isLoggedIn()) {
+      return "";
     }
-    else {
-      this.data.getTournamentPlayersScoresByTypeAndYear(0x02, year).subscribe((s: any) => {
-        this.scores = s;
-        this.isScoreLoaded = true;
-        this.isWaiting = false;
-      }, error => {
-        this.isWaiting = false;
-      });
-    }
+
+    return this.auth.player.id;
   }
 
   ngOnInit() {

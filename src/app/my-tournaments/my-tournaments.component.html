@@ -19,6 +19,10 @@
         <label>Leikmaður 2: {{team.player2.name}} ({{team.player2Id}})</label>
       </div>
 
+      <div *ngIf="team.score > 0">
+        <label style="font-weight: normal; color: rgb(255,111,105)">Stig: {{team.score}}</label>
+      </div>
+
       <div *ngIf="team.payment == null || team.payment.length == 0">
         <button class="btn btn-m btn-primary btn-block" type="submit" (click)="pay(team)" [attr.disabled]="isCancelling ? true : null">Greiða</button>
         <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="cancel(team)" [attr.disabled]="isCancelling ? true : null">Hætta við
