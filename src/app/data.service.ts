@@ -194,11 +194,11 @@ export class DataService {
     return tmp;
   }
 
-  sendAurRequest(gsm: string) {
+  sendAurRequest(gsm: string, teamId: number) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
-    var result = this.http.get(this.apiUrl + "payments/aur/" + gsm, this.getAuthorizationRequestOption(data));
+    var result = this.http.get(this.apiUrl + "payments/aur/" + gsm + "/" + teamId, this.getAuthorizationRequestOption(data));
     var tmp = result.map(s => s.json());
 
     return tmp;

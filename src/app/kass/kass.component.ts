@@ -58,10 +58,11 @@ export class KassComponent implements OnInit {
 
     this.isWaiting = true;    
     console.log("sending kass");
-    this.data.sendKassRequest(this.gsm, this.teamId).subscribe(s=> {
-      
+    this.data.sendKassRequest(this.gsm, this.teamId).subscribe(s=> {      
     }, error => {
       console.log(error);
+      this.showMessage("Villa", "Óþekkt villa. Vinsamlegast reynið síðar");
+      this.isWaiting = false;
     });
     
     //this.timer.newTimer(this.timerName, 1)
