@@ -8,6 +8,7 @@ export class Tournament {
     date: string;
     isRegistrationOpen: boolean;
     type: number;
+    price: string;
     isStarted: boolean;
     location: BeachLocation;
     dateTicks: number;    
@@ -15,4 +16,6 @@ export class Tournament {
     year: number;
     isOngoing: boolean;
     days: number;
+    bankAccountId: string;
+    emailHost: string;
 }

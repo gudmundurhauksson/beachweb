@@ -28,6 +28,7 @@ import { ArrangeMatchesTimesComponent } from './admin/arrange-matches-times/arra
 import { TournamentOverviewComponent } from './tournament-overview/tournament-overview.component';
 import { EnterMatchResultComponent } from './enter-match-result/enter-match-result.component';
 import { RootHomeComponent } from './root-home/root-home.component';
+import { DepositComponent } from './deposit/deposit.component';
 
 const routes: Routes = [  
   {
@@ -99,7 +100,10 @@ const routes: Routes = [
     path:'payment/:id/aur',
     component: AurComponent
   },
-  
+  {
+    path: 'payment/:id/deposit',
+    component: DepositComponent
+  },
   {
     path:'scores/tournaments',    
     component: TournamentScoresComponent

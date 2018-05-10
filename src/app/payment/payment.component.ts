@@ -31,6 +31,10 @@ export class PaymentComponent implements OnInit {
     this.router.navigate([this.location.path() + "/aur"]);
   }
 
+  payDeposit() : void {
+    this.router.navigate([this.location.path() + "/deposit"]);
+  }
+
   ngOnInit() {
   }
 

@@ -44,6 +44,7 @@ import { ArrangeMatchesTimesComponent } from './admin/arrange-matches-times/arra
 import { TournamentOverviewComponent } from './tournament-overview/tournament-overview.component';
 import { EnterMatchResultComponent } from './enter-match-result/enter-match-result.component';
 import { RootHomeComponent } from './root-home/root-home.component';
+import { DepositComponent } from './deposit/deposit.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,7 @@ import { RootHomeComponent } from './root-home/root-home.component';
     AurComponent,
     ScoresComponent,
     TournamentScoresComponent,  
-    AllRegistrationsComponent, ArrangeMatchesComponent, ForgotPasswordComponent, ResetPasswordComponent, ArrangeMatchesTimesComponent, TournamentOverviewComponent, EnterMatchResultComponent, RootHomeComponent
+    AllRegistrationsComponent, ArrangeMatchesComponent, ForgotPasswordComponent, ResetPasswordComponent, ArrangeMatchesTimesComponent, TournamentOverviewComponent, EnterMatchResultComponent, RootHomeComponent, DepositComponent
   ],
   imports: [
     BrowserModule,
