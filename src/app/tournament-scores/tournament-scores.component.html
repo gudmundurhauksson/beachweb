@@ -12,12 +12,14 @@
           <div>
             <table *ngIf="isScoreLoaded">
               <tr>
+                  <td>#</td>
                 <td style="width:175px">Nafn</td>
                 <td style="text-align: center;width:75px" *ngFor="let tournament of scores.tournaments">{{tournament.name}}</td>
                 <td style="text-align: center;width:75px" *ngIf="selectedYear > 5">Samtals</td>
               </tr>
 
-              <tr *ngFor="let player of scores.playerScores" [ngStyle]="{'font-weight':(player.playerId == loggedInPlayerId() ? 'bold' : 'normal')}">
+              <tr *ngFor="let player of scores.playerScores; let i = index" [ngStyle]="{'font-weight':(player.playerId == loggedInPlayerId() ? 'bold' : 'normal')}">
+                <td>{{i + 1}}.</td>
                 <td nowrap>{{player.name}}</td>
                 <td *ngFor="let score of player.score" style="text-align:center;">
                   <div *ngIf="score > 0">{{score}}</div>
