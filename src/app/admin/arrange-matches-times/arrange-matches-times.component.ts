@@ -24,6 +24,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
   public groupViews: Array<GroupView>;
   private selectedTimeSlot: TimeSlotName;
   private dateVisibility: Array<DateVisibility>;
+  private tournament: Tournament;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,12 +45,12 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       this.courts = null;
 
       this.data.getTournament(this.tournamentId).subscribe((s: any) => {
-        var tournament = <Tournament>s;
+        this.tournament = <Tournament>s;
 
-        var date = new Date(tournament.unixDateTicks);
+        var date = new Date(this.tournament.unixDateTicks);
         date.setHours(8);
         date.setMinutes(0);
-        this.courts = tournament.location.courts;
+        this.courts = this.tournament.location.courts;
 
         this.generateTimeSlots(date);
 
@@ -226,7 +227,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
     var minutesForEachGame = 40;
     this.timeSlots = new Array();
 
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < this.tournament.days; i++) {
       var currentDate = new Date(startDate);
       currentDate.setDate(startDate.getDate() + i);
       var startOfSlot = new Date(startDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), startDate.getHours(), startDate.getMinutes());
@@ -354,7 +355,9 @@ export class ArrangeMatchesTimesComponent implements OnInit {
   }
 
   translate(date: string): string {
-    return date.replace("Friday", "Föstudagur")
+    return date
+      .replace("Thursday", "Fimmtudagur")
+      .replace("Friday", "Föstudagur")
       .replace("Saturday", "Laugardagur")
       .replace("Sunday", "Sunnudagur")
       .replace("June", "Júní")

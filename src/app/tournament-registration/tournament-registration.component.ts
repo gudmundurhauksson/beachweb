@@ -87,10 +87,10 @@ export class TournamentRegistrationComponent implements OnInit {
     return this.auth.isLoggedIn();
   }  
 
-  getDateString(date: string): string {
+  getDateString(date: string, days: number): string {
     var dateObj = new Date(date);
     var dateFinal = new Date(dateObj);
-    dateFinal.setDate(dateFinal.getDate() + 2);
+    dateFinal.setDate(dateFinal.getDate() + days - 1);
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 
@@ -99,7 +99,9 @@ export class TournamentRegistrationComponent implements OnInit {
   }
 
   monthToString(month: number) {
-    if (month == 5) {
+    if (month == 4) {
+      return "maí";
+    } else if (month == 5) {
       return "júní";
     } else if (month == 6) {
       return "júlí";

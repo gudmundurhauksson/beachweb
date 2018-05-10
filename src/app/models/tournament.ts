@@ -14,4 +14,5 @@ export class Tournament {
     unixDateTicks: number;
     year: number;
     isOngoing: boolean;
+    days: number;
 }
