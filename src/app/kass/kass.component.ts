@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { DataService } from '../data.service';
 // import { SimpleTimer } from 'ng2-simple-timer';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { PaymentStatus } from '../models/registration';
 
 @Component({
   selector: 'app-kass',
@@ -49,14 +50,20 @@ export class KassComponent implements OnInit {
   }
 
   send() : void {
-    // this._data.sendKassRequest(this.gsm);
-
+    
     if (this.gsm == null || this.gsm.length != 7) {
       this.showMessage("Villa", "Vinsamlegast sláið inn gilt símanúmer");
       return;
     }
 
     this.isWaiting = true;    
+    console.log("sending kass");
+    this.data.sendKassRequest(this.gsm, this.teamId).subscribe(s=> {
+      
+    }, error => {
+      console.log(error);
+    });
+    
     //this.timer.newTimer(this.timerName, 1)
     //this.timerCount = 90;
     //this.timerId = this.timer.subscribe(this.timerName, () => {
@@ -111,6 +118,19 @@ export class KassComponent implements OnInit {
 
   public openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template); // {3}
+  }
+
+  refresh() {
+    this.data.refreshPaymentStatus(this.teamId).subscribe((s: any) => {
+      var status = <PaymentStatus>s;
+      if (status.isPaid) {
+        this.showMessage('Aðgerð tókst', 'Greiðla var móttekin.');
+        this.router.navigate(['my-tournaments']);
+        return;
+      } else {
+        this.showMessage('Vinsamlegast bíðið ...', 'Greiðsla hefur ekki borist. Vinsamlegast bíðið augnablik og reynið aftur.');
+      }
+    });
   }
 
   ngOnInit() {

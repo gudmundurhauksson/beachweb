@@ -22,8 +22,8 @@ import { SimpleDivisionMatchResult } from './models/simpleDivisionMatchResult';
 @Injectable()
 export class DataService {
 
-  private baseUrl = "https://www.stigakerfi.net/api/";
-  //private baseUrl = "http://localhost:3564/";
+  //private baseUrl = "https://www.stigakerfi.net/api/";
+  private baseUrl = "http://localhost:3564/";
   private apiUrl = this.baseUrl + "api/";
 
   constructor(private http: Http, private _cookieService: CookieService) {
@@ -184,11 +184,11 @@ export class DataService {
     return tmp;
   }
 
-  sendKassRequest(gsm: string) {
+  sendKassRequest(gsm: string, teamId: number) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
-    var result = this.http.get(this.apiUrl + "payments/kass/" + gsm, this.getAuthorizationRequestOption(data));
+    var result = this.http.get(this.apiUrl + "payments/kass/" + gsm + "/" + teamId, this.getAuthorizationRequestOption(data));
     var tmp = result.map(s => s.json());
 
     return tmp;
@@ -437,5 +437,14 @@ export class DataService {
     return tmp;
   }
 
+  refreshPaymentStatus(teamId: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "payments/" + teamId + "/refresh", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
 
 }

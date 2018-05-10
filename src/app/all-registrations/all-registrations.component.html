@@ -17,6 +17,7 @@
               <th style="width:175px">Stig</th>
               <th style="width:175px">Heildarstig</th>
               <th style="width:175px">Deild</th>
+              <th style="width:175px">Greitt?</th>
 
             </thead>
             <ng-container *ngFor="let division of registrations">
@@ -32,6 +33,10 @@
                       <button *ngIf="!isLocked(d)" class="btn btn-xs" (click)="assignDivision(registration.teamId, d)">{{d}}</button>
                     </ng-container>
                   </div>
+                </td>
+                <td>
+                  <label>{{translatePaymentStatus(registration.paymentStatus.paymentStatus)}}</label>
+                  <button class="btn" (click)="fetchPaymentStatus(registration)" *ngIf=!registration.paymentStatus.isPaid>Uppfæra</button>
                 </td>
               </tr>
 

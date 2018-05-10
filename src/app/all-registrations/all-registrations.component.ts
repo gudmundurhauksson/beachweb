@@ -4,12 +4,13 @@ import { AuthData } from '../models/authdata';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { registerLocaleData } from '@angular/common/src/i18n/locale_data';
-import { Registration } from '../models/registration';
+import { Registration, PaymentStatus } from '../models/registration';
 import { isEmbeddedView } from '@angular/core/src/view/util';
 import { Router } from '@angular/router';
 import { digest } from '@angular/compiler/src/i18n/serializers/xmb';
 import { DivisionMatch } from '../models/divisionMatch';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { TournamentRegistrationIdComponent } from '../tournament-registration-id/tournament-registration-id.component';
 
 @Component({
   selector: 'app-all-registrations',
@@ -153,5 +154,26 @@ export class AllRegistrationsComponent implements OnInit {
   public openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template); // {3}
   }
+
+  public fetchPaymentStatus(registration: Registration) {
+    this.data.refreshPaymentStatus(registration.teamId).subscribe((s : any) => {
+      var status = <PaymentStatus>s;      
+      registration.paymentStatus = status;
+    });
+  }
+
+  public translatePaymentStatus(paymentStatus: string) {
+    if (paymentStatus == "NOT_PAID") {
+      return "Ógreitt!"
+    } else if (paymentStatus == "PAID") {
+      return "Greitt!"
+    } else if (paymentStatus == "PENDING") {
+      return "Ógreitt!"
+    } else if (paymentStatus == "REJECTED") {
+      return "Hafnað!"
+    } 
+    
+    return "Villa!"
+  };
 
 }

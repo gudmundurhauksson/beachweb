@@ -9,4 +9,10 @@ export class Registration {
     totalTeamPoints: number;
     teamDivision: number;
     isReadOnly: boolean;
+    paymentStatus: PaymentStatus;
+}
+
+export class PaymentStatus {
+    isPaid: boolean;
+    paymentStatus: string;
 }

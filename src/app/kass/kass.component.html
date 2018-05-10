@@ -7,8 +7,10 @@
 
     <button *ngIf="!isWaiting" class="btn btn-primary btn-block" type="submit" (click)="send()">Senda rukkun</button>
 
-    <label *ngIf="isWaiting">Beðið eftir greiðslu. Vinsamlegast bíðið ...</label>
-    <h1 *ngIf="isWaiting" style="text-align: center">{{timerCount}}</h1>
+    <button *ngIf="isWaiting" (click)="refresh()" class="btn btn-primary btn-block">Smellið hér þegar greiðsla hefur farið fram</button>
+
+    <!--<label *ngIf="isWaiting">Beðið eftir greiðslu. Vinsamlegast bíðið ...</label>
+    <h1 *ngIf="isWaiting" style="text-align: center">{{timerCount}}</h1>-->
 
   </div>
 </div>
