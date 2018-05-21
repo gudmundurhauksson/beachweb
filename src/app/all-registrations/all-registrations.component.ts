@@ -83,6 +83,14 @@ export class AllRegistrationsComponent implements OnInit {
     });
   }
 
+  isAdmin(): boolean {
+    if (!this.auth.isLoggedIn()) {
+      return false;
+    }
+
+    return this.auth.player.isAdmin;
+  }
+
   private getDivisionMatches(division: number) {    
     this.data.getMatches(this.tournamentId, this.typeSelected, division).subscribe((s:any) => {
       var matches = <DivisionMatch[]>s;

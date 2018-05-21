@@ -6,4 +6,5 @@ export class Player {
     isMale: boolean;
     mobile: string;
     isAdmin: boolean;
+    isAdminViewer: boolean;
 }

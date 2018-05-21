@@ -16,8 +16,8 @@
               <th style="width:175px">Leikmaður 2</th>
               <th style="width:175px">Stig</th>
               <th style="width:175px">Heildarstig</th>
-              <th style="width:175px">Deild</th>
-              <th style="width:175px">Greitt?</th>
+              <th *ngIf="isAdmin()" style="width:175px">Deild</th>
+              <th *ngIf="isAdmin()" style="width:175px">Greitt?</th>
 
             </thead>
             <ng-container *ngFor="let division of registrations">
@@ -27,24 +27,24 @@
                 <td>{{registration.player2Name}}</td>
                 <td>{{registration.totalPlayer2Points}}</td>
                 <td>{{registration.totalTeamPoints}}</td>
-                <td>{{registration.teamDivision}}
+                <td *ngIf="isAdmin()">{{registration.teamDivision}}
                   <div *ngIf='!registration.isReadOnly && !isLocked(division[0].teamDivision)'>
                     <ng-container *ngFor="let d of divisions">
                       <button *ngIf="!isLocked(d)" class="btn btn-xs" (click)="assignDivision(registration.teamId, d)">{{d}}</button>
                     </ng-container>
                   </div>
                 </td>
-                <td>
+                <td *ngIf="isAdmin()">
                   <label>{{translatePaymentStatus(registration.paymentStatus.paymentStatus)}}</label>
                   <button class="btn" (click)="fetchPaymentStatus(registration)" *ngIf=!registration.paymentStatus.isPaid>Uppfæra</button>
                 </td>
               </tr>
 
-              <tr *ngIf="division[0].teamDivision != 0 && !division[0].isReadOnly && !isLocked(division[0].teamDivision)">
+              <tr *ngIf="division[0].teamDivision != 0 && !division[0].isReadOnly && !isLocked(division[0].teamDivision)  && isAdmin()">
                 <button class="btn btn-primary btn-block btn-signin" type="submit" (click)="arrangeMatches(division[0].teamDivision)">Leikjaniðurröðun</button>
               </tr>
 
-              <tr *ngIf="isLocked(division[0].teamDivision)">
+              <tr *ngIf="isLocked(division[0].teamDivision)  && isAdmin()">
                 <td colspan="6">
                   <button (click)="viewMatches(division[0].teamDivision)" style="margin: 1px" class="btn">Stilla upp tímaplani</button>
                   <button (click)="clearMatches(division[0].teamDivision)" style="margin: 1px" class="btn">Hreinsa tímaplan</button>

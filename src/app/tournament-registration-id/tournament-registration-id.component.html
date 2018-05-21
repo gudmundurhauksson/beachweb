@@ -48,7 +48,7 @@
               <h4>Leikmaður 2</h4>
 
               <div *ngIf="otherPlayer == null">
-                <input type="text" id="existingId" name="existingId" class="form-control" placeholder="kennitala" required autofocus [(ngModel)]="existingId">
+                <input type="text" id="existingId" name="existingId" class="form-control" placeholder="nafn" required autofocus [(ngModel)]="existingId">
                 <button class="btn btn-primary btn-block" type="submit" (click)="search()" [attr.disabled]="isSearching ? true : null">Leita
                   <span *ngIf="isSearching">
                     <img src="./assets/loading.gif" height="16" width="16" />

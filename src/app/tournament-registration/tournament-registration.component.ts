@@ -83,6 +83,14 @@ export class TournamentRegistrationComponent implements OnInit {
     return this.auth.player.isAdmin;
   }
 
+  isAdminViewer() : boolean {
+    if (!this.auth.isLoggedIn()) {
+      return false;
+    }
+
+    return this.auth.player.isAdminViewer;
+  }
+
   isLoggedIn(): boolean {
     return this.auth.isLoggedIn();
   }  
