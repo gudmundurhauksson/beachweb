@@ -43,6 +43,7 @@ export class MyTournamentsComponent implements OnInit {
     this.data.getTournamentsStatus(this.auth.player).subscribe((s: any) => {
       this.isWaiting = false;
       this.teams = <Team[]>s;
+      console.log(this.teams);
     }, (err: any) => {
       this.isWaiting = false;
       console.log(err);

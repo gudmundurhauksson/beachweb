@@ -22,30 +22,30 @@ export class AllRegistrationsComponent implements OnInit {
   public registrations: Array<Array<Registration>>;
   public isRegistrationsLoaded: boolean;
   private tournamentId: number;
-  public typeSelected: number; 
+  public typeSelected: number;
   public lockedDivisions: Array<number>;
   public divisions: Array<number>;
   public modalRef: BsModalRef; // {1}
 
-  constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute, private router: Router, private modalService: BsModalService) {    
+  constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
     var maxNumberOfDivisions = 5;
     this.divisions = new Array();
 
     for (var i = 1; i <= maxNumberOfDivisions; i++) {
-      this.divisions.push(i);      
+      this.divisions.push(i);
     }
 
-    this.divisions.push(0);      
+    this.divisions.push(0);
 
-    this.isRegistrationsLoaded = false;    
+    this.isRegistrationsLoaded = false;
     this.typeSelected = 2;
     this.lockedDivisions = new Array();
 
     this.route.params.subscribe((res: any) => {
       this.tournamentId = res.tournamentId;
-      this.refresh(this.typeSelected);      
+      this.refresh(this.typeSelected);
     });
-  }  
+  }
 
   public refresh(teamType: number) {
 
@@ -62,16 +62,16 @@ export class AllRegistrationsComponent implements OnInit {
         return;
       }
 
-      var currentDivision = registrations[0].teamDivision;      
+      var currentDivision = registrations[0].teamDivision;
       this.getDivisionMatches(currentDivision);
 
-      var currentGroup : Array<Registration>;
+      var currentGroup: Array<Registration>;
       currentGroup = new Array<Registration>();
       this.registrations.push(currentGroup);
       for (var i = 0; i < registrations.length; i++) {
         if (registrations[i].teamDivision != currentDivision) {
           currentGroup = new Array<Registration>();
-          currentDivision = registrations[i].teamDivision;          
+          currentDivision = registrations[i].teamDivision;
           this.getDivisionMatches(currentDivision);
           this.registrations.push(currentGroup);
         }
@@ -91,8 +91,8 @@ export class AllRegistrationsComponent implements OnInit {
     return this.auth.player.isAdmin;
   }
 
-  private getDivisionMatches(division: number) {    
-    this.data.getMatches(this.tournamentId, this.typeSelected, division).subscribe((s:any) => {
+  private getDivisionMatches(division: number) {
+    this.data.getMatches(this.tournamentId, this.typeSelected, division).subscribe((s: any) => {
       var matches = <DivisionMatch[]>s;
       if (matches.length > 0) {
         this.lockedDivisions.push(division);
@@ -107,11 +107,11 @@ export class AllRegistrationsComponent implements OnInit {
   }
 
   public isLocked(division: number) {
-    
+
     for (var i = 0; i < this.lockedDivisions.length; i++) {
       if (this.lockedDivisions[i] == division) {
         return true;
-      }            
+      }
     }
 
     return false;
@@ -126,18 +126,18 @@ export class AllRegistrationsComponent implements OnInit {
 
   arrangeMatches(division: number) {
     this.router.navigate(['/admin-arrange-matches/' + this.tournamentId + '/' + this.typeSelected + "/" + division]);
-  }  
+  }
 
   clearMatches(division: number) {
     this.divisionToDelete = division;
-    this.showMessage("Aðvörun", "Ertu viss um að þú viljir eyða tímaplani fyrir deildina (deild " + division + ")?");    
+    this.showMessage("Aðvörun", "Ertu viss um að þú viljir eyða tímaplani fyrir deildina (deild " + division + ")?");
   };
 
   confirmDelete() {
 
-    this.data.deleteMatches(this.tournamentId, this.typeSelected, this.divisionToDelete).subscribe(s=> {
+    this.data.deleteMatches(this.tournamentId, this.typeSelected, this.divisionToDelete).subscribe(s => {
       this.refresh(this.typeSelected);
-      
+
     });
 
     this.divisionToDelete = -1;
@@ -164,9 +164,18 @@ export class AllRegistrationsComponent implements OnInit {
   }
 
   public fetchPaymentStatus(registration: Registration) {
-    this.data.refreshPaymentStatus(registration.teamId).subscribe((s : any) => {
-      var status = <PaymentStatus>s;      
+    this.data.refreshPaymentStatus(registration.teamId).subscribe((s: any) => {
+      var status = <PaymentStatus>s;
       registration.paymentStatus = status;
+    });
+  }
+
+  public completeDeposit(registration: Registration) {
+    this.data.completeDeposit(registration.teamId).subscribe(s => {
+      this.data.refreshPaymentStatus(registration.teamId).subscribe((s: any) => {
+        var status = <PaymentStatus>s;
+        registration.paymentStatus = status;
+      })
     });
   }
 
@@ -179,8 +188,8 @@ export class AllRegistrationsComponent implements OnInit {
       return "Ógreitt!"
     } else if (paymentStatus == "REJECTED") {
       return "Hafnað!"
-    } 
-    
+    }
+
     return "Villa!"
   };
 

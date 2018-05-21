@@ -129,7 +129,12 @@ export class KassComponent implements OnInit {
         this.router.navigate(['my-tournaments']);
         return;
       } else {
-        this.showMessage('Vinsamlegast bíðið ...', 'Greiðsla hefur ekki borist. Vinsamlegast bíðið augnablik og reynið aftur.');
+        if (status.paymentStatus == "REJECTED") {
+          this.showMessage('Hafnað', 'Greiðslu var hafnað!');
+          this.router.navigate(['/payment/' + this.teamId]);
+        } else {
+          this.showMessage('Vinsamlegast bíðið ...', 'Greiðsla hefur ekki borist. Vinsamlegast bíðið augnablik og reynið aftur.');
+        }
       }
     });
   }

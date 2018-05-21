@@ -22,8 +22,8 @@ import { SimpleDivisionMatchResult } from './models/simpleDivisionMatchResult';
 @Injectable()
 export class DataService {
 
-  //private baseUrl = "https://www.stigakerfi.net/api/";
-  private baseUrl = "http://localhost:3564/";
+  private baseUrl = "https://www.stigakerfi.net/api/";
+  //private baseUrl = "http://localhost:3564/";
   private apiUrl = this.baseUrl + "api/";
 
   constructor(private http: Http, private _cookieService: CookieService) {
@@ -144,6 +144,16 @@ export class DataService {
     return tmp;
   }
 
+  findPlayerByName(name: string, type: number): Observable<Response> {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "players/find/" + name + "/" + type, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
   registerTeam(team: Team): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
@@ -199,6 +209,26 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "payments/aur/" + gsm + "/" + teamId, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  sendDepositRequest(teamId: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "payments/deposit/" + teamId, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  completeDeposit(teamId: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "payments/deposit/" + teamId + "/complete", this.getAuthorizationRequestOption(data));
     var tmp = result.map(s => s.json());
 
     return tmp;
@@ -302,7 +332,7 @@ export class DataService {
     return tmp;
   }
 
-  calculateMatches(group: GroupModel): Observable<Response>{
+  calculateMatches(group: GroupModel): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
 
@@ -413,7 +443,7 @@ export class DataService {
     return tmp;
   }
 
-  getTeamById(teamId: number) : Observable<Response> {
+  getTeamById(teamId: number): Observable<Response> {
     var result = this.http.get(this.apiUrl + "teams/" + teamId);
     var tmp = result.map(s => s.json());
 
@@ -431,7 +461,7 @@ export class DataService {
   }
 
   getDivisionGroupTable(tournamentId: number, teamTypeId: number, division: number, divisionGroup: number) {
-    var result = this.http.get(this.apiUrl + "matches/" + tournamentId + "/"+ teamTypeId + "/"+ division + "/"+ divisionGroup + "/table");
+    var result = this.http.get(this.apiUrl + "matches/" + tournamentId + "/" + teamTypeId + "/" + division + "/" + divisionGroup + "/table");
     var tmp = result.map(s => s.json());
 
     return tmp;

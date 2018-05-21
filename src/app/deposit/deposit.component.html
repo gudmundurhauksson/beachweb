@@ -2,5 +2,6 @@
   <div class="card card-container">
     Vinsamlegast leggið {{tournament.price}} Kr. inn á {{tournament.bankAccountId}} og sendið kvittun á {{tournament.emailHost}}. Setjið eftirfarandi númer í skýringu:
     <h3 style="text-align: center">{{teamId}}</h3>
+    <button (click)="paid()" class="btn btn-primary btn-block">Smellið hér þegar greiðsla hefur farið fram</button>
   </div>
 </div>

@@ -49,7 +49,7 @@
 
               <div *ngIf="otherPlayer == null">
                 <input type="text" id="existingId" name="existingId" class="form-control" placeholder="nafn" required autofocus [(ngModel)]="existingId">
-                <button class="btn btn-primary btn-block" type="submit" (click)="search()" [attr.disabled]="isSearching ? true : null">Leita
+                <button class="btn btn-primary btn-block" type="submit" (click)="searchByName()" [attr.disabled]="isSearching ? true : null">Leita
                   <span *ngIf="isSearching">
                     <img src="./assets/loading.gif" height="16" width="16" />
                   </span>
@@ -64,6 +64,23 @@
                   </span>
                 </button>
                 <button class="btn btn-primary btn-block" type="submit" (click)="cancel()">Hætta við</button>
+              </div>
+
+              <!-- LIST OF FOUND PLAYERS-->
+              <table *ngIf="players != null">
+                <ng-container *ngFor="let player of players">
+                  <tr>
+                    <td>
+                      <label class="radioLabel">
+                        <input type="radio" [value]="player.id" name="otherPlayerRadio" (change)="selectOtherPlayer(player)" />{{player.name}} ({{getBirthDate(player.id)}})
+                      </label>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+
+              <div *ngIf="noPlayerFound">
+                <label>Enginn leikmaður fannst.</label>
               </div>
 
             </form>

@@ -27,7 +27,7 @@
               <label style="font-weight: normal; color: rgb(255,111,105)">Stig: {{team.score}}</label>
             </div>
 
-            <div *ngIf="team.payment == null || team.payment.length == 0">
+            <div *ngIf="team.paymentStatus == null || (!team.paymentStatus.isPaid && team.paymentStatus.paymentStatus != 'PENDING')">
               <button class="btn btn-m btn-primary btn-block" type="submit" (click)="pay(team)" [attr.disabled]="isCancelling ? true : null">Greiða</button>
               <button class="btn btn-m btn-primary btn-block btn-signin" type="submit" (click)="cancel(team)" [attr.disabled]="isCancelling ? true : null">Hætta við
                 <span *ngIf="isCancelling">
@@ -36,6 +36,11 @@
 
               </button>
             </div>
+
+            <div *ngIf="team.paymentStatus != null && !team.paymentStatus.isPaid && team.paymentStatus.paymentStatus == 'PENDING'">
+              <h5>Greiðsla bíður staðfestingar!</h5>
+              <br />              
+            </div> 
 
           </div>
 

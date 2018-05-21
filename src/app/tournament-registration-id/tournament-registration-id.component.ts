@@ -20,24 +20,26 @@ export class TournamentRegistrationIdComponent implements OnInit {
 
   private id: number;
   public tournament: Tournament;
-  public tournamentType: number;
-  public player: Player;
+  public tournamentType: number;  
   public existingId: string;
   public modalRef: BsModalRef; // {1}
   public otherPlayer: Player;
   public isWaiting : boolean;
   public isSearching : boolean;
   public isRegistering : boolean;
+  public players: Player[];
+  public noPlayerFound: boolean;
 
   constructor(private route: ActivatedRoute, private data: DataService,
     private auth: AuthService, private modalService: BsModalService,
     private router: Router) {
 
+    this.noPlayerFound = false;
     this.isWaiting = true;
-    this.isSearching = false;
-    this.player = new Player();
+    this.isSearching = false;    
     this.tournament = null;
     this.isRegistering = false;
+    this.players = new Array();
 
     if (!auth.isLoggedIn()) {
       this.router.navigate(['login']);
@@ -118,38 +120,61 @@ export class TournamentRegistrationIdComponent implements OnInit {
     return this.auth.player;
   }
 
-  search(): void {
+  // search(): void {
+  //   if(this.existingId === undefined || this.existingId == null || this.existingId.length == 0) {
+  //     this.showMessage("Villa", "Vantar kennitölu");
+  //     return;
+  //   }
+
+  //   this.isSearching = true;
+  //   this.data.findPlayerById(this.existingId).subscribe((s: any) => {
+  //     var found: Player;
+  //     found = s;
+
+  //     this.isSearching = false;
+
+  //     if (found.id == this.loggedInPlayer().id) {
+  //       this.showMessage("Villa", "Þessi leikmaður er þegar skráður í liðið.")
+  //       return;
+  //     }
+
+  //     if(found.isMale != this.loggedInPlayer().isMale) {
+  //       this.showMessage("Villa", "Ekki er hægt að skrá blönduð lið!");
+  //       return;
+  //     } 
+
+  //     this.otherPlayer = found;
+
+
+  //   }, (err: any) => {
+  //     this.isSearching = false;
+  //     if (err.status == 404) {
+  //       document.getElementById('openModalButton').click();
+  //     }
+  //   });
+  // }
+
+  searchByName() : void {
     if(this.existingId === undefined || this.existingId == null || this.existingId.length == 0) {
-      this.showMessage("Villa", "Vantar kennitölu");
+      this.showMessage("Villa", "Vantar nafn");
       return;
     }
 
     this.isSearching = true;
-    this.data.findPlayerById(this.existingId).subscribe((s: any) => {
-      var found: Player;
-      found = s;
-
+    this.noPlayerFound = false;
+    
+    this.data.findPlayerByName(this.existingId, this.auth.player.isMale ? 0x01 : 0x02).subscribe((s : any) => {
       this.isSearching = false;
-
-      if (found.id == this.loggedInPlayer().id) {
-        this.showMessage("Villa", "Þessi leikmaður er þegar skráður í liðið.")
-        return;
-      }
-
-      if(found.isMale != this.loggedInPlayer().isMale) {
-        this.showMessage("Villa", "Ekki er hægt að skrá blönduð lið!");
-        return;
-      } 
-
-      this.otherPlayer = found;
-
-
-    }, (err: any) => {
+      console.log(this.players);
+      this.players = <Player[]>s;
+      this.noPlayerFound = this.players.length == 0;
+    }, error => {
       this.isSearching = false;
-      if (err.status == 404) {
-        document.getElementById('openModalButton').click();
-      }
     });
+  }
+
+  selectOtherPlayer(otherPlayer : Player) {
+    this.otherPlayer = otherPlayer;
   }
 
   public modalHeader: string;
@@ -172,33 +197,53 @@ export class TournamentRegistrationIdComponent implements OnInit {
 
   public cancel(): void {
     this.otherPlayer = null;
+    this.players = new Array();
+    this.existingId = "";
   }
 
   public canConfirm(): boolean {
     return this.loggedInPlayer() != null && this.existingId != null && this.tournamentType > 0;
   }
 
+  public getBirthDate(personalId: string) {
+    return personalId.substr(0, 6);
+  }
+
   public confirm(): void {
     var team = new Team();
     team.player1Id = this.loggedInPlayer().id;
-    team.player2Id = this.existingId;
+    team.player2Id = this.otherPlayer.id;
     team.tournamentId = this.tournament.id;
     team.teamTypeId = this.tournamentType;
     this.isRegistering = true;
     
+    if (team.player1Id == team.player2Id) {
+      this.showMessage("Villa", "Tveir leikmenn þurfa að vera í liðinu!");
+      this.otherPlayer = null;  
+      this.isRegistering = false;    
+      return;
+    }
+    
+    console.log(team);
+
     this.data.registerTeam(team).subscribe((s: any) => {
       this.isRegistering = false;
       this.router.navigate(['/my-tournaments']);
     }, err => {      
-      var errorMessage= err.json().message;
+      console.log(err);
+      var errorMessage = err.json().message;
+      console.log(errorMessage);
       this.isRegistering = false;
+      
       if (errorMessage == "PLAYER_IN_ANOTHER_TEAM") {
-        this.showMessage("Villa", "Leikmaður 2 er skráður í annað lið.");
-        
+        this.showMessage("Villa", "Leikmaður 2 er skráður í annað lið.");        
+        return;
+      } else if (errorMessage == "TEAM_HAS_DUPLICATES") {
+        this.showMessage("Villa", "Velja þarf tvo leikmenn.")
         return;
       }
 
-      this.showMessage("Villa", err);
+      this.showMessage("Villa", errorMessage);
       console.log(err);
     });
   }
