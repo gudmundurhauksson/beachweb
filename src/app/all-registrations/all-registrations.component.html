@@ -34,10 +34,10 @@
                     </ng-container>
                   </div>
                 </td>
-                <td *ngIf="isAdmin()">
+                <td *ngIf="isAdmin() || isAdminViewer()">
                   <label>{{translatePaymentStatus(registration.paymentStatus.paymentStatus)}}</label>
-                  <button class="btn" (click)="fetchPaymentStatus(registration)" *ngIf=!registration.paymentStatus.isPaid>Uppfæra</button>
-                  <button class="btn" (click)="completeDeposit(registration)" *ngIf=!registration.paymentStatus.isPaid>Millifært</button>
+                  <button class="btn" (click)="fetchPaymentStatus(registration)" *ngIf="isAdmin() && !registration.paymentStatus.isPaid">Uppfæra</button>
+                  <button class="btn" (click)="completeDeposit(registration)" *ngIf="(isAdminViewer() || isAdmin()) && !registration.paymentStatus.isPaid">Millifært</button>
                 </td>
               </tr>
 

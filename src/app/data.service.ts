@@ -22,11 +22,11 @@ import { SimpleDivisionMatchResult } from './models/simpleDivisionMatchResult';
 @Injectable()
 export class DataService {
 
-  private baseUrl = "https://www.stigakerfi.net/api/";
-  //private baseUrl = "http://localhost:3564/";
+  //private baseUrl = "https://www.stigakerfi.net/api/";
+  private baseUrl = "http://localhost:3564/";
   private apiUrl = this.baseUrl + "api/";
 
-  constructor(private http: Http, private _cookieService: CookieService) {
+  constructor(private http: Http, private cookieService: CookieService) {
   }
 
   register(player: Player): Observable<Response> {
@@ -74,15 +74,15 @@ export class DataService {
     option = new CookieOptions();
     var expires = new Date();
     expires.setDate(expires.getDate() + 30);
-    this._cookieService.putObject(key, content, { "expires": expires });
+    this.cookieService.putObject(key, content, { "expires": expires });
   }
 
   load(key: string): Object {
-    return this._cookieService.getObject(key);
+    return this.cookieService.getObject(key);
   }
 
   clear(key: string): void {
-    this._cookieService.remove(key);
+    this.cookieService.remove(key);
   }
 
   verifyLogin(auth: AuthData): Observable<Response> {
