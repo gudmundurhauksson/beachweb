@@ -5,8 +5,11 @@
       <div class="panel panel-primary">
 
         <div class="panel-body">
-          <button style="margin: 1px" (click)="refresh(2)" [ngClass]="{'btn': true, 'btn-primary': typeSelected == 2}">Konur</button>
-          <button style="margin: 1px" (click)="refresh(1)" [ngClass]="{'btn': true, 'btn-primary': typeSelected == 1}">Karlar</button>
+          <button *ngIf="isTypeInTournament(2)"  style="margin: 1px" (click)="refresh(2)" [ngClass]="{'btn': true, 'btn-primary': typeSelected == 2}">Konur</button>
+          <button *ngIf="isTypeInTournament(1)" style="margin: 1px" (click)="refresh(1)" [ngClass]="{'btn': true, 'btn-primary': typeSelected == 1}">Karlar</button>          
+          <button *ngIf="isTypeInTournament(8)" style="margin: 1px" (click)="refresh(8)" [ngClass]="{'btn': true, 'btn-primary': typeSelected == 8}">Stúlkur</button>
+          <button *ngIf="isTypeInTournament(4)" style="margin: 1px" (click)="refresh(4)" [ngClass]="{'btn': true, 'btn-primary': typeSelected == 4}">Drengir</button>
+
         </div>
         <div class="panel-body">
           <table *ngIf="isRegistrationsLoaded">
@@ -16,7 +19,7 @@
               <th style="width:175px">Leikmaður 2</th>
               <th style="width:175px">Stig</th>
               <th style="width:175px">Heildarstig</th>
-              <th *ngIf="isAdmin()" style="width:175px">Deild</th>
+              <th *ngIf="isAdmin()" style="width:250px">Deild</th>
               <th *ngIf="isAdmin()" style="width:375px">Greitt?</th>
 
             </thead>
@@ -34,10 +37,11 @@
                     </ng-container>
                   </div>
                 </td>
-                <td *ngIf="isAdmin() || isAdminViewer()">
+                <td *ngIf="isAdminViewer()">
                   <label>{{translatePaymentStatus(registration.paymentStatus.paymentStatus)}}</label>
                   <button class="btn" (click)="fetchPaymentStatus(registration)" *ngIf="isAdmin() && !registration.paymentStatus.isPaid">Uppfæra</button>
-                  <button class="btn" (click)="completeDeposit(registration)" *ngIf="(isAdminViewer() || isAdmin()) && !registration.paymentStatus.isPaid">Millifært</button>
+                  <button class="btn" (click)="completeDeposit(registration)" *ngIf="!registration.paymentStatus.isPaid">Millifært</button>
+                  <!-- <button class="btn" (click)="communication(registration.teamId)">Samskipti</button> -->
                 </td>
               </tr>
 
@@ -45,7 +49,7 @@
                 <button class="btn btn-primary btn-block btn-signin" type="submit" (click)="arrangeMatches(division[0].teamDivision)">Leikjaniðurröðun</button>
               </tr>
 
-              <tr *ngIf="isLocked(division[0].teamDivision)  && isAdmin()">
+              <tr *ngIf="isLocked(division[0].teamDivision) && isAdmin()">
                 <td colspan="6">
                   <button (click)="viewMatches(division[0].teamDivision)" style="margin: 1px" class="btn">Stilla upp tímaplani</button>
                   <button (click)="clearMatches(division[0].teamDivision)" style="margin: 1px" class="btn">Hreinsa tímaplan</button>

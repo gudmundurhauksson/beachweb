@@ -87,6 +87,8 @@ export class ArrangeMatchesComponent implements OnInit {
     this.data.getFinals(this.tournamentId, this.teamType, this.division, this.groupRule, finalsGroupRule).subscribe((s: any) =>{
       this.finals = <DivisionMatch[]>s;
       this.isFinalsDecided = true;
+    },  error => {
+      this.showMessage("Villa", "Of fá lið í kross.");
     });
   }
 
@@ -140,7 +142,7 @@ export class ArrangeMatchesComponent implements OnInit {
       group.matches = matches;
       this.matchFetchCount--;
     }, error => {
-      this.showMessage("Villa", "Of margir leikir í deild.");
+      this.showMessage("Villa", "Of margir leikir í deild eða of fá lið í kross.");
     });
   }
   

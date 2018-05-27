@@ -13,4 +13,9 @@ export class SimpleDivisionMatch {
     teamTypeId: number;
     round: number;
     results: SimpleDivisionMatchResult[];
+
+    support: string;
+    supportEdit: string;
+
+    isEditing: boolean;
 }

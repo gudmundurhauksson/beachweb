@@ -6,6 +6,7 @@ import { TemplateRef } from '@angular/core/src/linker/template_ref';
 import { BsModalService } from 'ngx-bootstrap/modal/bs-modal.service';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Router } from '@angular/router';
+import { Comment } from '../models/comment';
 
 @Component({
   selector: 'app-my-tournaments',
@@ -43,6 +44,17 @@ export class MyTournamentsComponent implements OnInit {
     this.data.getTournamentsStatus(this.auth.player).subscribe((s: any) => {
       this.isWaiting = false;
       this.teams = <Team[]>s;
+
+      for (var i = 0; i < this.teams.length; i++) {
+        var comment = new Comment();
+        comment.player = this.auth.player;
+        comment.team = this.teams[i];
+        this.teams[i].comment = comment;
+
+        this.teams[i].comments = new Array();
+        this.refreshComments(this.teams[i]);
+      }
+
       console.log(this.teams);
     }, (err: any) => {
       this.isWaiting = false;
@@ -104,6 +116,25 @@ export class MyTournamentsComponent implements OnInit {
 
   public pay(team: Team) : void {
     this.router.navigate(['/payment/' + team.id]);
+  }
+
+
+  public submitComment(team: Team) {
+    console.log(team.comment);
+    if (team.comment === undefined || team.comment == null || team.comment.text == null || team.comment.text.length == 0) {
+      return;
+    }
+
+    console.log("Submitting comment for: " + team.id + "=" + team.comment);
+    this.data.sendComment(team.id, team.comment).subscribe((s:any) => {
+      this.refreshComments(team);
+    });
+  };
+
+  refreshComments(team: Team) : void {
+    this.data.getComments(team.id).subscribe((s:any) => {
+      team.comments = <Comment[]>s;
+    });
   }
 
   ngOnInit() {

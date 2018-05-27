@@ -18,7 +18,7 @@
               - Opið fyrir skráningu!
             </a>
 
-            <a *ngIf="isAdmin() || isAdminViewer()" routerLink="/admin-all-registrations/{{tournament.id}}"> Allar Skráningar (admin) </a>
+            <a *ngIf="isAdminViewer()" routerLink="/admin-all-registrations/{{tournament.id}}"> Allar Skráningar (admin) </a>
           </div>
 
           <h4>Eldri mót</h4>

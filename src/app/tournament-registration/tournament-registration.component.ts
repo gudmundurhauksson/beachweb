@@ -14,7 +14,7 @@ export class TournamentRegistrationComponent implements OnInit {
   public tournaments: Array<Tournament>;
   public oldTournaments: Array<Tournament>;
   public yearNow: number;
-  public isWaiting : boolean;
+  public isWaiting: boolean;
 
   constructor(private auth: AuthService, private data: DataService) {
 
@@ -31,13 +31,13 @@ export class TournamentRegistrationComponent implements OnInit {
     for (var i = date.getFullYear(); i >= 2016; i--) {
 
       data.getTournaments(i).subscribe((s: any) => {
-        var local = <Tournament[]>s;        
+        var local = <Tournament[]>s;
 
         // just wait for the first call to go through
         this.isWaiting = false;
-        
+
         data.getLocations().subscribe((l: any) => {
-          for (var t = 0; t < local.length; t++) {            
+          for (var t = 0; t < local.length; t++) {
             var locations = <BeachLocation[]>l;
 
             for (var tmp = 0; tmp < locations.length; tmp++) {
@@ -59,11 +59,11 @@ export class TournamentRegistrationComponent implements OnInit {
 
           this.tournaments.sort(function (a, b) { return a.dateTicks - b.dateTicks });
           this.oldTournaments.sort(function (a, b) { return a.dateTicks - b.dateTicks });
-          
+
         }, (err: any) => {
           this.isWaiting = false;
         });
-        
+
       }, (error: any) => {
         this.isWaiting = false;
         console.log(error);
@@ -83,17 +83,17 @@ export class TournamentRegistrationComponent implements OnInit {
     return this.auth.player.isAdmin;
   }
 
-  isAdminViewer() : boolean {
+  isAdminViewer(): boolean {
     if (!this.auth.isLoggedIn()) {
       return false;
     }
 
-    return this.auth.player.isAdminViewer;
+    return this.auth.player.isAdminViewer || this.auth.player.isAdmin;
   }
 
   isLoggedIn(): boolean {
     return this.auth.isLoggedIn();
-  }  
+  }
 
   getDateString(date: string, days: number): string {
     var dateObj = new Date(date);
@@ -102,7 +102,7 @@ export class TournamentRegistrationComponent implements OnInit {
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 
-    return dateObj.getDate() + ". " + this.monthToString(dateObj.getMonth()) + " - " + 
+    return dateObj.getDate() + ". " + this.monthToString(dateObj.getMonth()) + " - " +
       dateFinal.getDate() + ". " + this.monthToString(dateFinal.getMonth());
   }
 
@@ -115,8 +115,8 @@ export class TournamentRegistrationComponent implements OnInit {
       return "júlí";
     } else if (month == 7) {
       return "ágúst";
-    } 
-    
+    }
+
     return month;
   }
 

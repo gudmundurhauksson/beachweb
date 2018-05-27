@@ -125,7 +125,7 @@ export class KassComponent implements OnInit {
     this.data.refreshPaymentStatus(this.teamId).subscribe((s: any) => {
       var status = <PaymentStatus>s;
       if (status.isPaid) {
-        this.showMessage('Aðgerð tókst', 'Greiðla var móttekin.');
+        this.showMessage('Aðgerð tókst', 'Greiðsla var móttekin.');
         this.router.navigate(['my-tournaments']);
         return;
       } else {

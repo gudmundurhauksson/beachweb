@@ -159,7 +159,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       return;
     }
 
-    console.log("assigning match: " + timeSlotName.time + " m: " + match.label);
+    // console.log("assigning match: " + timeSlotName.time + " m: " + match.label);
 
     if (timeSlotName.match != null) {
       this.clearMatchFromSlot(timeSlotName.match, initializing);
@@ -311,6 +311,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       return "#D3D3D3";
     }
 
+    // https://graf1x.com/list-of-colors-with-color-names/
     if (match.type == 1) {
       if (match.division == 1) {
         if (match.divisionGroup == 0) {
@@ -340,7 +341,24 @@ export class ArrangeMatchesTimesComponent implements OnInit {
         } else {
           return "#633686";
         }
+      } else if (match.division == 2) {
+        if (match.divisionGroup == 0) {
+          return "#81007f";
+        } else if (match.divisionGroup == 1) {
+          return "#8d4585";
+        } else {
+          return "#311432";
+        }
+      } else if (match.division == 3) {
+        if (match.divisionGroup == 0) {
+          return "#6f2da8";
+        } else if (match.divisionGroup == 1) {
+          return "#9966cb";
+        } else {
+          return "#702963";
+        }
       }
+
     }
 
     return "#445566";

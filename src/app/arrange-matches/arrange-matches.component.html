@@ -49,12 +49,7 @@
 
                 </tr>
 
-                <tr>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                </tr>
+                
               </ng-container>
 
             </table>
@@ -102,9 +97,15 @@
               </div>
               <div>
                 <label>
+                  <input type="radio" name="finaltype" value="2" (click)="updateFinals(13)"> Efstu 2 í kross + úrlist, Neðri 2 í kross + úrslit
+                </label>
+              </div>
+              <div>
+                <label>
                   <input type="radio" name="finaltype" value="2" (click)="updateFinals(12)"> Jafningaleikir, engin úrslit
                 </label>
               </div>
+              
             </div>
 
             <div *ngIf="finals != null && finals.length > 0">

@@ -1,6 +1,7 @@
 import { Tournament } from "./tournament";
 import { Player } from "./player";
 import { PaymentStatus } from "./registration";
+import { Comment } from "./comment";
 
 export class Team {
     id: number;
@@ -15,6 +16,10 @@ export class Team {
     player2: Player;
     score: number;
     paymentStatus: PaymentStatus;
+
+    /* For comment editing purposes*/ 
+    comment: Comment;
+    comments: Comment[];
 }
 
 export class SimpleTeam {

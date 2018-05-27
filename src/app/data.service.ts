@@ -18,6 +18,9 @@ import { ScoresModel } from './models/scoresmodel';
 import { GroupModel } from './models/groupModel';
 import { DivisionMatch } from './models/divisionMatch';
 import { SimpleDivisionMatchResult } from './models/simpleDivisionMatchResult';
+import { Comment } from './models/comment';
+import { Support } from './models/support';
+import { SimpleDivisionMatch } from './models/simpleDivisionMatch';
 
 @Injectable()
 export class DataService {
@@ -472,6 +475,36 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "payments/" + teamId + "/refresh", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  sendComment(teamId: number, comment: Comment) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.post(this.apiUrl + "comments/" + teamId, comment, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  getComments(teamId: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "comments/" + teamId, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  assignMatchSupport(match: SimpleDivisionMatch, support: Support) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.post(this.apiUrl + "matches/" + match.round + "/" + match.team1Id + "/" + match.team2Id + "/support", support, this.getAuthorizationRequestOption(data));
     var tmp = result.map(s => s.json());
 
     return tmp;

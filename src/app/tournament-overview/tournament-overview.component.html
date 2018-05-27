@@ -41,15 +41,21 @@
               <td style="text-align: center">&nbsp;{{entry.pointsFor}} / {{entry.pointsAgainst}}</td>
               <td style="text-align: center">&nbsp;{{formatRatio(entry.ratioWon)}} / {{formatRatio(entry.ratioPoints)}}</td>
             </tr>
-          </table>
+          </table>          
 
           <h4 *ngIf="matchesInGroup.length > 0">Leikir:</h4>
+
+          <div *ngIf="isAdmin() && selectedGroup != null && selectedGroup.divisionGroup >= 1000">
+            <button (click)="refreshFromTable(selectedDivision)">Uppfæra frá töflum</button>
+          </div>
+
           <table *ngIf="matchesInGroup.length > 0">
             <thead>
               <tr>
                 <th>Tími</th>                
                 <th>&nbsp;Lið</th>
                 <th>&nbsp;Völlur</th>
+                <th>&nbsp;Umsjón</th>
                 <th>&nbsp;Úrslit</th>                
               </tr>              
             </thead>
@@ -58,10 +64,18 @@
               <td>{{match.date}}</td>
               <td>&nbsp;{{match.team1}} - {{match.team2}}</td>
               <td>&nbsp;{{match.courtName}}</td>
+              <td>
+                &nbsp;{{match.support}}
+
+                <button *ngIf="!match.isEditing && isAdminViewer()" style="margin: 0px; padding:0px; font-size: 8px" (click)="editSupport(match)">Breyta</button>
+                <input *ngIf="match.isEditing" type="text" [(ngModel)]="match.supportEdit" style="width: 100px" />
+                <button *ngIf="match.isEditing" type="button" (click)="confirmSupport(match)" style="margin: 0px; padding:0px; font-size: 8px">Ok</button>
+
+              </td>
               <td>&nbsp;
                 {{getMatchResults(match)}}
 
-                <button *ngIf="isAdmin()" (click)="enterResults(match)">Úrslit</button>
+                <button *ngIf="isAdmin()" (click)="enterResults(match)" style="margin: 0px; padding:0px; font-size: 8px" >Úrslit</button>
               </td>
             </tr>
           </table>

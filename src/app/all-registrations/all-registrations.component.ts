@@ -11,6 +11,7 @@ import { digest } from '@angular/compiler/src/i18n/serializers/xmb';
 import { DivisionMatch } from '../models/divisionMatch';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TournamentRegistrationIdComponent } from '../tournament-registration-id/tournament-registration-id.component';
+import { Tournament } from '../models/tournament';
 
 @Component({
   selector: 'app-all-registrations',
@@ -26,6 +27,7 @@ export class AllRegistrationsComponent implements OnInit {
   public lockedDivisions: Array<number>;
   public divisions: Array<number>;
   public modalRef: BsModalRef; // {1}
+  public tournament: Tournament;
 
   constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute, private router: Router, private modalService: BsModalService) {
     var maxNumberOfDivisions = 5;
@@ -44,6 +46,10 @@ export class AllRegistrationsComponent implements OnInit {
     this.route.params.subscribe((res: any) => {
       this.tournamentId = res.tournamentId;
       this.refresh(this.typeSelected);
+
+      this.data.getTournament(this.tournamentId).subscribe((s:any) => {
+        this.tournament = <Tournament>s;  
+      });
     });
   }
 
@@ -83,6 +89,14 @@ export class AllRegistrationsComponent implements OnInit {
     });
   }
 
+  isTypeInTournament(type: number) {
+    if (this.tournament == null) {
+      return false;
+    }
+
+    return (this.tournament.type & type) > 0;
+  }
+
   isAdmin(): boolean {
     if (!this.auth.isLoggedIn()) {
       return false;
@@ -96,12 +110,14 @@ export class AllRegistrationsComponent implements OnInit {
       return false;
     }
 
-    return this.auth.player.isAdminViewer;
+    return this.auth.player.isAdminViewer || this.auth.player.isAdmin;
   }
 
   private getDivisionMatches(division: number) {
     this.data.getMatches(this.tournamentId, this.typeSelected, division).subscribe((s: any) => {
       var matches = <DivisionMatch[]>s;
+      console.log("got matches for " + this.typeSelected + " division: " + division);
+      console.log(matches);
       if (matches.length > 0) {
         this.lockedDivisions.push(division);
       }
@@ -115,7 +131,6 @@ export class AllRegistrationsComponent implements OnInit {
   }
 
   public isLocked(division: number) {
-
     for (var i = 0; i < this.lockedDivisions.length; i++) {
       if (this.lockedDivisions[i] == division) {
         return true;
