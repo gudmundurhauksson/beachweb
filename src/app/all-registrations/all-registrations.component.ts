@@ -116,8 +116,6 @@ export class AllRegistrationsComponent implements OnInit {
   private getDivisionMatches(division: number) {
     this.data.getMatches(this.tournamentId, this.typeSelected, division).subscribe((s: any) => {
       var matches = <DivisionMatch[]>s;
-      console.log("got matches for " + this.typeSelected + " division: " + division);
-      console.log(matches);
       if (matches.length > 0) {
         this.lockedDivisions.push(division);
       }

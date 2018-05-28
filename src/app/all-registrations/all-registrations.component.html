@@ -14,17 +14,19 @@
         <div class="panel-body">
           <table *ngIf="isRegistrationsLoaded">
             <thead>
-              <th style="width:175px;">Leikmaður 1</th>
-              <th style="width:175px">Stig</th>
-              <th style="width:175px">Leikmaður 2</th>
-              <th style="width:175px">Stig</th>
-              <th style="width:175px">Heildarstig</th>
+              <th style="width:50px">#</th>
+              <th style="width:250px;">Leikmaður 1</th>
+              <th style="width:75px">Stig</th>
+              <th style="width:250px">Leikmaður 2</th>
+              <th style="width:75px">Stig</th>
+              <th style="width:75px">Heildarstig</th>
               <th *ngIf="isAdmin()" style="width:250px">Deild</th>
               <th *ngIf="isAdmin()" style="width:375px">Greitt?</th>
 
             </thead>
             <ng-container *ngFor="let division of registrations">
               <tr *ngFor="let registration of division">
+                <td>{{registration.teamId}}</td>
                 <td>{{registration.player1Name}}</td>
                 <td>{{registration.totalPlayer1Points}}</td>
                 <td>{{registration.player2Name}}</td>
@@ -46,7 +48,9 @@
               </tr>
 
               <tr *ngIf="division[0].teamDivision != 0 && !division[0].isReadOnly && !isLocked(division[0].teamDivision)  && isAdmin()">
-                <button class="btn btn-primary btn-block btn-signin" type="submit" (click)="arrangeMatches(division[0].teamDivision)">Leikjaniðurröðun</button>
+                <td colspan="5">
+                  <button class="btn btn-primary btn-block btn-signin" type="submit" (click)="arrangeMatches(division[0].teamDivision)">Leikjaniðurröðun</button>
+              </td>
               </tr>
 
               <tr *ngIf="isLocked(division[0].teamDivision) && isAdmin()">

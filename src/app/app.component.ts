@@ -19,7 +19,6 @@ export class AppComponent {
   }
 
   constructor(public authService:AuthService, private router: Router ) {
-    console.log(authService);
     authService.isLoggedIn();
   }
 

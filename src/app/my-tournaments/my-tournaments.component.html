@@ -23,7 +23,7 @@
               <label>Leikmaður 2: {{team.player2.name}} ({{team.player2Id}})</label>
             </div>
 
-            <div>
+            <!-- <div>
                 <label>Athugasemdir:</label>
 
                 
@@ -33,7 +33,7 @@
             <div *ngIf="team.tournament.isRegistrationOpen">
               <textarea class="form-control" rows="5" cols="40" maxlength="1024" [(ngModel)]="team.comment" ></textarea><br>
               <button class="btn" (click)="submitComment(team)">Senda</button>
-            </div>
+            </div> -->
 
             <div *ngIf="team.score > 0">
               <label style="font-weight: normal; color: rgb(255,111,105)">Stig: {{team.score}}</label>
