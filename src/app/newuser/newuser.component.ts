@@ -93,6 +93,7 @@ export class NewuserComponent implements OnInit {
       return;
     }
 
+    this.player.isMale = (this.gender == 1);
     this.isWaiting = true;
     // Create user 
     this.data.register(this.player).subscribe(data => {

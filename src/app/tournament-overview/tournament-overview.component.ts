@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
 import { SimpleDivisionMatchResult } from '../models/simpleDivisionMatchResult';
 import { DivisionGroupTable } from '../models/divisionGroupTable';
 import { Support } from '../models/support';
+import { DivisionAndGroup } from '../models/divisionAndGroup';
 
 @Component({
   selector: 'app-tournament-overview',
@@ -57,6 +58,17 @@ export class TournamentOverviewComponent implements OnInit {
 
           this.loadDivisions(res.type, division, divisionGroup);
         }
+        else if(this.auth.isLoggedIn()) {
+          // Load what the player is registered in
+          this.data.getPlayerDivisionAndGroup(this.auth.player.id, this.tournament.id).subscribe((s:any) => {
+            var divisionAndGroup = <DivisionAndGroup>s;
+
+            if (divisionAndGroup.division >= 0 && divisionAndGroup.divisionGroup >= 0) {
+              this.loadDivisions(divisionAndGroup.type, divisionAndGroup.division, divisionAndGroup.divisionGroup);
+            }
+          });
+        }
+
       });
 
     });
@@ -133,6 +145,7 @@ export class TournamentOverviewComponent implements OnInit {
     this.isWaiting = true;
     this.data.getSimpleDivisionMatches(this.tournament.id, this.typeSelected, this.selectedDivision.division, this.selectedGroup.divisionGroup).subscribe((s: any) => {
       this.matchesInGroup = <SimpleDivisionMatch[]>s;
+      console.log(this.matchesInGroup);
       this.isWaiting = false;
 
       console.log(this.matchesInGroup);

@@ -25,8 +25,8 @@ import { SimpleDivisionMatch } from './models/simpleDivisionMatch';
 @Injectable()
 export class DataService {
 
-  //private baseUrl = "https://www.stigakerfi.net/api/";
-  private baseUrl = "http://localhost:3564/";
+  private baseUrl = "https://www.stigakerfi.net/api/";
+  //private baseUrl = "http://localhost:3564/";
   private apiUrl = this.baseUrl + "api/";
 
   constructor(private http: Http, private cookieService: CookieService) {
@@ -505,6 +505,16 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.post(this.apiUrl + "matches/" + match.round + "/" + match.team1Id + "/" + match.team2Id + "/support", support, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  getPlayerDivisionAndGroup(personalId: string, tournamentId: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "tournaments/" + tournamentId + "/player/" + personalId + "/division_and_group", this.getAuthorizationRequestOption(data));
     var tmp = result.map(s => s.json());
 
     return tmp;

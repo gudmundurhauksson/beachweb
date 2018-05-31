@@ -13,18 +13,14 @@ export class ResetPasswordComponent implements OnInit {
   public modalRef: BsModalRef; // {1}
 
   constructor(private router: Router, private route: ActivatedRoute, private data: DataService, private modalService: BsModalService) { 
-    console.log('in here 1');
     this.route.params.subscribe((res: any) => {
       var requestId = res.requestId;
 
-      console.log('in here 2');
       this.data.resetPassword(requestId).subscribe(s => {
-        console.log('in here 4');
         this.showMessage("Sending tókst", "Lykilorð hefur verið sent í tölvupósti");
         this.router.navigate(['/login']);
         return;
       }, error => {
-        console.log('in here 3');
         var json = error.json().message;
   
         if (json == "PLAYER_NOT_FOUND") {

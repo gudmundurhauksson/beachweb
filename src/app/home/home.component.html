@@ -19,7 +19,7 @@
         <div class="panel-body">
           <div *ngFor="let tournament of ongoings" style="margin: 4px; font-size:10px">
             <button class="btn btn-block btn-primary" (click)="openTournament(tournament.id)">            
-              {{tournament.name}} - {{tournament.location.name}}
+              {{tournament.description}} - {{tournament.location.name}}
             </button>
           </div>
         </div>

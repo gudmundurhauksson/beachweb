@@ -279,7 +279,6 @@ export class ArrangeMatchesTimesComponent implements OnInit {
   }
 
   downloadScoresheet(tournamentId: number, teamType: number, division: number) {
-    console.log("...");
     this.data.getScoreSheets(tournamentId, teamType, division).subscribe(blob => {
       FileSaver.saveAs(blob, "scoresheet-" + tournamentId + "-" + teamType + "-" + division + ".zip");
     });

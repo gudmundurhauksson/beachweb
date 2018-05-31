@@ -120,8 +120,8 @@ export class ArrangeMatchesComponent implements OnInit {
   change(teamId: number, currentGroup: GroupModel, newGroup: GroupModel) : void {
     var index = currentGroup.teamIds.indexOf(teamId);
     currentGroup.teamIds.splice(index, 1);
-    newGroup.teamIds.push(teamId);
-  }  
+    newGroup.teamIds.push(teamId);    
+  }    
 
   calculateMatches() : void {
     this.matchFetchCount = this.groups.length;
@@ -134,6 +134,21 @@ export class ArrangeMatchesComponent implements OnInit {
         this.isFinalsDecided = true;
       }
     } 
+  }
+
+  getTeams(group: GroupModel) {
+    var teams: Registration[];
+    teams = new Array();
+
+    for (var i = 0; i < group.teamIds.length; i++) {
+      teams.push(this.getTeamRegistration(group.teamIds[i]));
+    }
+
+    teams.sort(function(a,b) {
+      return b.totalTeamPoints - a.totalTeamPoints;
+    });
+
+    return teams;
   }
 
   private loadMatches(group: GroupModel) {

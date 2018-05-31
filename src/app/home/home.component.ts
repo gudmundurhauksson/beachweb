@@ -35,10 +35,7 @@ export class HomeComponent implements OnInit {
   }
 
   openTournament(tournamentId: number) {
-    console.log("navigating:" + tournamentId);
-
     this.router.navigate(['/tournaments/' + tournamentId]);
-
   }
 
   ngOnInit() {

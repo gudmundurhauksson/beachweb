@@ -39,12 +39,12 @@
                     <h4>Riðill {{group.name}}</h4>
                   </td>
                 </tr>
-                <tr *ngFor="let team of group.teamIds">
-                  <td>{{getTeamRegistration(team).player1Name}}/{{getTeamRegistration(team).player2Name}}</td>
+                <tr *ngFor="let team of getTeams(group)">
+                  <td>{{team.player1Name}}/{{team.player2Name}}</td>
 
-                  <td>{{getTeamRegistration(team).totalTeamPoints}}</td>
+                  <td>{{team.totalTeamPoints}}</td>
                   <td>
-                    <button *ngFor="let changegroup of getRemainingGroups(group)" (click)="change(team, group, changegroup)">{{changegroup.name}}</button>
+                    <button *ngFor="let changegroup of getRemainingGroups(group)" (click)="change(team.teamId, group, changegroup)">{{changegroup.name}}</button>
                   </td>
 
                 </tr>
