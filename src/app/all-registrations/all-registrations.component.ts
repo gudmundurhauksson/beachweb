@@ -101,7 +101,7 @@ export class AllRegistrationsComponent implements OnInit {
     if (!this.auth.isLoggedIn()) {
       return false;
     }
-
+    
     return this.auth.player.isAdmin;
   }
 
@@ -130,7 +130,7 @@ export class AllRegistrationsComponent implements OnInit {
 
   public isLocked(division: number) {
     for (var i = 0; i < this.lockedDivisions.length; i++) {
-      if (this.lockedDivisions[i] == division) {
+      if (this.lockedDivisions[i] == division) {        
         return true;
       }
     }

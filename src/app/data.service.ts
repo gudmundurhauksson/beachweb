@@ -520,4 +520,24 @@ export class DataService {
     return tmp;
   }
 
+  resolveMatchTeams(match: SimpleDivisionMatch) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "matches/" + match.templateTeam1Id + "/" + match.templateTeam2Id + "/" + match.round + "/resolve", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  resetMatchTeams(match: SimpleDivisionMatch) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "matches/" + match.templateTeam1Id + "/" + match.templateTeam2Id + "/" + match.round + "/reset", this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
 }

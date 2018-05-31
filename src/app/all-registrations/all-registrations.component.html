@@ -32,7 +32,7 @@
                 <td>{{registration.player2Name}}</td>
                 <td>{{registration.totalPlayer2Points}}</td>
                 <td>{{registration.totalTeamPoints}}</td>
-                <td *ngIf="isAdmin()">{{registration.teamDivision}}
+                <td *ngIf="isAdmin()">{{registration.teamDivision}}                  
                   <div *ngIf='!registration.isReadOnly && !isLocked(division[0].teamDivision)'>
                     <ng-container *ngFor="let d of divisions">
                       <button *ngIf="!isLocked(d)" class="btn btn-xs" (click)="assignDivision(registration.teamId, d)">{{d}}</button>

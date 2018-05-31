@@ -18,4 +18,10 @@ export class SimpleDivisionMatch {
     supportEdit: string;
 
     isEditing: boolean;
+    isTemplated: boolean;
+
+    templateTeam1Id: number;
+    templateTeam2Id: number;
+
+    label: string;
 }

@@ -145,10 +145,7 @@ export class TournamentOverviewComponent implements OnInit {
     this.isWaiting = true;
     this.data.getSimpleDivisionMatches(this.tournament.id, this.typeSelected, this.selectedDivision.division, this.selectedGroup.divisionGroup).subscribe((s: any) => {
       this.matchesInGroup = <SimpleDivisionMatch[]>s;
-      console.log(this.matchesInGroup);
       this.isWaiting = false;
-
-      console.log(this.matchesInGroup);
 
       for (var i = 0; i < this.matchesInGroup.length; i++) {
         this.loadResults(this.matchesInGroup[i]);
@@ -187,14 +184,7 @@ export class TournamentOverviewComponent implements OnInit {
     }
 
     return result;
-  }
-
-  refreshFromTable(division: Division) {
-    console.log("Refreshing");
-    console.log(division);
-
-    //this.data.refreshMatchesFromResults(division)
-  }
+  }  
 
   isAdmin() {
     if (!this.auth.isLoggedIn()) {
@@ -239,6 +229,18 @@ export class TournamentOverviewComponent implements OnInit {
       var result = <Support>s;
       match.support = result.support;
       match.isEditing = false;
+    });
+  }
+
+  resolveTeams(match: SimpleDivisionMatch) {
+    this.data.resolveMatchTeams(match).subscribe(s=> {
+      this.loadDivisionGroup(this.selectedDivision, this.selectedGroup);
+    });
+  }
+
+  resetTeams(match: SimpleDivisionMatch) {
+    this.data.resetMatchTeams(match).subscribe(s=> {
+      this.loadDivisionGroup(this.selectedDivision, this.selectedGroup);
     });
   }
 }

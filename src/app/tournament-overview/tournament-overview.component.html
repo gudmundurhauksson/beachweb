@@ -45,10 +45,6 @@
 
           <h4 *ngIf="matchesInGroup.length > 0">Leikir:</h4>
 
-          <div *ngIf="isAdmin() && selectedGroup != null && selectedGroup.divisionGroup >= 1000">
-            <button (click)="refreshFromTable(selectedDivision)">Uppfæra frá töflum</button>
-          </div>
-
           <table *ngIf="matchesInGroup.length > 0">
             <thead>
               <tr>
@@ -62,7 +58,10 @@
 
             <tr *ngFor="let match of matchesInGroup">
               <td>{{match.date}}</td>
-              <td>&nbsp;{{match.team1}} - {{match.team2}}</td>
+              <td><span *ngIf="match.templateTeam1Id > 0 && match.team1Id != match.templateTeam1Id">({{match.label}})</span>&nbsp;{{match.team1}} - {{match.team2}}
+                <button *ngIf="isAdmin() && match.isTemplated" (click)="resolveTeams(match)" style="margin: 0px; padding:0px; font-size: 8px">Uppfæra</button>
+                <button *ngIf="isAdmin() && match.isTemplated" (click)="resetTeams(match)" style="margin: 0px; padding:0px; font-size: 8px">Hreinsa</button>
+              </td>
               <td>&nbsp;{{match.courtName}}</td>
               <td>
                 &nbsp;{{match.support}}
