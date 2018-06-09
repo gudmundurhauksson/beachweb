@@ -1,5 +1,6 @@
 export class DivisionGroupTable {
     entries: DivisionGroupEntry[];
+    finalEntries: DivisionGroupEntry[];
 }
 
 export class DivisionGroupEntry {
@@ -13,4 +14,5 @@ export class DivisionGroupEntry {
     pointsAgainst: number;
     ratioWon: number;
     ratioPoints: number;
+    tournamentPoints: number;
 }

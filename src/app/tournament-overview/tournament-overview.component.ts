@@ -8,7 +8,7 @@ import { GroupModel } from '../models/groupModel';
 import { SimpleDivisionMatch } from '../models/simpleDivisionMatch';
 import { AuthService } from '../auth.service';
 import { SimpleDivisionMatchResult } from '../models/simpleDivisionMatchResult';
-import { DivisionGroupTable } from '../models/divisionGroupTable';
+import { DivisionGroupTable, DivisionGroupEntry } from '../models/divisionGroupTable';
 import { Support } from '../models/support';
 import { DivisionAndGroup } from '../models/divisionAndGroup';
 
@@ -79,7 +79,7 @@ export class TournamentOverviewComponent implements OnInit {
       return false;
     }
 
-    return (type | 0x02) > 0;
+    return (type & this.tournament.type) > 0;
   }
 
   loadDivisions(type: number, division: number, divisionGroup: number) {
@@ -241,6 +241,12 @@ export class TournamentOverviewComponent implements OnInit {
   resetTeams(match: SimpleDivisionMatch) {
     this.data.resetMatchTeams(match).subscribe(s=> {
       this.loadDivisionGroup(this.selectedDivision, this.selectedGroup);
+    });
+  }
+
+  saveFinalPoints(finalEntries: DivisionGroupEntry[]) {
+    this.data.saveFinalTable(finalEntries).subscribe(s =>  {
+
     });
   }
 }

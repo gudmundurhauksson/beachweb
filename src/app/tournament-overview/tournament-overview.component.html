@@ -7,6 +7,9 @@
           <div class="btn-group">
             <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 2}" *ngIf="isTournament(2)" (click)="loadDivisions(2, -1, -1)">Konur</button>
             <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 1}" *ngIf="isTournament(1)" (click)="loadDivisions(1, -1, -1)">Karlar</button>
+            <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 8}" *ngIf="isTournament(8)" (click)="loadDivisions(8, -1, -1)">Stúlkur</button>
+            <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 4}" *ngIf="isTournament(4)" (click)="loadDivisions(4, -1, -1)">Drengir</button>
+            
           </div>
           <br />
           <span *ngFor="let division of divisions">
@@ -20,8 +23,8 @@
               <img src="./assets/loading.gif" height="16" width="16" />
           </span>
 
-          <h4 *ngIf="table != null && table.entries != null && table.entries.length > 0">Tafla:</h4>
-          <table *ngIf="table != null && table.entries != null && table.entries.length > 0">
+          <h4 *ngIf="table != null && table.entries != null && table.entries.length > 0 && selectedGroup != null && selectedGroup.divisionGroup < 1000">Tafla:</h4>
+          <table *ngIf="table != null && table.entries != null && table.entries.length > 0 && selectedGroup != null && selectedGroup.divisionGroup < 1000">
             <thead>
               <tr>
                 <th>Lið</th>
@@ -78,6 +81,24 @@
               </td>
             </tr>
           </table>
+
+          <h4 *ngIf="selectedGroup != null && table != null && table.finalEntries != null && table.finalEntries.length > 0">Úrslit:</h4>
+          <table *ngIf="selectedGroup != null && table != null && table.finalEntries != null && table.finalEntries.length > 0">
+            <thead>
+              <tr>
+                <th>Lið</th>
+                <th>Stig</th>
+              </tr>
+            </thead>
+            
+            <tr *ngFor="let entry of table.finalEntries">
+              <td>{{entry.name}}</td>
+              <td>{{entry.tournamentPoints}}</td>
+            </tr>
+
+          </table>
+
+          <button style="margin: 0px; padding:0px; font-size: 8px" *ngIf="selectedGroup != null && table != null && table.finalEntries != null && table.finalEntries.length > 0" (click)="saveFinalPoints(table.finalEntries)">Vista</button>
 
 
         </div>

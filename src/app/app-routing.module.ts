@@ -127,7 +127,7 @@ const routes: Routes = [
   {
     path:'registrations/:tournamentId',
     component: RegistrationsComponent
-  }
+  },
   {
     path: 'admin-arrange-matches/:tournamentId/:type/:division',
     component: ArrangeMatchesComponent
@@ -147,9 +147,7 @@ const routes: Routes = [
   {
     path: 'enter-results/:tournamentId/:teamTypeId/:division/:divisionGroup/:round/:team1Id/:team2Id',
     component: EnterMatchResultComponent
-  },
-  
-
+  }
 ];
 
 @NgModule({
