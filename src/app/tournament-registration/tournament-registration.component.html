@@ -17,8 +17,12 @@
             <a *ngIf="tournament.isRegistrationOpen" routerLink="{{tournament.id}}/register">
               - Opið fyrir skráningu!
             </a>
+            
+            <br />
+            <a *ngIf="isLoggedIn()" routerLink="/registrations/{{tournament.id}}">Skráningar</a>
 
-            <a *ngIf="isAdminViewer()" routerLink="/admin-all-registrations/{{tournament.id}}"> Allar Skráningar (admin) </a>
+            <br />
+            <a *ngIf="isAdminViewer()" routerLink="/admin-all-registrations/{{tournament.id}}"> Uppstilling / Greiðslustaða (admin) </a>
           </div>
 
           <h4>Eldri mót</h4>

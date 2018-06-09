@@ -45,6 +45,7 @@ import { TournamentOverviewComponent } from './tournament-overview/tournament-ov
 import { EnterMatchResultComponent } from './enter-match-result/enter-match-result.component';
 import { RootHomeComponent } from './root-home/root-home.component';
 import { DepositComponent } from './deposit/deposit.component';
+import { RegistrationsComponent } from './registrations/registrations.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,7 @@ import { DepositComponent } from './deposit/deposit.component';
     AurComponent,
     ScoresComponent,
     TournamentScoresComponent,  
-    AllRegistrationsComponent, ArrangeMatchesComponent, ForgotPasswordComponent, ResetPasswordComponent, ArrangeMatchesTimesComponent, TournamentOverviewComponent, EnterMatchResultComponent, RootHomeComponent, DepositComponent
+    AllRegistrationsComponent, ArrangeMatchesComponent, ForgotPasswordComponent, ResetPasswordComponent, ArrangeMatchesTimesComponent, TournamentOverviewComponent, EnterMatchResultComponent, RootHomeComponent, DepositComponent, RegistrationsComponent
   ],
   imports: [
     BrowserModule,
