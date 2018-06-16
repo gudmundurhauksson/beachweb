@@ -16,7 +16,7 @@ export class RegistrationsComponent implements OnInit {
   private tournament : Tournament;
   public typeSelected : number;
 
-  private registrations: RegisteredTeam[];
+  public registrations: RegisteredTeam[];
 
   constructor(private data: DataService, private auth: AuthService, private route: ActivatedRoute) { 
 

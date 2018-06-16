@@ -98,7 +98,7 @@
 
           </table>
 
-          <button style="margin: 0px; padding:0px; font-size: 8px" *ngIf="selectedGroup != null && table != null && table.finalEntries != null && table.finalEntries.length > 0" (click)="saveFinalPoints(table.finalEntries)">Vista</button>
+          <button style="margin: 0px; padding:0px; font-size: 8px" *ngIf="isAdmin() && selectedGroup != null && table != null && table.finalEntries != null && table.finalEntries.length > 0" (click)="saveFinalPoints(table.finalEntries)">Vista</button>
 
 
         </div>

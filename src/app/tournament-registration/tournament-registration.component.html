@@ -19,9 +19,12 @@
             </a>
             
             <br />
+            <a routerLink="/tournaments/{{tournament.id}}">Deildir/Úrslit</a>
+
+            <br *ngIf="isLoggedIn()" />
             <a *ngIf="isLoggedIn()" routerLink="/registrations/{{tournament.id}}">Skráningar</a>
 
-            <br />
+            <br *ngIf="isAdminViewer()" />
             <a *ngIf="isAdminViewer()" routerLink="/admin-all-registrations/{{tournament.id}}"> Uppstilling / Greiðslustaða (admin) </a>
           </div>
 

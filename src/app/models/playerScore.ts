@@ -3,4 +3,6 @@ export class PlayerScore {
     name: string;
     score: number[];
     totalScore : number;
+    positionStart: number;
+    positionEnd: number;
 }
