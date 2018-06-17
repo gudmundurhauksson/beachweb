@@ -30,18 +30,17 @@
 
           <h4>Eldri mót</h4>
 
-          <div *ngFor="let tournament of oldTournaments">
+          <div *ngFor="let tournament of oldTournaments" style="font-size: 10px">
             
-            <label>{{tournament.date}} - </label>
+            <label>{{getDateString(tournament.date, tournament.days)}} - </label>
             <span>{{tournament.name}}</span>
 
             <span>{{tournament.location.name}}</span>
-
-            <a *ngIf="tournament.isRegistrationOpen" routerLink="{{tournament.id}}/register">
-              - Opið fyrir skráningu!
-            </a>
-
+            <br />
+            <a routerLink="/tournaments/{{tournament.id}}">Deildir/Úrslit</a> <br />
             <a *ngIf="isAdmin()" routerLink="/admin-all-registrations/{{tournament.id}}"> Allar Skráningar (admin) </a>
+            <br />
+            <br />
           </div>
 
         </div>

@@ -47,9 +47,7 @@ export class ArrangeMatchesTimesComponent implements OnInit {
       this.data.getTournament(this.tournamentId).subscribe((s: any) => {
         this.tournament = <Tournament>s;
 
-        var date = new Date(this.tournament.unixDateTicks);
-        date.setHours(8);
-        date.setMinutes(0);
+        var date = new Date(this.tournament.unixDateTicks);        
         this.courts = this.tournament.location.courts;
 
         this.generateTimeSlots(date);

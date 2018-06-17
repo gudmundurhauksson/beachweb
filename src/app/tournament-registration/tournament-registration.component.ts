@@ -50,7 +50,7 @@ export class TournamentRegistrationComponent implements OnInit {
           }
 
           for (var ll = 0; ll < local.length; ll++) {
-            if (local[ll].year == this.yearNow) {
+            if (local[ll].year == this.yearNow && !local[ll].isStarted) {
               this.tournaments.push(local[ll]);
             } else {
               this.oldTournaments.push(local[ll]);
@@ -58,7 +58,7 @@ export class TournamentRegistrationComponent implements OnInit {
           }
 
           this.tournaments.sort(function (a, b) { return a.dateTicks - b.dateTicks });
-          this.oldTournaments.sort(function (a, b) { return a.dateTicks - b.dateTicks });
+          this.oldTournaments.sort(function (a, b) { return b.dateTicks - a.dateTicks });
 
         }, (err: any) => {
           this.isWaiting = false;
