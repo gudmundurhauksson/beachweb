@@ -25,8 +25,8 @@ import { SimpleDivisionMatch } from './models/simpleDivisionMatch';
 @Injectable()
 export class DataService {
 
-  private baseUrl = "https://www.stigakerfi.net/api/";
-  //private baseUrl = "http://localhost:3564/";
+  //private baseUrl = "https://www.stigakerfi.net/api/";
+  private baseUrl = "http://localhost:3564/";
   private apiUrl = this.baseUrl + "api/";
 
   constructor(private http: Http, private cookieService: CookieService) {

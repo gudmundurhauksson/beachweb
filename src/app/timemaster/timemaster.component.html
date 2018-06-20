@@ -1,0 +1,59 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+
+          <div class="col-lg-8">
+
+              <table>
+                  <thead>
+                    <th><button class="btn btn-primary" (click)="toggleExplanations()">Litakóði
+                    </button></th>
+                  </thead>
+                  <ng-container *ngIf="isExplanationsVisible" >
+                  <ng-container *ngFor="let groupView of groupViews">
+                    <tr [ngStyle]="{'background-color':getOverviewColor(groupView)}">
+                      <td style="color: white">{{getDescriptionFromType(groupView.type)}} - {{groupView.division}} deild - {{getDescriptionFromGroup(groupView.group)}}
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+                </table>
+    
+
+            <table>
+              <thead>
+                <th style="width:50px">Tími</th>
+
+                <ng-container *ngFor="let court of courts">
+                  <th style="width: 150px">{{court.name}}</th>
+                </ng-container>
+              </thead>
+
+              <ng-container *ngFor="let time of timeSlots; let i = index">
+                <tr *ngIf="time.slot == 0">
+                  <td [attr.colspan]="time.names.length" style="background-color: lightgray; font-weight: bold">{{getDateString(time.date)}}</td>
+                  <td>
+                    <button class="btn btn-block btn-primary" id="{{prepareButton(i)}}" (click)="toggleButton(i)">{{(getVisibility(i).isVisible ? "Fela" : "Sýna")}}</button>
+                  </td>
+                </tr>
+                <tr *ngIf="getVisibility(i).isVisible">
+                  <td>{{time.time}}</td>
+                  <td *ngFor="let name of time.names" [ngStyle]="{'background-color':name.match != null ? getColor(name.match, false) : 'white'}">
+                    <label>
+                      <span *ngIf="name.match == null">---------</span>
+                      <span *ngIf="name.match != null" style="color: white">{{name.match.team1.playerNamesShort}}-{{name.match.team2.playerNamesShort}}</span>
+                    </label>
+                  </td>
+                </tr>
+              </ng-container>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

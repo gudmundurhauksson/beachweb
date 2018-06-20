@@ -20,6 +20,8 @@ export class Team {
     /* For comment editing purposes*/ 
     comment: Comment;
     comments: Comment[];
+
+    playerNamesShort : string;
 }
 
 export class SimpleTeam {

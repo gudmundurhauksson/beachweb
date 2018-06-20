@@ -29,6 +29,7 @@ import { TournamentOverviewComponent } from './tournament-overview/tournament-ov
 import { EnterMatchResultComponent } from './enter-match-result/enter-match-result.component';
 import { RootHomeComponent } from './root-home/root-home.component';
 import { DepositComponent } from './deposit/deposit.component';
+import { TimemasterComponent } from './timemaster/timemaster.component';
 
 const routes: Routes = [  
   {
@@ -142,6 +143,10 @@ const routes: Routes = [
   {
     path: 'enter-results/:tournamentId/:teamTypeId/:division/:divisionGroup/:round/:team1Id/:team2Id',
     component: EnterMatchResultComponent
+  },
+  {
+    path: 'timemaster/:tournamentId',
+    component: TimemasterComponent
   }
 
 ];
