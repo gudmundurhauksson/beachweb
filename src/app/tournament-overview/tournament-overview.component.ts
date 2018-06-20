@@ -82,6 +82,10 @@ export class TournamentOverviewComponent implements OnInit {
     return (type | 0x02) > 0;
   }
 
+  navigateTimemaster() {
+    this.router.navigate(['/timemaster/' + this.tournament.id]);
+  }
+
   loadDivisions(type: number, division: number, divisionGroup: number) {
     this.typeSelected = type;
     this.selectedDivision = null;

@@ -7,6 +7,7 @@
           <div class="btn-group">
             <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 2}" *ngIf="isTournament(2)" (click)="loadDivisions(2, -1, -1)">Konur</button>
             <button [ngClass]="{'btn':true, 'btn-primary': typeSelected == 1}" *ngIf="isTournament(1)" (click)="loadDivisions(1, -1, -1)">Karlar</button>
+            <button class="btn" (click)="navigateTimemaster()">Tímaplan - Allir</button>
           </div>
           <br />
           <span *ngFor="let division of divisions">
