@@ -21,6 +21,7 @@ import { SimpleDivisionMatchResult } from './models/simpleDivisionMatchResult';
 import { Comment } from './models/comment';
 import { Support } from './models/support';
 import { SimpleDivisionMatch } from './models/simpleDivisionMatch';
+import { DivisionGroupEntry } from './models/divisionGroupTable';
 
 @Injectable()
 export class DataService {
@@ -256,6 +257,16 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamType, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  getTeamRegistrations(tournamentId: number, teamType: number): Observable<Response> {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "registrations/" + tournamentId + "/" + teamType + "/public", this.getAuthorizationRequestOption(data));
     var tmp = result.map(s => s.json());
 
     return tmp;
@@ -540,4 +551,13 @@ export class DataService {
     return tmp;
   }
 
+  saveFinalTable(finalEntries: DivisionGroupEntry[]) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.post(this.apiUrl + "tournaments/save_results", finalEntries, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
 }

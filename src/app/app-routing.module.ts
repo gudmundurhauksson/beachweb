@@ -30,6 +30,7 @@ import { EnterMatchResultComponent } from './enter-match-result/enter-match-resu
 import { RootHomeComponent } from './root-home/root-home.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { TimemasterComponent } from './timemaster/timemaster.component';
+import { RegistrationsComponent } from './registrations/registrations.component';
 
 const routes: Routes = [  
   {
@@ -125,6 +126,10 @@ const routes: Routes = [
     component: AllRegistrationsComponent
   },
   {
+    path:'registrations/:tournamentId',
+    component: RegistrationsComponent
+  },
+  {
     path: 'admin-arrange-matches/:tournamentId/:type/:division',
     component: ArrangeMatchesComponent
   },
@@ -148,7 +153,6 @@ const routes: Routes = [
     path: 'timemaster/:tournamentId',
     component: TimemasterComponent
   }
-
 ];
 
 @NgModule({

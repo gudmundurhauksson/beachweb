@@ -57,6 +57,7 @@ export class TournamentScoresComponent implements OnInit {
       this.isWaiting = false;
       this.scores = s;
       this.isScoreLoaded = true;
+      console.log(s);
     }, error => {
       this.isWaiting = false;
     });
