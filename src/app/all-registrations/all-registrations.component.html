@@ -27,9 +27,13 @@
             <ng-container *ngFor="let division of registrations">
               <tr *ngFor="let registration of division">
                 <td>{{registration.teamId}}</td>
-                <td>{{registration.player1Name}}</td>
+                <td>{{registration.player1Name}}
+                  <button *ngIf="isAdmin()" style="font-size: 8px; margin: 0px; padding: 0px" (click)="swapPlayer(registration.teamId, registration.player1Id)">Skipta</button>
+                </td>
                 <td>{{registration.totalPlayer1Points}}</td>
-                <td>{{registration.player2Name}}</td>
+                <td>{{registration.player2Name}}
+                    <button *ngIf="isAdmin()" style="font-size: 8px; margin: 0px; padding: 0px" (click)="swapPlayer(registration.teamId, registration.player2Id)">Skipta</button>
+                </td>
                 <td>{{registration.totalPlayer2Points}}</td>
                 <td>{{registration.totalTeamPoints}}</td>
                 <td *ngIf="isAdmin()">{{registration.teamDivision}}                  

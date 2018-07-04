@@ -191,6 +191,10 @@ export class AllRegistrationsComponent implements OnInit {
     });
   }
 
+  public swapPlayer(teamId: number, playerId: string) {
+    this.router.navigate(['/replace-team-player/' + teamId + "/" + playerId]);
+  }
+
   public completeDeposit(registration: Registration) {
     this.data.completeDeposit(registration.teamId).subscribe(s => {
       this.data.refreshPaymentStatus(registration.teamId).subscribe((s: any) => {

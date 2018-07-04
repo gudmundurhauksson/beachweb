@@ -168,6 +168,16 @@ export class DataService {
     return tmp;
   }
 
+  replacePlayerInTeam(teamId: number, oldPlayerId: string, newPlayerId: string) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "teams/" + teamId + "/replace/" + oldPlayerId + "/" + newPlayerId,this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
   getTeamByPlayerIdAndTournamentId(personalId: string, tournamentId: number) {
     var data: AuthData;
     data = <AuthData>this.load("authentication");

@@ -31,6 +31,7 @@ import { RootHomeComponent } from './root-home/root-home.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { TimemasterComponent } from './timemaster/timemaster.component';
 import { RegistrationsComponent } from './registrations/registrations.component';
+import { ReplaceTeamPlayerComponent } from './replace-team-player/replace-team-player.component';
 
 const routes: Routes = [  
   {
@@ -152,6 +153,10 @@ const routes: Routes = [
   {
     path: 'timemaster/:tournamentId',
     component: TimemasterComponent
+  },
+  {
+    path: 'replace-team-player/:teamId/:playerId',
+    component: ReplaceTeamPlayerComponent
   }
 ];
 
