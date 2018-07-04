@@ -18,4 +18,5 @@ export class Tournament {
     days: number;
     bankAccountId: string;
     emailHost: string;
+    isComplete: boolean;
 }

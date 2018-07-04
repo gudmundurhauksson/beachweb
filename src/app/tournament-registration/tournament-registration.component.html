@@ -32,7 +32,7 @@
 
           <div *ngFor="let tournament of oldTournaments" style="font-size: 10px">
             
-            <label>{{getDateString(tournament.date, tournament.days)}} - </label>
+            <label>{{getDateString(tournament.date, tournament.days)}}, {{getYear(tournament.date)}} - </label>
             <span>{{tournament.name}}</span>
 
             <span>{{tournament.location.name}}</span>

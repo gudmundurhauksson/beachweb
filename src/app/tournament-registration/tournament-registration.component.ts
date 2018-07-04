@@ -50,7 +50,7 @@ export class TournamentRegistrationComponent implements OnInit {
           }
 
           for (var ll = 0; ll < local.length; ll++) {
-            if (local[ll].year == this.yearNow && !local[ll].isStarted) {
+            if (!local[ll].isComplete) {
               this.tournaments.push(local[ll]);
             } else {
               this.oldTournaments.push(local[ll]);
@@ -101,9 +101,13 @@ export class TournamentRegistrationComponent implements OnInit {
     dateFinal.setDate(dateFinal.getDate() + days - 1);
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-
     return dateObj.getDate() + ". " + this.monthToString(dateObj.getMonth()) + " - " +
       dateFinal.getDate() + ". " + this.monthToString(dateFinal.getMonth());
+  }
+
+  getYear(date: string) : number {
+    var dateObj = new Date(date);
+    return dateObj.getFullYear();
   }
 
   monthToString(month: number) {

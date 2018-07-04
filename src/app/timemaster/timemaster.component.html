@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="font-size: 8px">
 
   <div class="row">
     <div class="col-lg-12">
@@ -36,7 +36,7 @@
                 <tr *ngIf="time.slot == 0">
                   <td [attr.colspan]="time.names.length" style="background-color: lightgray; font-weight: bold">{{getDateString(time.date)}}</td>
                   <td>
-                    <button class="btn btn-block btn-primary" id="{{prepareButton(i)}}" (click)="toggleButton(i)">{{(getVisibility(i).isVisible ? "Fela" : "Sýna")}}</button>
+                    <button class="btn btn-block btn-primary" id="{{prepareButton(i)}}" (click)="toggleButton(i)" style="font-size: 8px">{{(getVisibility(i).isVisible ? "Fela" : "Sýna")}}</button>
                   </td>
                 </tr>
                 <tr *ngIf="getVisibility(i).isVisible">
