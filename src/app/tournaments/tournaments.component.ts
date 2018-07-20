@@ -36,8 +36,7 @@ export class TournamentsComponent implements OnInit {
     var date = new Date();
     this.data.getTournaments(date.getFullYear()).subscribe((s: any) => {
       this.isWaiting = false;
-      this.tournaments = <Tournament[]>s;
-      console.log(this.tournaments);
+      this.tournaments = <Tournament[]>s;      
     }, error => {
       this.isWaiting = false;
     });
@@ -56,6 +55,12 @@ export class TournamentsComponent implements OnInit {
       (error: any) => {
         console.log(error);
       });
+  }
+
+  save(tournament: Tournament) {
+    this.data.updateTournament(tournament).subscribe((s:any) => {
+      this.selected = <Tournament>s;
+    });
   }
 
   close(): void {

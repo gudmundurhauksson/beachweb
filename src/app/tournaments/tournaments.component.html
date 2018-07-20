@@ -4,10 +4,10 @@
       <div class="panel panel-primary">
         <div class="panel-body">
 
-            <span *ngIf="isWaiting">
-                <img src="./assets/loading.gif" height="16" width="16" />
-              </span>
-          
+          <span *ngIf="isWaiting">
+            <img src="./assets/loading.gif" height="16" width="16" />
+          </span>
+
 
           <p id="profile-name" class="profile-name-card"></p>
           <form class="form-signin">
@@ -20,6 +20,21 @@
                   <span *ngIf="tournament.isRegistrationOpen">(Opið fyrir skráningu)</span>
                 </label>
               </div>
+            </div>
+
+            <div *ngIf="selected != null && selected.id >= 0">
+              <span>
+                Gamalt mót?
+                <input name="isComplete" type="checkbox" [(ngModel)]="selected.isComplete">
+              </span><br />
+              <span>Verð: <input type="text" name="price" [(ngModel)]="selected.price"></span>
+              <br />
+              <span>Netfang mótshaldara: <input name="emailHost" type="text" [(ngModel)]="selected.emailHost"> </span>
+              <br />
+              <span>Bankaupplýsingar og kennitala: <input name="bankAccountId" type="text" [(ngModel)]="selected.bankAccountId"> </span>
+              <br />
+
+              <button class="btn btn-primary btn-clock" (click)="save(selected)">Vista</button>
             </div>
 
             <button class="btn btn-primary btn-block" type="submit" (click)="open()" *ngIf="selected != null && selected.id >= 0 && !selected.isRegistrationOpen">Opna fyrir skráningu</button>

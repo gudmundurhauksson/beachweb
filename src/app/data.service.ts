@@ -26,8 +26,8 @@ import { DivisionGroupEntry } from './models/divisionGroupTable';
 @Injectable()
 export class DataService {
 
-  private baseUrl = "https://www.stigakerfi.net/api/";
-  //private baseUrl = "http://localhost:3564/";
+  //private baseUrl = "https://www.stigakerfi.net/api/";
+  private baseUrl = "http://localhost:3564/";
   private apiUrl = this.baseUrl + "api/";
 
   constructor(private http: Http, private cookieService: CookieService) {
@@ -117,6 +117,16 @@ export class DataService {
     return result.map(s => s.json());
   }
 
+  updateTournament(tournament: Tournament) : Observable<Response> {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.put(this.apiUrl + "tournaments/" + tournament.id, tournament, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
   openRegistration(tournamentId: number): Observable<Response> {
     var data: AuthData;
     data = <AuthData>this.load("authentication");
@@ -126,7 +136,6 @@ export class DataService {
 
     return tmp;
   }
-
 
   closeRegistration(tournamentId: number): Observable<Response> {
     var data: AuthData;
