@@ -19,10 +19,11 @@
               <td><input type="text" [(ngModel)]="set.team1Score"></td>
               <td><input type="text" [(ngModel)]="set.team2Score"></td>
               <td><input type="checkbox" [(ngModel)]="set.complete"></td>
-              <td><button class="btn" (click)="sendResults(set)">Vista</button></td>
+              <td><button class="btn" (click)="sendResults(set)">Vista</button></td>              
             </tr>
           </table>
 
+          <button class="btn" (click)="clearMatchResults()">Reset</button>
           <button class="btn" (click)="navigateBack()">Til baka</button>
         </div>
       </div>

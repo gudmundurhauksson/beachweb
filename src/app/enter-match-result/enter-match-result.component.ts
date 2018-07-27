@@ -54,13 +54,20 @@ export class EnterMatchResultComponent implements OnInit {
   }
 
   sendResults(resultSet: SimpleDivisionMatchResult) {
-    this.data.sendResults(this.round, resultSet).subscribe(s=> {
-
+    this.data.sendResults(this.round, resultSet).subscribe(s => {
     });
   }
 
   navigateBack() {
     this.router.navigate(['/tournaments/' + this.tournamentId + "/" + this.teamTypeId + "/" + this.division + "/" + this.divisionGroup]);
+  }
+
+  clearMatchResults() {
+    this.data.clearMatchResults(this.team1Id, this.team2Id, this.round).subscribe((s: any) => {
+      this.data.getMatchResult(this.round, this.team1Id, this.team2Id).subscribe((s: any) => {
+        this.setResults = <SimpleDivisionMatchResult[]>s;
+      });
+    });
   }
 
   ngOnInit() {

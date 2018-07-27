@@ -26,8 +26,8 @@ import { DivisionGroupEntry } from './models/divisionGroupTable';
 @Injectable()
 export class DataService {
 
-  //private baseUrl = "https://www.stigakerfi.net/api/";
-  private baseUrl = "http://localhost:3564/";
+  private baseUrl = "https://www.stigakerfi.net/api/";
+  //private baseUrl = "http://localhost:3564/";
   private apiUrl = this.baseUrl + "api/";
 
   constructor(private http: Http, private cookieService: CookieService) {
@@ -575,6 +575,16 @@ export class DataService {
     data = <AuthData>this.load("authentication");
 
     var result = this.http.post(this.apiUrl + "tournaments/save_results", finalEntries, this.getAuthorizationRequestOption(data));
+    var tmp = result.map(s => s.json());
+
+    return tmp;
+  }
+
+  clearMatchResults(team1Id: number, team2Id: number, round: number) {
+    var data: AuthData;
+    data = <AuthData>this.load("authentication");
+
+    var result = this.http.get(this.apiUrl + "matches/" + team1Id + "/" + team2Id + "/" + round + "/clear_results", this.getAuthorizationRequestOption(data));
     var tmp = result.map(s => s.json());
 
     return tmp;
